@@ -1,0 +1,127 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #d2b48c, #f5deb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.container {
+  background: #fffaf0;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 26px;
+  color: #8b4513;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  gap: 5px;
+}
+
+.user-icon-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.user-name {
+  font-size: 18px;
+  color: #8b4513;
+  font-weight: bold;
+}
+
+.user-mbti-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-mbti {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* MBTIごとの色 */
+.mbti-purple { color: #9b59b6; } /* INTJ, INFJ, ENTJ, ENFJ */
+.mbti-green { color: #2ecc71; } /* INTP, INFP, ENTP, ENFP */
+.mbti-blue { color: #3498db; } /* ISTP, ISFP, ESTP, ESFP */
+.mbti-yellow { color: #f1c40f; } /* ISTJ, ISFJ, ESTJ, ESFJ */
+
+.btn {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  transition: 0.3s;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #a0522d, #8b4513);
+}
+
+
+/* ポップアップメッセージのスタイル */
+.popup-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  color: #8b4513;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.fade-out {
+  animation: fadeOut 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translate(-50%, -50%); }
+  to { opacity: 0; transform: translate(-50%, -60%); }
+}

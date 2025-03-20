@@ -1,0 +1,86 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #d2b48c, #f5deb3); /* default.cssの色を適用 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: #fffaf0; /* default.cssのベースカラー */
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.bubble {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #8b4513; /* default.css のボタン色に統一 */
+    margin-bottom: 20px;
+    font-family: 'M PLUS Rounded 1c', sans-serif; /* ここで変更 */
+}
+
+.hidden {
+    display: none;
+}
+
+/* ボタンの配置調整 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #8b4513, #a0522d); /* default.css のボタンカラー */
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 40%;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #a0522d, #8b4513);
+}
+
+/* 「もう一度診断する」ボタンの配置 */
+.restart-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #8b4513, #a0522d);
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    width: 200px;
+    text-align: center;
+}
+
+#user-icon {
+    width: 200px;  /* 画像サイズ */
+    height: auto;
+    display: block;
+    margin: 20px auto; /* 完全に中央に配置 */
+    opacity: 0;  /* 初期状態は非表示 */
+    transform: scale(0.5) translateY(0px); /* 初期縮小＆少し上 */
+}
