@@ -84,7 +84,7 @@ body {
 #message-input {
     flex: 1;
     padding: 10px;
-    width: 70%;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -92,7 +92,6 @@ body {
     max-height: 120px;
     overflow-y: auto;
     resize: none;
-    width: 100%;
 }
 
 #message-input:focus {
