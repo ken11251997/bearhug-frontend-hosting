@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("user-name").innerText = `${user_name}`;
     document.getElementById("user-mbti").innerText = `${mbti}`;
-    document.getElementById("user-icon").src = `/static/img/${mbti}.png`;
+    document.getElementById("user-icon").src = `static/img/${mbti}.png`;
 
     const mbtiElement = document.getElementById("user-mbti");
     const mbtiColorClasses = {
