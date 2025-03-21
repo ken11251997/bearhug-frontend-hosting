@@ -82,9 +82,8 @@ body {
 
 /* メッセージ入力欄のサイズ可変 */
 #message-input {
-    flex: 1;
     padding: 10px;
-    width: 120%;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -229,12 +228,10 @@ button:hover {
 }
 
 #send-btn {
-    margin-left: 8px;
     display: flex;
     align-items: center;
     justify-content: right;
-    width: 80px;
-    min-width: 60px;
+    min-width: 40px;
     max-width: 100px;
     height: 40px;
     white-space: nowrap;
