@@ -193,9 +193,9 @@ body {
     padding: 10px;
     background: #f5deb3;
     border-radius: 10px;
-    flex-wrap: wrap; /* スマホ時に折り返せるように */
     box-sizing: border-box;
     width: 100%;
+    flex-wrap: nowrap;  /* ✅ 横一列固定 */
 }
 
 #media-btn {
@@ -243,24 +243,35 @@ button:hover {
     flex-shrink: 0;
 }
 
+#send-btn {
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    min-width: 60px; /* ✅ ボタン幅を固定 */
+    max-width: 100px;
+    height: 40px;
+    white-space: nowrap;
+}
+
+/* スマホ対応（600px以下） */
 @media (max-width: 600px) {
     #input-container {
-        flex-direction: column;
-        align-items: stretch;
+        flex-wrap: nowrap; /* ✅ スマホでも横並びを維持 */
+        justify-content: space-between;
     }
 
     .input-wrapper {
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    #message-input {
-        font-size: 16px;
+        flex-grow: 1;
+        width: auto;
+        margin-top: 0;
     }
 
     #send-btn, #send-file-btn {
-        width: 100%;
+        width: auto;
+        min-width: 60px;
+        max-width: 80px;
         justify-content: center;
-        margin-top: 6px;
     }
 }
