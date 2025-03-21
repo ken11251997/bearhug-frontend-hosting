@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     socket.on("back", function (msg) {
         if(msg.user_id==user_id){
-            window.location.href = `/login?user_id=${msg.user_id}&user_name=${msg.user_name}&mbti=${msg.mbti}`;
+            window.location.href = `login?user_id=${msg.user_id}&user_name=${msg.user_name}&mbti=${msg.mbti}`;
             }
     });
 
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
         newMessage.textContent = `${msg.sendername}: ${msg.message}`;
         chatBox.appendChild(newMessage);
         if(msg.sender_id==user_id){
-            window.location.href = `/login?user_id=${msg.sender_id}&user_name=${msg.sendername}&mbti=${msg.mbti}`};
+            window.location.href = `login?user_id=${msg.sender_id}&user_name=${msg.sendername}&mbti=${msg.mbti}`};
     });
 
 

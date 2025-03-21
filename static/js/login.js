@@ -132,5 +132,5 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 function joinRoom(roomId, otherUserName,mbti) {
-    window.location.href = `/chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
+    window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
 }

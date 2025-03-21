@@ -7,22 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const questions = [
         { text: "1.グループで活動する方が好きだ。", type: "E" },
-        { text: "2.相手の気持ちを考えて判断することが多い。", type: "F" },
+        { text: "2.相手の気持ちを考えて判断しがち。", type: "F" },
         { text: "3.一人で過ごす時間が必要だと感じる。", type: "I" },
         { text: "4.期限が決まっている方がやる気が出る。", type: "J" },
         { text: "5.柔軟に予定を変えながら対応したい。", type: "P" },
         { text: "6.初対面の人ともすぐに打ち解ける。", type: "E" },
         { text: "7.物事を決めるとスッキリする。", type: "J" },
         { text: "8.社交的な場面の後は疲れることが多い。", type: "I" },
-        { text: "9.具体的な事実やデータに基づいて判断することが多い。", type: "S" },
-        { text: "10.ルールやマニュアルに従う方が安心する。", type: "S" },
+        { text: "9.事実やデータに基づいて判断するのが好き。", type: "S" },
+        { text: "10.ルールやマニュアルに従う方が安心だ。", type: "S" },
         { text: "11.その場の流れで動く方が得意だ。", type: "P" },
         { text: "12.物事を話しながら考えることが多い。", type: "E" },
         { text: "13.公平なルールを重視する。", type: "T" },
-        { text: "14.未来の可能性やアイデアを考えるのが好きだ。", type: "N" },
-        { text: "15.目の前の現実に意識を向けることが多い。", type: "S" },
+        { text: "14.未来やアイデアを考えるのが好きだ。", type: "N" },
+        { text: "15.目の前の現実に意識を向けがちだ。", type: "S" },
         { text: "16.物事を論理的に分析するのが得意だ。", type: "T" },
-        { text: "17.人の気持ちを傷つけるのはできるだけ避けたい。", type: "F" },
+        { text: "17.人の気持ちを傷つけるのは避けたい。", type: "F" },
         { text: "18.計画を立てるのが好きだ。", type: "J" },
         { text: "19.感情よりも客観的な事実を優先する。", type: "T" },
         { text: "20.全体の流れや直感を大切にする。", type: "N" }
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         resultText.textContent = `あなたのMBTIタイプは ・・・`;
         resultLast.textContent = `${mbti}です！！`;
         // document.getElementById("user-icon").src = `/static/img/${mbti}.jpg`;
-        document.getElementById("user-icon").src = `/static/img/send_message.png`;
+        document.getElementById("user-icon").src = `/static/img/${mbti}.png`;
         
 
     }
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     restartBtn.addEventListener("click", function () {
-        window.location.href = '/'
+        window.location.href = ''
         // currentQuestion = 0;
         // scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
         // resultBox.classList.add("hidden");

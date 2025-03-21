@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("mbti-test-btn").addEventListener("click", function () {
         console.log("test")
-        window.location.href = '/mbti_test';
+        window.location.href = 'mbti_test';
     });
     
     // Register to buckend
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 sessionStorage.setItem("user_id", result.user_id);
                 console.log(sessionStorage.getItem("user_id"));
                 setTimeout(() => {
-                    window.location.href = `/login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
+                    window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     console.log("✅ 遷移コード実行完了");
                 }, 100);
                 // 勝手にリロードされるためチェック完了後に実施
