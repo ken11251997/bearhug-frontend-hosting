@@ -309,6 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 sender_id : user_id
             });
             sendFileButton.style.color = ""; // ✅ 送信後、元の色に戻す
+            fileInput.value = ""; // ✅ 送信後にファイル入力をリセット
         };
         reader.readAsArrayBuffer(file);
     });  // ✅ バイナリデータに変換

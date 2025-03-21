@@ -208,4 +208,8 @@ h1.show {
   .background-slider {
     height: auto;
   }
+  .logo-container {
+    margin-top: 50px; /* ← ロゴを全体的に下げたいとき */
+    text-align: center;
+  }
 }
