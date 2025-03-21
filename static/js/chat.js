@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chatBox.style.backgroundPosition = "center";
         chatBox.style.backgroundRepeat = "no-repeat";
         chatBox.style.backgroundAttachment = "fixed"; // 背景を固定
-        chatBox.style.backgroundSize = "contain"; 
+        chatBox.style.backgroundSize = "50%"; 
         console.log("適用された背景画像:", chatBox.style.backgroundImage); 
     }
    
