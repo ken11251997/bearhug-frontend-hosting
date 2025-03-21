@@ -116,6 +116,7 @@ body {
     width: fit-content; /* 文字の長さに合わせる */
     max-width: 60%;
     min-height: 31.6px;
+    text-align: left; /* 左揃えに変更 */
 }
 
 .my-message, .partner-message {
@@ -237,3 +238,8 @@ button:hover {
     white-space: nowrap;
 }
 
+@media (max-width: 768px) {
+    #chat-box {
+        background-size: 80% !important;
+    }
+  }
