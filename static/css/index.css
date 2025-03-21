@@ -197,3 +197,15 @@ h1.show {
   to { opacity: 0; transform: translate(-50%, -60%); }
 }
 
+
+@media (max-width: 768px) {
+  .background-slider img {
+    width: 40vw;
+    height: auto;
+    transform: scale(1);  /* ズーム縮小解除 */
+  }
+
+  .background-slider {
+    height: auto;
+  }
+}

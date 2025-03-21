@@ -82,15 +82,17 @@ body {
 
 /* メッセージ入力欄のサイズ可変 */
 #message-input {
-    flex: 1;
+    flex-grow: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px; /* ✅ ズーム防止 */
     min-height: 40px;
     max-height: 120px;
     overflow-y: auto;
     resize: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #message-input:focus {
@@ -187,23 +189,27 @@ body {
 #input-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 10px;
     background: #f5deb3;
     border-radius: 10px;
+    flex-wrap: wrap; /* スマホ時に折り返せるように */
+    box-sizing: border-box;
+    width: 100%;
 }
 
 #media-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
+    width: 36px;
+    height: 36px;
     margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .input-wrapper {
     display: flex;
     flex-grow: 1;
     align-items: center;
+    min-width: 0;
 }
 
 
@@ -229,3 +235,32 @@ button:hover {
 }
 
 
+
+#send-file-btn {
+    margin-left: 8px;
+    font-size: 14px;
+    padding: 8px 10px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    #input-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-wrapper {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    #message-input {
+        font-size: 16px;
+    }
+
+    #send-btn, #send-file-btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 6px;
+    }
+}
