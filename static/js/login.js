@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("user-name").innerText = `${user_name}`;
     document.getElementById("user-mbti").innerText = `${mbti}`;
-    document.getElementById("user-icon").src = `/static/img/${mbti}.jpg`;
+    document.getElementById("user-icon").src = `/static/img/${mbti}.png`;
 
     const mbtiElement = document.getElementById("user-mbti");
     const mbtiColorClasses = {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded",function(){
         event.preventDefault();
 
 
-        fetch("http://127.0.0.1:5000/match/matching",{
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matching",{
             method:"POST",
             mode: "cors",
             credentials: "include",
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
     function fetchMatchedUsers(){
-        fetch("http://127.0.0.1:5000/match/matched_list",{
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
             method:"POST",
             mode: "cors",
             credentials: "include",

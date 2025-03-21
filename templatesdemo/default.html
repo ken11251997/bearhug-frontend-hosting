@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI Match</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-slider top-slider">
+            <img src="{{ url_for('static', filename='img/INTJ.png') }}">
+            <img src="{{ url_for('static', filename='img/INTP.png') }}">
+            <img src="{{ url_for('static', filename='img/ENTJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ENTP.png') }}">
+            <img src="{{ url_for('static', filename='img/INFJ.png') }}">
+            <img src="{{ url_for('static', filename='img/INFP.png') }}">
+            <img src="{{ url_for('static', filename='img/ENFJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ENFP.png') }}">
+        </div>
+        <div class="background-slider bottom-slider">
+            <img src="{{ url_for('static', filename='img/ISTJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ISFJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ESTJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ESFJ.png') }}">
+            <img src="{{ url_for('static', filename='img/ISTP.png') }}">
+            <img src="{{ url_for('static', filename='img/ISFP.png') }}">
+            <img src="{{ url_for('static', filename='img/ESTP.png') }}">
+            <img src="{{ url_for('static', filename='img/ESFP.png') }}">
+        </div>
+    </div>
+    
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo" alt="MBTI Match Logo">
+    </div>
+    <div class="card">
+        <h1 class="text-2xl font-semibold mb-4">MBTI Match</h1>
+        <div class="button-container">
+            <button class="btn" onclick="toggleForm('register')">登録</button>
+            <button class="btn" onclick="toggleForm('login')">ログイン</button>
+            <button id ="mbti-test-btn" class="btn">簡単診断</button>
+        </div>
+        <p>※13歳未満はご利用いただけません※</p>
+
+        <form id="register-form" class="hidden">
+            <label for="reg-username">Username</label>
+            <input type="text" id="reg-username" required>
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" required>
+            <label for="mbti">MBTI</label>
+            <select id="mbti" required>
+                <option value="INTJ">INTJ（建築家 - Architect）</option>
+                <option value="INTP">INTP（論理学者 - Logician）</option>
+                <option value="ENTJ">ENTJ（指揮官 - Commander）</option>
+                <option value="ENTP">ENTP（討論者 - Debater）</option>
+                <option value="INFJ">INFJ（提唱者 - Advocate）</option>
+                <option value="INFP">INFP（仲介者 - Mediator）</option>
+                <option value="ENFJ">ENFJ（主人公 - Protagonist）</option>
+                <option value="ENFP">ENFP（広報運動家 - Campaigner）</option>
+                <option value="ISTJ">ISTJ（管理者 - Logistician）</option>
+                <option value="ISFJ">ISFJ（擁護者 - Defender）</option>
+                <option value="ESTJ">ESTJ（幹部 - Executive）</option>
+                <option value="ESFJ">ESFJ（領事官 - Consul）</option>
+                <option value="ISTP">ISTP（巨匠 - Virtuoso）</option>
+                <option value="ISFP">ISFP（冒険家 - Adventurer）</option>
+                <option value="ESTP">ESTP（起業家 - Entrepreneur）</option>
+                <option value="ESFP">ESFP（エンターテイナー - Entertainer）</option>
+            </select>
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="13" max="99" required>
+            <label for="prefecture">Prefecture</label>
+            <select id="prefecture" required>
+                <option value="北海道">北海道</option>
+                <option value="青森">青森</option>
+                <option value="岩手">岩手</option>
+                <option value="宮城">宮城</option>
+                <option value="秋田">秋田</option>
+                <option value="山形">山形</option>
+                <option value="福島">福島</option>
+                <option value="茨城">茨城</option>
+                <option value="栃木">栃木</option>
+                <option value="群馬">群馬</option>
+                <option value="埼玉">埼玉</option>
+                <option value="千葉">千葉</option>
+                <option value="東京">東京</option>
+                <option value="神奈川">神奈川</option>
+                <option value="新潟">新潟</option>
+                <option value="富山">富山</option>
+                <option value="石川">石川</option>
+                <option value="福井">福井</option>
+                <option value="山梨">山梨</option>
+                <option value="長野">長野</option>
+                <option value="岐阜">岐阜</option>
+                <option value="静岡">静岡</option>
+                <option value="愛知">愛知</option>
+                <option value="三重">三重</option>
+                <option value="滋賀">滋賀</option>
+                <option value="京都">京都</option>
+                <option value="大阪">大阪</option>
+                <option value="兵庫">兵庫</option> 
+                <option value="奈良">奈良</option>
+                <option value="和歌山">和歌山</option>       
+                <option value="鳥取">鳥取</option>       
+                <option value="島根">島根</option>       
+                <option value="岡山">岡山</option>       
+                <option value="広島">広島</option>       
+                <option value="山口">山口</option>                                                 
+                <option value="徳島">徳島</option>       
+                <option value="香川">香川</option>       
+                <option value="愛媛">愛媛</option>       
+                <option value="高知">高知</option>       
+                <option value="福岡">福岡</option>       
+                <option value="佐賀">佐賀</option> 
+                <option value="長崎">長崎</option>       
+                <option value="熊本">熊本</option>       
+                <option value="大分">大分</option>       
+                <option value="宮崎">宮崎</option>       
+                <option value="鹿児島">鹿児島</option>       
+                <option value="沖縄">沖縄</option>  
+            </select>
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <button type="submit" class="btn">Register</button>
+        </form>
+
+        <form id="login-form" class="hidden">
+            <label for="log-username">Username</label>
+            <input type="text" id="log-username" required>
+            <label for="log-password">Password</label>
+            <input type="password" id="log-password" required>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <!-- <script>
+        function toggleForm(formType) {
+            document.getElementById("register-form").classList.add("hidden");
+            document.getElementById("login-form").classList.add("hidden");
+            document.getElementById(`${formType}-form`).classList.remove("hidden");
+        }
+    </script> -->
+
+    <script src="{{ url_for('static', filename='js/default.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/default_ani.js') }}" defer></script>
+</body>
+</html>

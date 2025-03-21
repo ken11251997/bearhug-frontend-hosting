@@ -71,9 +71,11 @@ body {
     border-radius: 12px; /* 角を丸くする */
     opacity: 1; /* 完全に表示 */
     background-size: cover;
+    background-size: 10%; /* 背景画像を90%のサイズに縮小 */
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed; /* 背景を固定 */
+    
 }
 
 

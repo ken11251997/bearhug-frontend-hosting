@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    window.socket = io("http://127.0.0.1:5000");
+    window.socket = io("https://bearhug-6c58c8d5bd0e.herokuapp.com");
     const urlParams = new URLSearchParams(window.location.search);
     const room_id = urlParams.get("room_id");
     const Partnername = decodeURIComponent(urlParams.get("username"));
@@ -60,11 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (other_mbti && chatBox) {
-        chatBox.style.backgroundImage = `url('/static/img/send_message.png')`;
-        chatBox.style.backgroundSize = "cover";
+        let imgPath = `/static/img/${other_mbti}.png`;  // MBTIタイプの画像に変更
+        chatBox.style.backgroundImage = `url('${imgPath}')`;
         chatBox.style.backgroundPosition = "center";
         chatBox.style.backgroundRepeat = "no-repeat";
         chatBox.style.backgroundAttachment = "fixed"; // 背景を固定
+        chatBox.style.backgroundSize = "contain"; 
         console.log("適用された背景画像:", chatBox.style.backgroundImage); 
     }
    

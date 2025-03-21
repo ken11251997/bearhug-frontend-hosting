@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded",function(){
             gender : gender
         }
         
-        fetch("http://127.0.0.1:5000/auth/register",{
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
             method:"POST",
             mode: "cors",
             credentials: "include",
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded",function(){
             password : password
         }
 
-        fetch("http://127.0.0.1:5000/auth/login",{
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/login",{
             method :"POST",
             mode: "cors",
             credentials: "include",
