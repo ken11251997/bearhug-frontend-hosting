@@ -92,6 +92,7 @@ body {
     max-height: 120px;
     overflow-y: auto;
     resize: none;
+    width: 100%;
 }
 
 #message-input:focus {
@@ -198,7 +199,6 @@ body {
     border: none;
     font-size: 20px;
     cursor: pointer;
-    margin-right: 10px;
 }
 
 .input-wrapper {
@@ -223,10 +223,21 @@ button:hover {
     background: linear-gradient(135deg, #a0522d, #8b4513);
 }
 .icon-button {
-    width: 40px; /* ボタンサイズを調整 */
-    height: 40px; /* ボタンサイズを調整 */
+    width: 36px; /* ボタンサイズを調整 */
+    height: 36px; /* ボタンサイズを調整 */
     object-fit: contain;
     cursor: pointer;
 }
 
+#send-btn {
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    width: 80px;
+    min-width: 60px;
+    max-width: 100px;
+    height: 40px;
+    white-space: nowrap;
+}
 
