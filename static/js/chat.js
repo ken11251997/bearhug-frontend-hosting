@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (other_mbti && chatBox) {
-        let imgPath = `/static/img/${other_mbti}.png`;  // MBTIタイプの画像に変更
+        let imgPath = `static/img/${other_mbti}.png`;  // MBTIタイプの画像に変更
         chatBox.style.backgroundImage = `url('${imgPath}')`;
         chatBox.style.backgroundPosition = "center";
         chatBox.style.backgroundRepeat = "no-repeat";
