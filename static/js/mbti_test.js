@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         resultText.textContent = `あなたのMBTIタイプは ・・・`;
         resultLast.textContent = `${mbti}です！！`;
         // document.getElementById("user-icon").src = `/static/img/${mbti}.jpg`;
-        document.getElementById("user-icon").src = `/static/img/${mbti}.png`;
+        document.getElementById("user-icon").src =`/img/${mbti}.png`;
         
 
     }
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     restartBtn.addEventListener("click", function () {
-        window.location.href = ''
+        window.location.href = 'index.html'
         // currentQuestion = 0;
         // scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
         // resultBox.classList.add("hidden");
