@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { text: "6.初対面の人ともすぐに打ち解ける。", type: "E" },
         { text: "7.物事を決めるとスッキリする。", type: "J" },
         { text: "8.社交的な場面の後は疲れることが多い。", type: "I" },
-        { text: "9.事実やデータに沿って判断するのが好き。", type: "S" },
+        { text: "9.事実やデータで判断するのが好き。", type: "S" },
         { text: "10.ルールやマニュアルに従う方が安心だ。", type: "S" },
         { text: "11.その場の流れで動く方が得意だ。", type: "P" },
         { text: "12.物事を話しながら考えることが多い。", type: "E" },
