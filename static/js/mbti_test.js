@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ 任意の座標で実行（例）
     createBearWithBalloon(
-        "/static/img/bear_2.png",  // クマ画像
+        "static/img/bear_2.png",  // クマ画像
         "26%", "68%",              // クマの位置
         "calc(33% + 130px)", "75%",// 吹き出しの位置
         "頭からっぽにして答えてね～"       // 吹き出しのメッセージ
