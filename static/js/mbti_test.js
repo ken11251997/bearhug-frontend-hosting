@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "考えすぎず直感で答えてね！"
     ];
     let introStep = 0;
+    let bearImage;
 
     const questions = [
         { text: "1.グループで活動する方が好きだ。", type: "E" },
@@ -78,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         questionBox.classList.add("hidden");
         buttonContainer.classList.add("hidden");
+        if (bearImage) {
+            bearImage.remove();  // ✅ クマを削除
+        }
         resultBox.classList.remove("hidden");
         restartContainer.classList.remove("hidden");
         // resultText.textContent = `あなたのMBTIタイプは ${mbti} です！`;
@@ -110,12 +114,80 @@ document.addEventListener("DOMContentLoaded", function () {
 
     restartBtn.addEventListener("click", function () {
         window.location.href = 'index.html'
-        // currentQuestion = 0;
-        // scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-        // resultBox.classList.add("hidden");
-        // restartContainer.classList.add("hidden");
-        // introBox.classList.remove("hidden");
-        // introText.textContent = introTexts[0];
-        // introStep = 0;
     });
+
+    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY, messageText) {
+        // 🧸 クマ画像を作成
+    
+        bearImage = document.createElement("img");
+        bearImage.src = imgSrc;
+        bearImage.alt = "Bear";
+        bearImage.style.position = "absolute";
+        bearImage.style.left = bearX;
+        bearImage.style.top = bearY;
+        bearImage.style.width = "240px";
+        bearImage.style.zIndex = "500";
+        bearImage.style.cursor = "pointer";
+        bearImage.style.transition = "transform 0.5s ease";
+
+        // 💬 吹き出し作成
+        const balloon = document.createElement("div");
+        balloon.innerHTML = `
+            ${messageText}
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: -12px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                border-right: 12px solid #fffaf0;
+                transform: translateY(-50%);
+            "></div>
+        `;
+        balloon.style.position = "absolute";
+        balloon.style.left = balloonX;
+        balloon.style.top = balloonY;
+        balloon.style.padding = "10px 16px";
+        balloon.style.background = "#fffaf0";
+        balloon.style.border = "2px solid #8b4513";
+        balloon.style.borderRadius = "12px";
+        balloon.style.color = "#8b4513";
+        balloon.style.fontWeight = "bold";
+        balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+        balloon.style.display = "none";
+        balloon.style.zIndex = "600";
+        balloon.style.whiteSpace = "nowrap";
+
+        bearImage.id = "bear-1";
+        balloon.id = "balloon-1";
+        
+
+        // 🖱️ クマをクリックしたら吹き出し表示 → 3秒後に消える
+        bearImage.addEventListener("click", () => {
+            balloon.style.display = "block";
+            setTimeout(() => {
+                balloon.style.display = "none";
+            }, 3000);
+        });
+
+        bearImage.addEventListener("mouseenter", () => {
+            bearImage.style.transform = "scale(1.05)";
+        });
+        bearImage.addEventListener("mouseleave", () => {
+            bearImage.style.transform = "scale(1)";
+        });
+
+        document.body.appendChild(bearImage);
+        document.body.appendChild(balloon);
+    }
+
+    // ✅ 任意の座標で実行（例）
+    createBearWithBalloon(
+        "/static/img/bear_2.png",  // クマ画像
+        "26%", "68%",              // クマの位置
+        "calc(33% + 130px)", "75%",// 吹き出しの位置
+        "頭からっぽにして答えてね～"       // 吹き出しのメッセージ
+    );
 });

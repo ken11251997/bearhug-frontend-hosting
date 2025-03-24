@@ -63,18 +63,17 @@ body {
 #chat-box {
     flex-grow: 1;
     height: auto;
-    max-height: 350px;
     overflow-y: auto;
     padding: 10px;
     border-bottom: 1px solid #ccc;
     transition: max-height 0.3s ease-in-out;
     border-radius: 12px; /* 角を丸くする */
     opacity: 1; /* 完全に表示 */
-    /* background-size: cover;
+    background-size: cover;
     background-size: 10%; /* 背景画像を90%のサイズに縮小 */
-    /* background-position: center;
+    background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; 背景を固定  */
+    background-attachment: fixed; /* 背景を固定 */
     
 }
 
@@ -82,8 +81,8 @@ body {
 
 /* メッセージ入力欄のサイズ可変 */
 #message-input {
+    flex: 1;
     padding: 10px;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -128,7 +127,7 @@ body {
 .my-message {
     background-color: #8b4513;
     color: white;
-    text-align: left;
+    text-align: right;
     margin-left: auto;
     border-radius: 12px 12px 0 12px;
     width: fit-content;
@@ -197,6 +196,7 @@ body {
     border: none;
     font-size: 20px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .input-wrapper {
@@ -221,24 +221,40 @@ button:hover {
     background: linear-gradient(135deg, #a0522d, #8b4513);
 }
 .icon-button {
-    width: 36px; /* ボタンサイズを調整 */
-    height: 36px; /* ボタンサイズを調整 */
+    width: 40px; /* ボタンサイズを調整 */
+    height: 40px; /* ボタンサイズを調整 */
     object-fit: contain;
     cursor: pointer;
 }
 
-#send-btn {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    min-width: 40px;
-    max-width: 100px;
-    height: 40px;
-    white-space: nowrap;
-}
 
-@media (max-width: 768px) {
-    #chat-box {
-        background-size: 80% !important;
-    }
+/* ポップアップメッセージのスタイル */
+.popup-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+    color: #8b4513;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -60%); }
   }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プレミアムプラン | ベアの仲間たち</title>
+  <link rel="stylesheet" href="static/css/sanitize.css">
+    <link rel="stylesheet" href="static/css/subscribe.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/subscribe.css') }}">
+</head>
+<body>
+  <button id="back-button" class="btn fixed">←戻る</button>
+  <header>
+    <h1>ベアの仲間たち プレミアムプラン</h1>
+    <p>もっと自由に、もっと深く、あなたらしい出会いを。</p>
+  </header>
+
+  <section class="intro">
+    <h2>出会いのチャンス、取りこぼしていませんか？</h2>
+    <p>
+      無料でも楽しめるけど、<strong>本当に話したい相手</strong>と出会うなら。<br />
+      プレミアムプランであなたの世界を広げましょう。
+    </p>
+  </section>
+
+  <section class="plans">
+    <div class="plan-card">
+      <h3 class="plan-title">フリープラン</h3>
+      <p class="plan-price">無料</p>
+      <ul class="features">
+        <li>1日10回のベア探し</li>
+        <li>チャットは1日40通まで</li>
+        <li>マッチングはランダムのみ</li>
+        <li>相手からのマッチには返信不可</li>
+      </ul>
+      <!-- <button class="btn" disabled>現在のプラン</button> -->
+    </div>
+
+    <div class="plan-card">
+      <h3 class="plan-title">ライトプラン</h3>
+      <p class="plan-price">週500円</p>
+      <ul class="features">
+        <li><strong>1日20回</strong>までベア探し</li>
+        <li><strong>チャット無制限</strong></li>
+        <li>相手からのマッチに返信可能</li>
+        <li>マッチングはランダム</li>
+      </ul>
+      <button id="Lite-btn" class="btn">ライトにアップグレード</button>
+    </div>
+
+    <div class="plan-card">
+      <h3 class="plan-title">フルプラン</h3>
+      <p class="plan-price">週1000円</p>
+      <ul class="features">
+        <li><strong>1日20回</strong>までベア探し</li>
+        <li><strong>チャット無制限</strong></li>
+        <li>相手からのマッチに返信可能</li>
+        <li><strong>性別・地域</strong>での絞り込みマッチ</li>
+      </ul>
+      <button id="Full-btn" class="btn">フルにアップグレード</button>
+    </div>
+  </section>
+
+  <section class="cta">
+    <p>プランはいつでも変更・解約可能です。</p>
+    <p>※課金はアプリ内決済を通じて安全に行われます。</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 bearhug All rights reserved.</p>
+  </footer>
+
+  <script src="static/js/subscribe.js" defer></script>
+  <script src="{{ url_for('static', filename='js/subscribe.js') }}" defer></script>
+</body>
+</html>

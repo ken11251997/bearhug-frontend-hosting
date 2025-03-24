@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 console.log(sessionStorage.getItem("user_id"));
                 setTimeout(() => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
+                    localStorage.setItem("subs", result.subs);
                     console.log("✅ 遷移コード実行完了");
                 }, 100);
                 // 勝手にリロードされるためチェック完了後に実施

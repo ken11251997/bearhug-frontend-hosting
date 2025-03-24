@@ -1,3 +1,22 @@
+/* クマの足跡背景を斜めに繰り返し配置 */
+body::before {
+  content: "";
+  position: fixed;               /* ← 画面に常に貼り付け */
+  top: 0;
+  left: 0;
+  width: 100vw;                  /* ← 画面幅に合わせる */
+  height: 100vh;                 /* ← 画面高に合わせる */
+  background-image: url("/static/img/paw.png");
+  background-repeat: repeat;
+  background-size: 80px 80px;
+  opacity: 0.05;
+  transform: rotate(-30deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #d2b48c, #f5deb3);
@@ -197,19 +216,60 @@ h1.show {
   to { opacity: 0; transform: translate(-50%, -60%); }
 }
 
-
-@media (max-width: 768px) {
-  .background-slider img {
-    width: 40vw;
-    height: auto;
-    transform: scale(1);  /* ズーム縮小解除 */
+@media screen and (max-width: 768px) {
+  .logo {
+    transform: scale(0.8);
+    transform-origin: top center;
   }
 
-  .background-slider {
+  .card {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+
+  .card.show {
+    transform: scale(0.9);
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  label, input, select {
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* ✅ クマ画像に適用するセレクタ */
+  img[src*="bear"] {
+    width: 100px !important;  
     height: auto;
   }
-  .logo-container {
-    margin-top: 50px; /* ← ロゴを全体的に下げたいとき */
-    text-align: center;
+
+  /* クマの位置調整 */
+  #bear-1 {
+    left: -8% !important;
+    top: 60% !important;
+    width: 180px !important;
   }
+
+  /* 吹き出しの位置調整 */
+  #balloon-1 {
+    left: calc(3% + 90px) !important;
+    top: 68% !important;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  /* 吹き出しのしっぽも調整 */
+  #balloon-1 div {
+    border-right-width: 8px !important;
+    border-top-width: 8px !important;
+    border-bottom-width: 8px !important;
+  }
+
 }

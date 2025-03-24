@@ -1,0 +1,135 @@
+body {
+    background: linear-gradient(135deg, #d2b48c, #f5deb3);
+    margin: 0;
+    padding: 40px 20px;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 32px;
+    color: #8b4513;
+    margin-bottom: 40px;
+  }
+  
+  .mbti-group {
+    margin-bottom: 60px;
+  }
+  
+  .mbti-character {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    background: #fffaf0;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+ 
+  
+  .mbti-character.left {
+    flex-direction: row;
+  }
+  
+  .mbti-character.right {
+    flex-direction: row-reverse;
+  }
+  
+  .bear-icon {
+    width: 120px;
+    height: auto;
+    border-radius: 50%;
+    margin: 0 20px;
+  }
+  
+  .description {
+    flex: 1;
+  }
+  
+  .description h2 {
+    margin: 0 0 10px;
+    color: #8b4513;
+  }
+  
+  .description p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* 色分け */
+  .purple-group .mbti-character {
+    border-left: 6px solid #b82da3a3;
+  }
+  
+  .green-group .mbti-character {
+    border-left: 6px solid #27ae60;
+  }
+  
+  .blue-group .mbti-character {
+    border-left: 6px solid #3e70c8;
+  }
+  
+  .yellow-group .mbti-character {
+    border-left: 6px solid #daef1b;
+  }
+
+  .back-button {
+    display: inline-block;
+    font-size: 16px;
+    color: #8b4513;
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 2px solid #8b4513;
+    border-radius: 6px;
+    background-color: #fffaf0;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #f0e6d6;
+  }
+  
+  /* 左上固定ボタン */
+  .back-button.fixed {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+  }
+  
+  /* 下部ボタン */
+  .back-button.bottom {
+    display: block;
+    text-align: center;
+    margin: 60px auto 20px;
+    width: fit-content;
+  }
+  
+  /* レスポンシブ */
+  @media (max-width: 768px) {
+    .mbti-character {
+      /* flex-direction: column !important; ← 削除またはコメントアウト */
+      flex-direction: inherit !important; /* 追加：left/rightで指定した方向を維持 */
+      text-align: left; /* 中央揃えを解除 */
+      flex-wrap: wrap; /* 必要に応じて折り返し可能に */
+    }
+
+    .mbti-character h2 {
+        text-align: center !important;
+        width: 100%;
+      }
+  
+    .bear-icon {
+      width: 80px; /* 例：少し小さくしてモバイル対応 */
+      margin: 0 10px;
+    }
+  
+    .description {
+      margin: 0 10px;
+      flex: 1;
+    }
+  }
+  

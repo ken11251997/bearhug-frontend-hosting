@@ -6,6 +6,8 @@
     <title>MBTI 診断</title>
     <link rel="stylesheet" href="static/css/sanitize.css">
     <link rel="stylesheet" href="static/css/mbti_test.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mbti_test.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
     
 
@@ -47,5 +49,7 @@
 
     <script src="static/js/mbti_test.js" defer></script>
     <script src="static/js/mbti_test_ani.js" defer></script>
+    <script src="{{ url_for('static', filename='js/mbti_test.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/mbti_test_ani.js') }}" defer></script>
 </body>
 </html>

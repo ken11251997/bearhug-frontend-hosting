@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chatBox.style.backgroundPosition = "center";
         chatBox.style.backgroundRepeat = "no-repeat";
         chatBox.style.backgroundAttachment = "fixed"; // 背景を固定
-        chatBox.style.backgroundSize = "50%"; 
+        chatBox.style.backgroundSize = "80%"; 
         console.log("適用された背景画像:", chatBox.style.backgroundImage); 
     }
    
@@ -86,7 +86,9 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.onAny((event, data) => {
         console.log(`📩 イベント受信: ${event}`, data);
     });
-
+    socket.on("error_message", (data) => {
+        showPopup(data.message); // or 任意のUI表示
+    });
     
     // ログインページへ
     BackButton.addEventListener("click", function () {

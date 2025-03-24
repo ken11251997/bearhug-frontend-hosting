@@ -6,14 +6,18 @@
     <title>MBTI Match - Dashboard</title>
     <link rel="stylesheet" href="static/css/sanitize.css">
     <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
-        <h1>MBTI Match </h1>
+        <!-- <h1>MBTI Match </h1> -->
+        <button id="bearspage-btn" class="btn">ベアの仲間たち</button>
 
         <div class="user-info">
+            <p id="subscribe-type" class="subscribe-type">subscribe-type</p>
             <p id="user-name" class="user-name">User</p>
             <div class="user-mbti-container">
                 <img id="user-icon" class="user-icon" src="" alt="User Icon">
@@ -22,11 +26,12 @@
         </div>
         
         <button id="match-btn" class="btn">ベア探し</button>
-        
         <button id="match_list_reload" class="btn">ベアハグリスト</button>
         <ul id="matched-user" class="match-list"></ul>
+        <button id="subscribe-btn" class="btn">アップグレード</button>
     </div>
 
     <script src="static/js/login.js" defer></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
 </body>
 </html>
