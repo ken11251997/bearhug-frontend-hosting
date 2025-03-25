@@ -200,10 +200,10 @@ h1.show {
 }
 
 @media screen and (max-width: 768px) {
-  /* .background-slider img {
+  .background-slider img {
     width: 50vw;
     transform: scale(1.0);
-  } */
+  }
 
   .logo {
     transform-origin: top center;
