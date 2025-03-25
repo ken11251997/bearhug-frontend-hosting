@@ -204,7 +204,7 @@ h1.show {
     width: 50vw;
     height: 50vh;
     object-fit: contain;
-    transform: scale(1);
+    transform: scale(0.8);
   }
 
   .logo {
