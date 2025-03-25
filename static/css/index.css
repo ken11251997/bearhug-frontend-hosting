@@ -224,8 +224,8 @@ h1.show {
   }
 
   .card {
-    transform: scale(0.9);
-    transform-origin: top center;
+    transform: scale(0.75);
+    /* transform-origin: top center; */
   }
 
   .card.show {
@@ -261,7 +261,7 @@ h1.show {
   /* 吹き出しの位置調整 */
   #balloon-1 {
     left: calc(9% + 90px) !important;
-    top: 68% !important;
+    top: 66% !important;
     font-size: 14px;
     padding: 6px 10px;
   }

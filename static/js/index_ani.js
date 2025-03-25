@@ -2,7 +2,12 @@ function toggleForm(formType) {
     document.getElementById("register-form").classList.add("hidden");
     document.getElementById("login-form").classList.add("hidden");
     document.getElementById(`${formType}-form`).classList.remove("hidden");
+    const existingBear = document.getElementById("bear-1");
+    const existingBalloon = document.getElementById("balloon-1");
+    if (existingBear) existingBear.remove();
+    if (existingBalloon) existingBalloon.remove();
 }
+let bearImage;
 
 document.addEventListener("DOMContentLoaded", function () {
     // フォーム切り替え用関数
@@ -47,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY, messageText) {
         // 🧸 クマ画像を作成
-        const bearImage = document.createElement("img");
+        bearImage = document.createElement("img");
         bearImage.src = imgSrc;
         bearImage.alt = "Bear";
         bearImage.style.position = "absolute";
