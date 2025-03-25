@@ -7,6 +7,23 @@
   <link rel="stylesheet" href="static/css/sanitize.css">
   <link rel="stylesheet" href="static/css/bears.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bears.css') }}">
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("static/img/paw.png");
+      background-repeat: repeat;
+      background-size: 80px 80px;
+      opacity: 0.05;
+      transform: rotate(-30deg);
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
   <button id="buck_btn" class="back-button fixed"  onclick="history.back()">←戻る</button>

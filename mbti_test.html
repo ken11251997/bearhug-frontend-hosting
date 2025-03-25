@@ -9,8 +9,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mbti_test.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
-    
-
+    <style>
+        body::before {
+          content: "";
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-image: url("static/img/paw.png");
+          background-repeat: repeat;
+          background-size: 80px 80px;
+          opacity: 0.05;
+          transform: rotate(-30deg);
+          z-index: 0;
+          pointer-events: none;
+        }
+      </style>
 </head>
 <body>
     <div class="container">
