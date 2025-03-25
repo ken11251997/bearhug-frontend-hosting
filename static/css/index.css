@@ -6,7 +6,7 @@ body::before {
   left: 0;
   width: 100vw;                  /* ← 画面幅に合わせる */
   height: 100vh;                 /* ← 画面高に合わせる */
-  background-image: url("/static/img/paw.png");
+  background-image: url("static/img/paw.png");
   background-repeat: repeat;
   background-size: 80px 80px;
   opacity: 0.05;
@@ -218,8 +218,9 @@ h1.show {
 
 @media screen and (max-width: 768px) {
   .logo {
-    transform: scale(0.8);
     transform-origin: top center;
+    max-width: 90%;
+    height: auto;
   }
 
   .card {
@@ -259,7 +260,7 @@ h1.show {
 
   /* 吹き出しの位置調整 */
   #balloon-1 {
-    left: calc(3% + 90px) !important;
+    left: calc(9% + 90px) !important;
     top: 68% !important;
     font-size: 14px;
     padding: 6px 10px;
@@ -267,7 +268,7 @@ h1.show {
 
   /* 吹き出しのしっぽも調整 */
   #balloon-1 div {
-    border-right-width: 8px !important;
+    border-right-width: 11px !important;
     border-top-width: 8px !important;
     border-bottom-width: 8px !important;
   }

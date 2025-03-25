@@ -1,11 +1,12 @@
+function toggleForm(formType) {
+    document.getElementById("register-form").classList.add("hidden");
+    document.getElementById("login-form").classList.add("hidden");
+    document.getElementById(`${formType}-form`).classList.remove("hidden");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // フォーム切り替え用関数
-    function toggleForm(formType) {
-        document.getElementById("register-form").classList.add("hidden");
-        document.getElementById("login-form").classList.add("hidden");
-        document.getElementById(`${formType}-form`).classList.remove("hidden");
-    }
-
+    
     window.addEventListener("load", function () {
         setTimeout(() => {
             document.querySelector("h1").classList.add("show");

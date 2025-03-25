@@ -84,3 +84,52 @@ body {
     opacity: 0;  /* 初期状態は非表示 */
     transform: scale(0.5) translateY(0px); /* 初期縮小＆少し上 */
 }
+
+@media screen and (max-width: 768px) {
+  
+    .container {
+      transform: scale(0.9);
+      transform-origin: top center;
+    }
+
+    h1 {
+      font-size: 18px;
+    }
+  
+    label, input, select {
+      font-size: 14px;
+    }
+  
+    .btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    /* ✅ クマ画像に適用するセレクタ */
+    img[src*="bear"] {
+      width: 100px !important;  
+      height: auto;
+    }
+  
+    /* クマの位置調整 */
+    #bear-1 {
+      left: -8% !important;
+      top: 60% !important;
+      width: 180px !important;
+    }
+  
+    /* 吹き出しの位置調整 */
+    #balloon-1 {
+      left: calc(3% + 90px) !important;
+      top: 68% !important;
+      font-size: 14px;
+      padding: 6px 10px;
+    }
+  
+    /* 吹き出しのしっぽも調整 */
+    #balloon-1 div {
+      border-right-width: 8px !important;
+      border-top-width: 8px !important;
+      border-bottom-width: 8px !important;
+    }
+}  
