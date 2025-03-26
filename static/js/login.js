@@ -124,16 +124,19 @@ document.addEventListener("DOMContentLoaded",function(){
 
     function joinRoom(roomId, otherUserName,mbti) {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
+    }
 
     restartBtn.addEventListener("click", function () {
         localStorage.setItem("backToLogin", window.location.href);
-        window.location.href = `bears`
+        console.log("bears")
+        window.location.href = `bears`;
     });
 
     SubsBtn.addEventListener("click", function () {
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("backToLogin", window.location.href);
-        window.location.href = `subscribe`
+        console.log("kakin")
+        window.location.href = `subscribe`;
         });
-    }
+    
 });
