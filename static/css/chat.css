@@ -82,7 +82,7 @@ body {
 /* メッセージ入力欄のサイズ可変 */
 #message-input {
     flex: 1;
-    padding: 10px;
+    /* padding: 10px; */
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -186,7 +186,7 @@ body {
 #input-container {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     background: #f5deb3;
     border-radius: 10px;
 }
@@ -196,7 +196,7 @@ body {
     border: none;
     font-size: 20px;
     cursor: pointer;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .input-wrapper {

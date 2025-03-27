@@ -9,14 +9,14 @@ body {
   header {
     text-align: center;
     background: #fffaf0;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0.5rem;
     border-bottom: 1px solid #ddd;
   }
   
   header h1 {
     color: #8b4513;
     font-size: 22px;
-    margin: 0;
+    margin-top: 60px;
   }
   
   header p {
@@ -27,7 +27,7 @@ body {
   
   .intro {
     text-align: center;
-    padding: 1.5rem 1rem;
+    padding: 0.5rem 0.5rem;
   }
   
   .intro h2 {
@@ -122,7 +122,7 @@ body {
     color: #aaa;
   }
 
-  .buck_btn {
+  .back_btn {
     display: inline-block;
     font-size: 16px;
     color: #8b4513;
