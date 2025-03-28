@@ -315,5 +315,21 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         reader.readAsArrayBuffer(file);
     });  // ✅ バイナリデータに変換
+
+    function showPopup(message) {
+        // Remove existing popups
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+
+        const popup = document.createElement("div");
+        popup.className = "popup-message";
+        popup.innerText = message;
+        document.body.appendChild(popup);
+        console.log("funshow")
+        
+        setTimeout(() => {
+            popup.classList.add("fade-out");
+            setTimeout(() => popup.remove(), 1500);
+        }, 1000);
+    }
     
 })
