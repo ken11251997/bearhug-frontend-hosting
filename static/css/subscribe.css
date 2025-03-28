@@ -144,8 +144,10 @@ body {
     padding: 0.75rem;
     font-size: 16px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #8b4513, #a0522d);
-    color: white;
+    /* background: linear-gradient(135deg, #8b4513, #a0522d); */
+    background-color: #fffaf0;
+    /* color: white; */
+    color: #8b4513;
     font-weight: bold;
     border: none;
     cursor: pointer;
