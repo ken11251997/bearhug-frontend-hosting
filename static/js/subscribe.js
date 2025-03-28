@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             showPopup(data.message);
-            setTimeout(() => window.location.href = '/', 1500);  // ✅ 反映のためページ再読み込み
+            setTimeout(() => window.location.href = 'index.html', 1500);  // ✅ 反映のためページ再読み込み
             
         }).catch(error => console.error("リスト更新エラー:", error));
     };
