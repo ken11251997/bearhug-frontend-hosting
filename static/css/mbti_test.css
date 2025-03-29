@@ -114,14 +114,14 @@ body {
     /* クマの位置調整 */
     #bear-1 {
       left: -8% !important;
-      top: 62% !important;
+      top: 65% !important;
       width: 180px !important;
     }
   
     /* 吹き出しの位置調整 */
     #balloon-1 {
-      left: calc(3% + 90px) !important;
-      top: 68% !important;
+      left: calc(10% + 90px) !important;
+      top: 72% !important;
       font-size: 14px;
       padding: 6px 10px;
     }

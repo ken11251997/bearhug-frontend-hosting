@@ -183,11 +183,24 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(balloon);
     }
 
+
+    const balloonMessages = [
+        "頭からっぽにして答えてね～",
+        "気軽にチャットしてみてね！",
+        "相性ピッタリな相手がいるかも？",
+        "今日もいい出会いがありますように✨",
+        "マッチしたらメッセージ送ってみよう！",
+        "クマたちが応援してるよ！"
+    ];
+    const randomIndex = Math.floor(Math.random() * balloonMessages.length);
+    const randomMessage = balloonMessages[randomIndex];
+
+    
     // ✅ 任意の座標で実行（例）
     createBearWithBalloon(
         "static/img/bear_2.png",  // クマ画像
         "26%", "68%",              // クマの位置
         "calc(33% + 130px)", "75%",// 吹き出しの位置
-        "頭からっぽにして答えてね～"       // 吹き出しのメッセージ
+        randomMessage
     );
 });

@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded",function(){
         if (subscription_type === "free") {
             planText += "フリープラン";
         } else if (subscription_type === "light") {
-            planText += "小グマプラン 🐻‍❄️";  // 絵文字もお好みで！
+            planText += "小グマプラン ";  // 絵文字もお好みで！
         } else if (subscription_type === "full") {
-            planText += "大グマプラン 🐻";
+            planText += "大グマプラン ";
         } else {
             planText += subscription_type; // 予期しない値の保険
         }
