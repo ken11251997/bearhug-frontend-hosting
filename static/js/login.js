@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded",function(){
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
     }
 
+    const planDisplay = document.getElementById("subscribe-type");
     if (subscription_type) {
         // document.getElementById("subscribe-type").innerText = `現在のプラン：${subscription_type}`;
         let planText = "現在のプラン：";
