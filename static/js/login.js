@@ -26,7 +26,20 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     if (subscription_type) {
-        document.getElementById("subscribe-type").innerText = `現在のプラン：${subscription_type}`;
+        // document.getElementById("subscribe-type").innerText = `現在のプラン：${subscription_type}`;
+        let planText = "現在のプラン：";
+
+        if (subscription_type === "free") {
+            planText += "フリープラン";
+        } else if (subscription_type === "light") {
+            planText += "小グマプラン 🐻‍❄️";  // 絵文字もお好みで！
+        } else if (subscription_type === "full") {
+            planText += "大グマプラン 🐻";
+        } else {
+            planText += subscription_type; // 予期しない値の保険
+        }
+
+    planDisplay.innerText = planText;
     }
 
     document.getElementById("match-btn").addEventListener("click",function(event){
