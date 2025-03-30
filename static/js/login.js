@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     const listItem = document.createElement("li");
                     listItem.textContent = user.username;
                     listItem.setAttribute("data-user-id", user.id);  // ✅ ユーザー ID を設定
+                    listItem.setAttribute("data-room-id", user.room_id);
                     // ✅ 条件分岐：？？？ならポップアップ、そうでなければチャット遷移
                     if (user.username === "？？？") {
                         listItem.onclick = () => {
@@ -119,6 +120,7 @@ document.addEventListener("DOMContentLoaded",function(){
                         };
                     } else {
                         listItem.onclick = () => {
+                            markAsRead(user.room_id);
                             joinRoom(user.room_id, user.username, user.mbti);
                         };
                     }
@@ -133,6 +135,16 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .catch(error => console.error("リスト更新エラー:", error));
     };
+
+    function markAsRead(room_id) {
+        const userItem = document.querySelector(`[data-room-id="${room_id}]`);
+        if (userItem) {
+            userItem.classList.remove("unread");  // 👈 太字解除
+        }
+    }
+
+
+
     document.getElementById("match_list_reload").addEventListener("click", fetchMatchedUsers);
 
 

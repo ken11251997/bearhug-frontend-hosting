@@ -223,11 +223,11 @@ document.addEventListener("DOMContentLoaded", function () {
             newMessage.classList.add("partner-message");
         }
         // newMessage.textContent = `${msg.sendername}: ${msg.message}`;
+        showInAppNotification(data);
         newMessage.textContent = `${msg.message}`;
         chatBox.appendChild(newMessage);
         scrollToBottom();
     });
-
 
 
     socket.on("new_file", function(data) {
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
             mediaElement.classList.add("message-media");  // ✅ `classList` を適用
             messageDiv.appendChild(mediaElement);
         }
-    
+        showInAppNotification(data);
         chatBox.appendChild(messageDiv);
         // chatBox.appendChild(document.createElement('br'));
         scrollToBottom();
@@ -315,6 +315,26 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         reader.readAsArrayBuffer(file);
     });  // ✅ バイナリデータに変換
+
+
+    function showInAppNotification(message) {
+        // 既存通知があれば削除
+        const existing = document.getElementById("in-app-banner");
+        if (existing) existing.remove();
+    
+        const banner = document.createElement("div");
+        banner.id = "in-app-banner";
+        banner.className = "in-app-banner";
+        banner.textContent = message;
+    
+        document.body.appendChild(banner);
+    
+        // 3秒後に消す
+        setTimeout(() => {
+            banner.classList.add("fade-out");
+            setTimeout(() => banner.remove(), 500); // アニメ後に削除
+        }, 3000);
+    }
 
     function showPopup(message) {
         // Remove existing popups

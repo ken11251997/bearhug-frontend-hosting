@@ -20,6 +20,10 @@ body {
   text-align: center;
 }
 
+.unread {
+  font-weight: bold;
+}
+
 h1 {
   font-size: 26px;
   color: #8b4513;
@@ -53,7 +57,7 @@ h1 {
 }
 
 .subscribe-type {
-  font-size: 20px;
+  font-size: 18px;
   color: #8b4513;
   font-weight: bold;
   margin: 4px 0; 
