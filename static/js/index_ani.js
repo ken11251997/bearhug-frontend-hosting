@@ -52,16 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
         const balloonMessages = [
-            "まずは簡単診断から！",
+            "頭からっぽにして答えてね～",
             "気軽にチャットしてみてね！",
             "相性ピッタリな相手がいるかも？",
-            "今日もいい出会いがありますように✨",
-            "マッチしたらメッセージ送ってみよう！",
-            "クマたちが応援してるよ！🐻"
+            "いい出会いがありますように✨",
+            "マッチしたらメッセージ！",
+            "クマたちが応援してるよ！"
         ];
     
-        // 🧸 クマ画像を作成
-        bearImage = document.createElement("img");
+        const bearImage = document.createElement("img");
         bearImage.src = imgSrc;
         bearImage.alt = "Bear";
         bearImage.style.position = "absolute";
@@ -71,50 +70,50 @@ document.addEventListener("DOMContentLoaded", function () {
         bearImage.style.zIndex = "500";
         bearImage.style.cursor = "pointer";
         bearImage.style.transition = "transform 0.5s ease";
-    
-        // 💬 吹き出し作成（メッセージは後で変更する）
-        const balloon = document.createElement("div");
-        balloon.className = "balloon";
-        balloon.innerHTML = `
-            <span id="balloon-text"></span>
-            <div style="
-                position: absolute;
-                top: 50%;
-                left: -12px;
-                width: 0;
-                height: 0;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-                border-right: 12px solid #fffaf0;
-                transform: translateY(-50%);
-            "></div>
-        `;
-        balloon.style.position = "absolute";
-        balloon.style.left = balloonX;
-        balloon.style.top = balloonY;
-        balloon.style.padding = "10px 16px";
-        balloon.style.background = "#fffaf0";
-        balloon.style.border = "2px solid #8b4513";
-        balloon.style.borderRadius = "12px";
-        balloon.style.color = "#8b4513";
-        balloon.style.fontWeight = "bold";
-        balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-        balloon.style.display = "none";
-        balloon.style.zIndex = "600";
-        balloon.style.whiteSpace = "nowrap";
-    
         bearImage.id = "bear-1";
-        balloon.id = "balloon-1";
     
-        // ✅ クマクリック → ランダムメッセージを吹き出しに表示
+        // ✅ クマをクリックしたときの吹き出し表示
         bearImage.addEventListener("click", () => {
+            // 既存の吹き出しがあれば削除
+            document.getElementById("balloon")?.remove();
+            document.getElementById("balloon-1")?.remove();
+    
             const randomIndex = Math.floor(Math.random() * balloonMessages.length);
             const randomMessage = balloonMessages[randomIndex];
-            balloon.querySelector("#balloon-text").innerText = randomMessage;
     
-            balloon.style.display = "block";
+            const balloon = document.createElement("div");
+            balloon.innerHTML = `
+                ${randomMessage}
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: -12px;
+                    width: 0;
+                    height: 0;
+                    border-top: 10px solid transparent;
+                    border-bottom: 10px solid transparent;
+                    border-right: 12px solid #fffaf0;
+                    transform: translateY(-50%);
+                "></div>
+            `;
+            balloon.style.position = "absolute";
+            balloon.style.left = balloonX;
+            balloon.style.top = balloonY;
+            balloon.style.padding = "10px 16px";
+            balloon.style.background = "#fffaf0";
+            balloon.style.border = "2px solid #8b4513";
+            balloon.style.borderRadius = "12px";
+            balloon.style.color = "#8b4513";
+            balloon.style.fontWeight = "bold";
+            balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+            balloon.style.zIndex = "600";
+            balloon.style.whiteSpace = "nowrap";
+            balloon.id = "balloon-1";
+    
+            document.body.appendChild(balloon);
+    
             setTimeout(() => {
-                balloon.style.display = "none";
+                balloon.remove();
             }, 3000);
         });
     
@@ -126,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     
         document.body.appendChild(bearImage);
-        document.body.appendChild(balloon);
     }
     
 
