@@ -169,6 +169,8 @@ document.addEventListener("DOMContentLoaded", function () {
             balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
             balloon.style.zIndex = "600";
             balloon.style.whiteSpace = "nowrap";
+            bearImage.id = "bear-1";
+            balloon.id = "balloon-1";
     
             document.body.appendChild(balloon);
             setTimeout(() => {
@@ -186,19 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(bearImage);
     }
     
-    bearImage.id = "bear-1";
-    balloon.id = "balloon-1";
-
-    const balloonMessages = [
-        "頭からっぽにして答えてね～",
-        "気軽にチャットしてみてね！",
-        "相性ピッタリな相手がいるかも？",
-        "いい出会いがありますように✨",
-        "マッチしたらメッセージ送ってみよう！",
-        "クマたちが応援してるよ！"
-    ];
-    const randomIndex = Math.floor(Math.random() * balloonMessages.length);
-    const randomMessage = balloonMessages[randomIndex];
+   
 
     
     // ✅ 任意の座標で実行（例）
