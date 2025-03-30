@@ -201,6 +201,5 @@ document.addEventListener("DOMContentLoaded", function () {
         "static/img/bear_2.png",  // クマ画像
         "26%", "68%",              // クマの位置
         "calc(33% + 130px)", "75%",// 吹き出しの位置
-        randomMessage
     );
 });
