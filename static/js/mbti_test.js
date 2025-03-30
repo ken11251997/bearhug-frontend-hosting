@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "クマたちが応援してるよ！"
         ];
     
-        const bearImage = document.createElement("img");
+        bearImage = document.createElement("img");
         bearImage.src = imgSrc;
         bearImage.alt = "Bear";
         bearImage.style.position = "absolute";
