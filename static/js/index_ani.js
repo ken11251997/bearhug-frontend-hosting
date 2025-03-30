@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "クマたちが応援してるよ！"
         ];
     
-        const bearImage = document.createElement("img");
+        bearImage = document.createElement("img");
         bearImage.src = imgSrc;
         bearImage.alt = "Bear";
         bearImage.style.position = "absolute";
@@ -128,15 +128,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 
-
-    
-
-
     // ✅ 任意の座標で実行（例）
     createBearWithBalloon(
         "static/img/bear_2.png",  // クマ画像
         "25%", "63%",              // クマの位置
         "calc(30% + 130px)", "70%",// 吹き出しの位置
-        randomMessage
     );
 });
