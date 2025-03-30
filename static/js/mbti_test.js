@@ -116,10 +116,17 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = 'index.html'
     });
 
-    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY, messageText) {
-        // 🧸 クマ画像を作成
+    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
+        const balloonMessages = [
+            "頭からっぽにして答えてね～",
+            "気軽にチャットしてみてね！",
+            "相性ピッタリな相手がいるかも？",
+            "今日もいい出会いがありますように✨",
+            "マッチしたらメッセージ送ってみよう！",
+            "クマたちが応援してるよ！"
+        ];
     
-        bearImage = document.createElement("img");
+        const bearImage = document.createElement("img");
         bearImage.src = imgSrc;
         bearImage.alt = "Bear";
         bearImage.style.position = "absolute";
@@ -129,66 +136,63 @@ document.addEventListener("DOMContentLoaded", function () {
         bearImage.style.zIndex = "500";
         bearImage.style.cursor = "pointer";
         bearImage.style.transition = "transform 0.5s ease";
-
-        // 💬 吹き出し作成
-        const balloon = document.createElement("div");
-        balloon.innerHTML = `
-            ${messageText}
-            <div style="
-                position: absolute;
-                top: 50%;
-                left: -12px;
-                width: 0;
-                height: 0;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-                border-right: 12px solid #fffaf0;
-                transform: translateY(-50%);
-            "></div>
-        `;
-        balloon.style.position = "absolute";
-        balloon.style.left = balloonX;
-        balloon.style.top = balloonY;
-        balloon.style.padding = "10px 16px";
-        balloon.style.background = "#fffaf0";
-        balloon.style.border = "2px solid #8b4513";
-        balloon.style.borderRadius = "12px";
-        balloon.style.color = "#8b4513";
-        balloon.style.fontWeight = "bold";
-        balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-        balloon.style.display = "none";
-        balloon.style.zIndex = "600";
-        balloon.style.whiteSpace = "nowrap";
-
         bearImage.id = "bear-1";
-        balloon.id = "balloon-1";
-        
-
-        // 🖱️ クマをクリックしたら吹き出し表示 → 3秒後に消える
+    
         bearImage.addEventListener("click", () => {
-            balloon.style.display = "block";
+            const randomIndex = Math.floor(Math.random() * balloonMessages.length);
+            const randomMessage = balloonMessages[randomIndex];
+    
+            const balloon = document.createElement("div");
+            balloon.innerHTML = `
+                ${randomMessage}
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: -12px;
+                    width: 0;
+                    height: 0;
+                    border-top: 10px solid transparent;
+                    border-bottom: 10px solid transparent;
+                    border-right: 12px solid #fffaf0;
+                    transform: translateY(-50%);
+                "></div>
+            `;
+            balloon.style.position = "absolute";
+            balloon.style.left = balloonX;
+            balloon.style.top = balloonY;
+            balloon.style.padding = "10px 16px";
+            balloon.style.background = "#fffaf0";
+            balloon.style.border = "2px solid #8b4513";
+            balloon.style.borderRadius = "12px";
+            balloon.style.color = "#8b4513";
+            balloon.style.fontWeight = "bold";
+            balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+            balloon.style.zIndex = "600";
+            balloon.style.whiteSpace = "nowrap";
+    
+            document.body.appendChild(balloon);
             setTimeout(() => {
-                balloon.style.display = "none";
+                balloon.remove();
             }, 3000);
         });
-
+    
         bearImage.addEventListener("mouseenter", () => {
             bearImage.style.transform = "scale(1.05)";
         });
         bearImage.addEventListener("mouseleave", () => {
             bearImage.style.transform = "scale(1)";
         });
-
+    
         document.body.appendChild(bearImage);
-        document.body.appendChild(balloon);
     }
+    
 
 
     const balloonMessages = [
         "頭からっぽにして答えてね～",
         "気軽にチャットしてみてね！",
         "相性ピッタリな相手がいるかも？",
-        "今日もいい出会いがありますように✨",
+        "いい出会いがありますように✨",
         "マッチしたらメッセージ送ってみよう！",
         "クマたちが応援してるよ！"
     ];
