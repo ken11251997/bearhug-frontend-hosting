@@ -118,10 +118,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
 
-        const existingBalloon = document.getElementById("balloon-1");
-        if (existingBalloon) {
-            existingBalloon.remove();
-        }
+        const existingBalloon = document.getElementById("balloon");
+        const existingBalloon2 = document.getElementById("balloon-1");
+        if (existingBalloon || existingBalloon2) {
+            if (existingBalloon) existingBalloon.remove();
+            if (existingBalloon2) existingBalloon2.remove();
+
+            
         const balloonMessages = [
             "頭からっぽにして答えてね～",
             "気軽にチャットしてみてね！",
