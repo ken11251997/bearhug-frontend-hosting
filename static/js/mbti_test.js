@@ -117,14 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
-
-        const existingBalloon = document.getElementById("balloon");
-        const existingBalloon2 = document.getElementById("balloon-1");
-        if (existingBalloon || existingBalloon2) {
-            if (existingBalloon) existingBalloon.remove();
-            if (existingBalloon2) existingBalloon2.remove();
-
-            
         const balloonMessages = [
             "頭からっぽにして答えてね～",
             "気軽にチャットしてみてね！",
@@ -146,7 +138,12 @@ document.addEventListener("DOMContentLoaded", function () {
         bearImage.style.transition = "transform 0.5s ease";
         bearImage.id = "bear-1";
     
+        // ✅ クマをクリックしたときの吹き出し表示
         bearImage.addEventListener("click", () => {
+            // 既存の吹き出しがあれば削除
+            document.getElementById("balloon")?.remove();
+            document.getElementById("balloon-1")?.remove();
+    
             const randomIndex = Math.floor(Math.random() * balloonMessages.length);
             const randomMessage = balloonMessages[randomIndex];
     
@@ -177,10 +174,10 @@ document.addEventListener("DOMContentLoaded", function () {
             balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
             balloon.style.zIndex = "600";
             balloon.style.whiteSpace = "nowrap";
-            bearImage.id = "bear-1";
             balloon.id = "balloon-1";
     
             document.body.appendChild(balloon);
+    
             setTimeout(() => {
                 balloon.remove();
             }, 3000);
