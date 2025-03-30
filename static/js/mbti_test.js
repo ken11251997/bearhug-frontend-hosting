@@ -186,7 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(bearImage);
     }
     
-
+    bearImage.id = "bear-1";
+    balloon.id = "balloon-1";
 
     const balloonMessages = [
         "頭からっぽにして答えてね～",
