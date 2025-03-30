@@ -50,7 +50,16 @@ document.addEventListener("DOMContentLoaded", function () {
         logo.style.transform = "translateY(0) scale(1)";
     }, 500);
 
-    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY, messageText) {
+    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
+        const balloonMessages = [
+            "まずは簡単診断から！",
+            "気軽にチャットしてみてね！",
+            "相性ピッタリな相手がいるかも？",
+            "今日もいい出会いがありますように✨",
+            "マッチしたらメッセージ送ってみよう！",
+            "クマたちが応援してるよ！🐻"
+        ];
+    
         // 🧸 クマ画像を作成
         bearImage = document.createElement("img");
         bearImage.src = imgSrc;
@@ -62,13 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
         bearImage.style.zIndex = "500";
         bearImage.style.cursor = "pointer";
         bearImage.style.transition = "transform 0.5s ease";
-
-        // 💬 吹き出し作成
-
+    
+        // 💬 吹き出し作成（メッセージは後で変更する）
         const balloon = document.createElement("div");
-        balloon.className = "balloon"; // ← 追加
+        balloon.className = "balloon";
         balloon.innerHTML = `
-            ${messageText}
+            <span id="balloon-text"></span>
             <div style="
                 position: absolute;
                 top: 50%;
@@ -94,41 +102,36 @@ document.addEventListener("DOMContentLoaded", function () {
         balloon.style.display = "none";
         balloon.style.zIndex = "600";
         balloon.style.whiteSpace = "nowrap";
-
+    
         bearImage.id = "bear-1";
         balloon.id = "balloon-1";
-        
-
-        // 🖱️ クマをクリックしたら吹き出し表示 → 3秒後に消える
+    
+        // ✅ クマクリック → ランダムメッセージを吹き出しに表示
         bearImage.addEventListener("click", () => {
+            const randomIndex = Math.floor(Math.random() * balloonMessages.length);
+            const randomMessage = balloonMessages[randomIndex];
+            balloon.querySelector("#balloon-text").innerText = randomMessage;
+    
             balloon.style.display = "block";
             setTimeout(() => {
                 balloon.style.display = "none";
             }, 3000);
         });
-
+    
         bearImage.addEventListener("mouseenter", () => {
             bearImage.style.transform = "scale(1.05)";
         });
         bearImage.addEventListener("mouseleave", () => {
             bearImage.style.transform = "scale(1)";
         });
-
+    
         document.body.appendChild(bearImage);
         document.body.appendChild(balloon);
     }
+    
 
 
-    const balloonMessages = [
-        "まずは簡単診断から！",
-        "気軽にチャットしてみてね！",
-        "相性ピッタリな相手がいるかも？",
-        "今日もいい出会いがありますように✨",
-        "マッチしたらメッセージ送ってみよう！",
-        "クマたちが応援してるよ！"
-    ];
-    const randomIndex = Math.floor(Math.random() * balloonMessages.length);
-    const randomMessage = balloonMessages[randomIndex];
+    
 
 
     // ✅ 任意の座標で実行（例）
