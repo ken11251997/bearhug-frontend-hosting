@@ -117,6 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
+
+        const existingBalloon = document.getElementById("balloon-1");
+        if (existingBalloon) {
+            existingBalloon.remove();
+        }
         const balloonMessages = [
             "頭からっぽにして答えてね～",
             "気軽にチャットしてみてね！",
@@ -187,9 +192,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
         document.body.appendChild(bearImage);
     }
-    
-   
-
     
     // ✅ 任意の座標で実行（例）
     createBearWithBalloon(
