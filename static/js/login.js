@@ -114,9 +114,9 @@ document.addEventListener("DOMContentLoaded",function(){
                     listItem.setAttribute("data-user-id", user.id);  // ✅ ユーザー ID を設定
                     listItem.setAttribute("data-room-id", user.room_id);
                     console.log(user.unread)
-                    if (user.unread) {
-                        listItem.style.fontWeight = "bold";
-                    }
+                    // if (user.unread) {
+                    //     listItem.style.fontWeight = "bold";
+                    // }
                     // ✅ 条件分岐：？？？ならポップアップ、そうでなければチャット遷移
                     if (user.username === "？？？") {
                         listItem.onclick = () => {
