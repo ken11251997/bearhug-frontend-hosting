@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded",function(){
     };
 
     function markAsRead(room_id) {
-        const userItem = document.querySelector(`[data-room-id="${room_id}]`);
+        const userItem = document.querySelector(`[data-room-id="${room_id}"]`);
         if (userItem) {
             userItem.classList.remove("unread");  // 👈 太字解除
         }
