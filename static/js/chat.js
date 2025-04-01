@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
             newMessage.classList.add("partner-message");
         }
         // newMessage.textContent = `${msg.sendername}: ${msg.message}`;
-        showInAppNotification(data);
+        showInAppNotification(msg.message);
         newMessage.textContent = `${msg.message}`;
         chatBox.appendChild(newMessage);
         scrollToBottom();
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
             mediaElement.classList.add("message-media");  // ✅ `classList` を適用
             messageDiv.appendChild(mediaElement);
         }
-        showInAppNotification(data);
+        showInAppNotification(msg.message);
         chatBox.appendChild(messageDiv);
         // chatBox.appendChild(document.createElement('br'));
         scrollToBottom();
