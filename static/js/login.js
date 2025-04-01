@@ -113,6 +113,10 @@ document.addEventListener("DOMContentLoaded",function(){
                     listItem.textContent = user.username;
                     listItem.setAttribute("data-user-id", user.id);  // ✅ ユーザー ID を設定
                     listItem.setAttribute("data-room-id", user.room_id);
+                    console.log(user.unread)
+                    if (user.unread) {
+                        listItem.style.fontWeight = "bold";
+                    }
                     // ✅ 条件分岐：？？？ならポップアップ、そうでなければチャット遷移
                     if (user.username === "？？？") {
                         listItem.onclick = () => {
@@ -127,7 +131,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     if (user.mbti in mbtiColorClasses) {
                         listItem.classList.add(mbtiColorClasses[user.mbti]);
                     }
-                    if (user.is_unread) {
+                    if (user.unread) {
                         listItem.classList.add("unread");
                     }
                     listContainer.appendChild(listItem);
