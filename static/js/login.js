@@ -114,10 +114,6 @@ document.addEventListener("DOMContentLoaded",function(){
                     listItem.setAttribute("data-user-id", user.id);  // ✅ ユーザー ID を設定
                     listItem.setAttribute("data-room-id", user.room_id);
                     console.log(user.unread)
-                    // if (user.unread) {
-                    //     listItem.style.fontWeight = "bold";
-                    // }
-                    // ✅ 条件分岐：？？？ならポップアップ、そうでなければチャット遷移
                     if (user.username === "？？？") {
                         listItem.onclick = () => {
                             showPopup("相手からマッチされています！\nアップグレードで相手の情報が見られます✨");
@@ -133,6 +129,9 @@ document.addEventListener("DOMContentLoaded",function(){
                     }
                     if (user.unread) {
                         listItem.classList.add("unread");
+                        const blueDot = document.createElement("span");
+                        blueDot.classList.add("unread-indicator");
+                        listItem.appendChild(blueDot);
                     }
                     listContainer.appendChild(listItem);
                 });

@@ -24,6 +24,15 @@ body {
   font-weight: bold;
 }
 
+.unread-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #3498db; /* 青色 */
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
 h1 {
   font-size: 26px;
   color: #8b4513;
