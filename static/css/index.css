@@ -40,6 +40,7 @@ body {
   transform: scale(0.8);
   transition: opacity 1s ease-out, transform 1s ease-out;
   margin-top: 0px;  /* ロゴと適切な距離を確保 */
+  margin-bottom: 100px;
 }
 
 
@@ -155,6 +156,19 @@ h1.show {
 
 .bottom-slider {
   animation: slideRight 20s linear infinite;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 250, 240, 0.95);
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #555;
+  z-index: 1;
 }
 
 @keyframes slideLeft {
