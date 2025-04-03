@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded",function(){
     };
     const restartBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
+    const ConBtn = document.getElementById("contact-btn");
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
@@ -95,8 +96,7 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
 
-    function fetchMatchedUsers(){
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
+    function fetchMatchedUsers(){ fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
             method:"POST",
             mode: "cors",
             credentials: "include",
@@ -142,14 +142,12 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(error => console.error("リスト更新エラー:", error));
     };
 
-    function markAsRead(room_id) {
-        const userItem = document.querySelector(`[data-room-id="${room_id}"]`);
-        if (userItem) {
-            userItem.classList.remove("unread");  // 👈 太字解除
-        }
-    }
-
-
+    // function markAsRead(room_id) {
+    //     const userItem = document.querySelector(`[data-room-id="${room_id}"]`);
+    //     if (userItem) {
+    //         userItem.classList.remove("unread");  // 👈 太字解除
+    //     }
+    // }
 
     document.getElementById("match_list_reload").addEventListener("click", fetchMatchedUsers);
 
@@ -164,6 +162,12 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = `bears`;
     });
 
+    ConBtn.addEventListener("click", function () {
+        localStorage.setItem("backToLogin", window.location.href);
+        console.log("contact")
+        window.location.href = `contact`;
+    });
+
     SubsBtn.addEventListener("click", function () {
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("backToLogin", window.location.href);
@@ -171,4 +175,5 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = `subscribe`;
         });
     
+       
 });

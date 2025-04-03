@@ -100,14 +100,6 @@ body {
     z-index: 999;
   }
   
-  /* 下部ボタン */
-  .back-button.bottom {
-    display: block;
-    text-align: center;
-    margin: 60px auto 20px;
-    width: fit-content;
-  }
-  
   /* レスポンシブ */
   @media (max-width: 768px) {
     .mbti-character {

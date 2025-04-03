@@ -1,0 +1,64 @@
+.contact-section {
+    background: #fffaf0;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+  
+  .contact-section h2 {
+    text-align: center;
+    color: #8b4513;
+    margin-bottom: 1rem;
+  }
+  
+  #contact-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #contact-form label {
+    font-weight: bold;
+    margin: 0.5rem 0 0.2rem;
+    color: #8b4513;
+  }
+  
+  #contact-form select,
+  #contact-form textarea {
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 1rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+
+  .back-button {
+    display: inline-block;
+    font-size: 16px;
+    color: #8b4513;
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 2px solid #8b4513;
+    border-radius: 6px;
+    background-color: #fffaf0;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #f0e6d6;
+  }
+  
+  /* 左上固定ボタン */
+  .back-button.fixed {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+  }

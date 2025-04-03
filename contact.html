@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>お問い合わせ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <button id="buck_btn" class="back-button fixed"  onclick="history.back()">←戻る</button>
+    <div class="contact-section">
+        <h2>お問い合わせ</h2>
+        <form id="contact-form">
+          <label for="contact-type">お問い合わせ種別</label>
+          <select id="contact-type" name="contact_type" required>
+            <option value="">選択してください</option>
+            <option value="bug">不具合報告</option>
+            <option value="payment">課金に関するお問い合わせ</option>
+            <option value="request">機能追加の要望</option>
+            <option value="other">その他</option>
+          </select>
+      
+          <label for="message">内容</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+      
+          <button type="submit" class="btn">送信</button>
+        </form>
+      </div>      
+  <script src="static/js/contact.js" defer></script>
+</body>
+</html>
