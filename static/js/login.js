@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded",function(){
                         };
                     } else {
                         listItem.onclick = () => {
-                            markAsRead(user.room_id);
+                            // markAsRead(user.room_id);
                             joinRoom(user.room_id, user.username, user.mbti);
                         };
                     }

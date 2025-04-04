@@ -277,5 +277,9 @@ footer {
     border-bottom-width: 8px !important;
   }
 
+  footer {
+    font-size: 8px !important;
+  }
+
 }
 
