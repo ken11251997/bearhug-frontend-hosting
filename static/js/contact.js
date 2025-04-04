@@ -1,27 +1,27 @@
-document.getElementById('contact-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contact-form");
+    const contactType = document.getElementById("contact-type");
+    const message = document.getElementById("message");
   
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const category = document.getElementById("category").value;
-    const message = document.getElementById("message").value;
-
-    const BackButton = document.getElementById("buck_btn");
-    BackButton.addEventListener("click", function () {
-        const savedUrl = localStorage.getItem("backToLogin");
-        window.location.href =savedUrl 
-        // history.back()
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+  
+      const contact_type = contactType.value;
+      const message_text = message.value;
+  
+      const response = await fetch("/contact/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ contact_type, message: message_text }),
+      });
+  
+      if (response.ok) {
+        alert("お問い合わせが送信されました。ありがとうございました。");
+        form.reset();
+      } else {
+        alert("送信に失敗しました。もう一度お試しください。");
+      }
     });
-  
-    const res = await fetch("/contact/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, category, message }),
-    });
-  
-    const result = await res.json();
-    document.getElementById("status-message").innerText = result.message || "送信完了しました。";
   });
-  
