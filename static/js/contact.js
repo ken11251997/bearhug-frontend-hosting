@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const contact_type = contactType.value;
       const message_text = message.value;
   
-      const response = await fetch("/contact/submit", {
+      const response = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/contact/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
