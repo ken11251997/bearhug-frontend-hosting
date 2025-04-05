@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
 
-    const MAX_IMAGE_SIZE_MB = 2;
+    const MAX_IMAGE_SIZE_MB = 3;
     const MAX_VIDEO_SIZE_MB = 5;
 
     sendFileButton.addEventListener("click", function () {
