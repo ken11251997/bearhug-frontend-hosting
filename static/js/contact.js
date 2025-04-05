@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const contact_type = contactType.value;
       const message_text = message.value;
+      console.log("user_id:", user_id);
+      console.log("category:", contact_type);
+      console.log("message:", message_text);
 
       const data ={
         user_id : user_id,
