@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded",function(){
     });
 
     ConBtn.addEventListener("click", function () {
+        localStorage.setItem("user_id", user_id);
         localStorage.setItem("backToLogin", window.location.href);
         console.log("contact")
         window.location.href = `contact`;
