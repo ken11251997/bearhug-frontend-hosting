@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .then(response => response.json())
         .then(result =>{
-            alert(result.message);
             showPopup(result.message, () => {
                 location.reload();
             });
@@ -79,10 +78,12 @@ document.addEventListener("DOMContentLoaded",function(){
                 }, 100);
                 // 勝手にリロードされるためチェック完了後に実施
                 console.log("✅ 遷移コード実行完了2");
-                alert("Login success");
+                // alert("Login success");
+                showPopup("Login success");
             }
             else{
-                alert("Error!:"+ result.message);
+                // alert("Error!:"+ result.message);
+                showPopup("Error!:"+ result.message);
             }
         })
         .catch(error => console.error("Error",error));

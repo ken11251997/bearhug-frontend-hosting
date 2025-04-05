@@ -36,10 +36,30 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   
       if (response.ok) {
-        alert("お問い合わせが送信されました。ありがとうございました。");
+        showPopup("お問い合わせが送信されました。ありがとうございました。");
         form.reset();
       } else {
-        alert("送信に失敗しました。もう一度お試しください。");
+        showPopup("送信に失敗しました。もう一度お試しください。");
       }
     });
+
+    function showPopup(message,callback) {
+        // Remove existing popups
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+        console.log(message)
+        const popup = document.createElement("div");
+        popup.className = "popup-message";
+        popup.innerText = message;
+        console.log(popup)
+        alert(popup)
+        document.body.appendChild(popup);
+        
+        setTimeout(() => {
+            popup.classList.add("fade-out");
+            setTimeout(() => {
+                popup.remove();
+                if (callback) callback();
+            }, 100);
+        }, 750);
+    }
   });
