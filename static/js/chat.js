@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     socket.on("new_file", function(data) {
         console.log("✅ receive new_file event:", data);
-        alert("🔔 画像/動画が送信されました");
+        showPopup("🔔 画像/動画が送信されました");
     
         var chatBox = document.getElementById('chat-box');
         var messageDiv = document.createElement("div");
@@ -288,14 +288,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
 
+    const MAX_IMAGE_SIZE_MB = 2;
+    const MAX_VIDEO_SIZE_MB = 5;
 
     sendFileButton.addEventListener("click", function () {
         let file = fileInput.files[0];
         if (!file) {
             console.error("❌ ファイルが選択されていません！");
-            alert("ファイルを選択してください！");
+            showPopup("ファイルを選択してください！");
             return;
         }
+
+        const isImage = file.type.startsWith("image/");
+        const isVideo = file.type.startsWith("video/");
+
+        const maxSizeMB = isImage ? MAX_IMAGE_SIZE_MB : isVideo ? MAX_VIDEO_SIZE_MB : 0;
+
+        if (file.size > maxSizeMB * 1024 * 1024) {
+            console.log(file.size)
+            alert(`${isImage ? '画像' : '動画'}のサイズは${maxSizeMB}MB以下にしてください`);
+            fileInput.value = ""; // クリア
+            return;
+          }
 
         let reader = new FileReader();
         reader.onload = function(event) {
