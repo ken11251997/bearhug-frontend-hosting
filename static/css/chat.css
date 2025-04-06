@@ -118,9 +118,11 @@ body {
 }
 
 .my-message, .partner-message {
-    display: inline-block;
+    display: flex;
+    /* display: inline-block; */
+    align-items: center;
     max-width: 60%;
-    /* min-width: auto; */
+    min-width: 100px;
     padding: 6px;
 }
 
@@ -157,6 +159,14 @@ body {
     display: block;
 }
 
+.message video {
+    width: 100%;
+    max-width: 300px; /* チャット欄に収めたい最大幅 */
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
 .my-message img, .partner-message img {
     width: 100%;
     max-width: 300px;
@@ -164,12 +174,13 @@ body {
     border-radius: 10px;
 }
 
-.my-message, .partner-message {
-    display: flex;
-    align-items: center;
-    max-width: 60%;
-    min-width: 100px;
-    padding: 6px;
+.my-message video,
+.partner-message video {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    display: block;
 }
 
 
