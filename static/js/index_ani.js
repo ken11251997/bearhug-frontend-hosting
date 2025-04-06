@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ 任意の座標で実行（例）
     createBearWithBalloon(
         "static/img/bear_2.png",  // クマ画像
-        "25%", "63%",              // クマの位置
-        "calc(30% + 130px)", "70%",// 吹き出しの位置
+        "25%", "68%",              // クマの位置
+        "calc(30% + 130px)", "75%",// 吹き出しの位置
     );
 });
