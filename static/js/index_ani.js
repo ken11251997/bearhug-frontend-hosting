@@ -38,8 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
         slider.style.animationPlayState = "paused";
     });
 
-
-
     const logo = document.querySelector(".logo");
     logo.style.opacity = "0";
     logo.style.transform = "translateY(-50px) scale(0.7)";  // 初期スケールを少し大きめに
