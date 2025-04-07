@@ -93,6 +93,34 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(error => console.error("Error",error));
     });
 
+    // フッターを非表示にする関数
+    function hideFooterIfFormVisible() {
+        const loginForm = document.getElementById("login-form");
+        const registerForm = document.getElementById("register-form");
+        const footer = document.getElementById("footer");
+    
+        if (
+        (loginForm && !loginForm.classList.contains("hidden")) ||
+        (registerForm && !registerForm.classList.contains("hidden"))
+        ) {
+        footer.classList.add("hide");
+        }
+    }
+    
+    // 監視対象を設定
+    const observer = new MutationObserver(hideFooterIfFormVisible);
+    
+    // 対象フォームに対して監視を設定
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+    
+    if (loginForm) {
+        observer.observe(loginForm, { attributes: true, attributeFilter: ['class'] });
+    }
+    if (registerForm) {
+        observer.observe(registerForm, { attributes: true, attributeFilter: ['class'] });
+    }
+
     // Function to show popup
     function showPopup(message,callback) {
         // Remove existing popups
