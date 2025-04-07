@@ -136,4 +136,41 @@ document.addEventListener("DOMContentLoaded", function () {
         "25%", "68%",              // クマの位置
         "calc(30% + 130px)", "75%",// 吹き出しの位置
     );
+
+    setTimeout(() => {
+        const balloon = document.createElement("div");
+        balloon.innerHTML = `
+            まずはMBTI診断から！
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: -12px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                border-right: 12px solid #fffaf0;
+                transform: translateY(-50%);
+            "></div>
+        `;
+        balloon.style.position = "absolute";
+        balloon.style.left = "calc(30% + 130px)";
+        balloon.style.top = "75%";
+        balloon.style.padding = "10px 16px";
+        balloon.style.background = "#fffaf0";
+        balloon.style.border = "2px solid #8b4513";
+        balloon.style.borderRadius = "12px";
+        balloon.style.color = "#8b4513";
+        balloon.style.fontWeight = "bold";
+        balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+        balloon.style.zIndex = "600";
+        balloon.style.whiteSpace = "nowrap";
+        balloon.id = "balloon-1";
+    
+        document.body.appendChild(balloon);
+    
+        setTimeout(() => {
+            balloon.remove();
+        }, 3000);
+    }, 1500);  // 少し遅れて表示（任意）
 });
