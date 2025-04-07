@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded",function(){
     document.getElementById("register-form").addEventListener("submit",function(event){
         event.preventDefault();
         console.log("✅ Login form submitted!");
-        if (footer) {
-            document.body.classList.add("hide-footer");  // ✅ footerを削除
-        }
+        // if (footer) {
+        //     document.body.classList.add("hide-footer");  // ✅ footerを削除
+        // }
         // get Data from HTML
         const username = document.getElementById("reg-username").value
         const password = document.getElementById("reg-password").value
@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded",function(){
     // Login to buckend
     document.getElementById("login-form").addEventListener("submit",function(event){
         event.preventDefault();
-        if (footer) {
-            document.body.classList.add("hide-footer"); // ✅ footerを削除
-        }
+        // if (footer) {
+        //     document.body.classList.add("hide-footer"); // ✅ footerを削除
+        // }
         console.log("✅ Login form submitted!");
 
         const username = document.getElementById("log-username").value
