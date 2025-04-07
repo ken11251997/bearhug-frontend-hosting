@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
         logo.style.transform = "translateY(0) scale(1)";
     }, 500);
 
-    const balloon = document.getElementById("balloon");
-    balloon.classList.remove("hidden");
+    // const balloon = document.getElementById("balloon");
+    // balloon.classList.remove("hidden");
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
         const balloonMessages = [
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         const balloon = document.createElement("div");
         balloon.innerHTML = `
-            まずはMBTI診断から！
+            まずはMBTI診断から!
             <div style="
                 position: absolute;
                 top: 50%;
