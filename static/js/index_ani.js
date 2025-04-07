@@ -11,8 +11,7 @@ let bearImage;
 
 document.addEventListener("DOMContentLoaded", function () {
     // フォーム切り替え用関数
-    const balloon = document.getElementById("balloon");
-    balloon.classList.remove("hidden");
+    
     
     window.addEventListener("load", function () {
         setTimeout(() => {
@@ -49,6 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
         logo.style.opacity = "1";
         logo.style.transform = "translateY(0) scale(1)";
     }, 500);
+
+    const balloon = document.getElementById("balloon");
+    balloon.classList.remove("hidden");
 
     function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
         const balloonMessages = [
