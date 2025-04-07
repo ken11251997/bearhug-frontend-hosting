@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         const balloon = document.createElement("div");
         balloon.innerHTML = `
-            まずはMBTI診断から!
+            MBTIが分からない人は<br>まずはMBTI診断から!
             <div style="
                 position: absolute;
                 top: 50%;

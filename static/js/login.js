@@ -175,6 +175,19 @@ document.addEventListener("DOMContentLoaded",function(){
         console.log("kakin")
         window.location.href = `subscribe`;
         });
+
+        
+    const intro = document.querySelector('.intro-animation');
+    if (intro) {
+        setTimeout(() => {
+        intro.style.transition = 'opacity 1s ease';
+        intro.style.opacity = '0';
+        setTimeout(() => {
+            intro.remove();
+        }, 1000);
+        }, 5000); // 5秒後に消す
+    }
+        
     
        
 });
