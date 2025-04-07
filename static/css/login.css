@@ -193,18 +193,18 @@ h1 {
     opacity: 0;
   }
   50% {
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, -50%);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, -50%);
     opacity: 1;
   }
 }
 
 @keyframes bear-slide-up {
   0% {
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, -50%);
     opacity: 1;
   }
   100% {
@@ -215,9 +215,9 @@ h1 {
 
 .intro-animation {
   position: fixed;
-  top: 0;
+  top: 50%; /* 中央 */
   left: 50%;
-  transform: translate(-50%, -200%);
+  transform: translate(-50%, -200%); /* アニメーション前の初期位置 */
   animation: bear-slide-down 2s ease forwards;
   z-index: 999;
   text-align: center;
