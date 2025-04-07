@@ -132,12 +132,12 @@ document.addEventListener("DOMContentLoaded",function(){
         console.log(popup)
         document.body.appendChild(popup);
         
-        setTimeout(() => {
-            popup.classList.add("fade-out");
-            setTimeout(() => {
-                popup.remove();
-                if (callback) callback();
-            }, 100);
-        }, 750);
+        // setTimeout(() => {
+        //     popup.classList.add("fade-out");
+        //     setTimeout(() => {
+        //         popup.remove();
+        //         if (callback) callback();
+        //     }, 100);
+        // }, 750);
     }
 });

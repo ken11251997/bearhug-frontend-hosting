@@ -182,6 +182,7 @@ h1 {
   from { opacity: 1; transform: translate(-50%, -50%); }
   to { opacity: 0; transform: translate(-50%, -60%); }
 }
+
 .intro-animation {
   position: fixed;
   top: -200px;
@@ -191,13 +192,12 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: dropIn 1.2s ease-out forwards;
+  animation: dropThenRise 4.5s ease-in-out forwards;
 }
 
 .bear-animation {
   width: 120px;
   height: 120px;
-  animation: bearBounce 1.2s ease-out forwards;
 }
 
 .speech-bubble {
@@ -209,24 +209,21 @@ h1 {
   font-weight: bold;
   color: #8b4513;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  animation: fadeBubble 1.4s ease-out forwards;
+  animation: fadeInOutBubble 4.5s ease-in-out forwards;
 }
 
-/* アニメーション定義 */
-@keyframes dropIn {
-  0% { top: -200px; opacity: 0; }
-  60% { top: 80px; opacity: 1; }
-  100% { top: 100px; }
+/* クマ全体のアニメーション（速度を均等化） */
+@keyframes dropThenRise {
+  0%   { top: -200px; opacity: 0; }
+  30%  { top: 100px; opacity: 1; }
+  70%  { top: 100px; opacity: 1; }
+  100% { top: -200px; opacity: 0; }
 }
 
-@keyframes bearBounce {
-  0% { transform: translateY(-200px); opacity: 0; }
-  50% { transform: translateY(20px); opacity: 1; }
-  100% { transform: translateY(0); }
-}
-
-@keyframes fadeBubble {
-  0% { opacity: 0; transform: scale(0.8); }
-  60% { opacity: 1; transform: scale(1.05); }
-  100% { transform: scale(1); }
+/* 吹き出しの表示・非表示も同様に */
+@keyframes fadeInOutBubble {
+  0%   { opacity: 0; transform: scale(0.8); }
+  30%  { opacity: 1; transform: scale(1); }
+  70%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
 }
