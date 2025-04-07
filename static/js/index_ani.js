@@ -11,6 +11,8 @@ let bearImage;
 
 document.addEventListener("DOMContentLoaded", function () {
     // フォーム切り替え用関数
+    const balloon = document.getElementById("balloon");
+    balloon.classList.remove("hidden");
     
     window.addEventListener("load", function () {
         setTimeout(() => {
