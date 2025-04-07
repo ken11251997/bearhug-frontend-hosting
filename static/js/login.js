@@ -180,12 +180,11 @@ document.addEventListener("DOMContentLoaded",function(){
     const intro = document.querySelector('.intro-animation');
     if (intro) {
         setTimeout(() => {
-        intro.style.transition = 'opacity 1s ease';
-        intro.style.opacity = '0';
-        setTimeout(() => {
-            intro.remove();
-        }, 1000);
-        }, 5000); // 5秒後に消す
+            intro.classList.add('intro-exit'); // 上に戻るアニメーション開始
+            setTimeout(() => {
+                intro.remove(); // アニメーション終了後削除
+            }, 2000); // slide-upのdurationと同じ
+        }, 5000); // 表示から5秒待つ
     }
         
     
