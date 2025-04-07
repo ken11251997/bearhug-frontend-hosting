@@ -189,37 +189,38 @@ h1 {
 
 @keyframes bear-slide-down {
   0% {
-    transform: translateY(-200%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
   50% {
-    transform: translateY(0);
+    transform: translate(-50%, 0%);
     opacity: 1;
   }
   100% {
-    transform: translateY(0);
+    transform: translate(-50%, 0%);
     opacity: 1;
   }
 }
 
 @keyframes bear-slide-up {
   0% {
-    transform: translateY(0);
+    transform: translate(-50%, 0%);
     opacity: 1;
   }
   100% {
-    transform: translateY(-200%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
 }
 
 .intro-animation {
   position: fixed;
-  top: 20%;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -200%);
   animation: bear-slide-down 2s ease forwards;
   z-index: 999;
+  text-align: center;
 }
 
 .intro-exit {
@@ -232,11 +233,14 @@ h1 {
 }
 
 .speech-bubble {
-  background: #fff;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  text-align: center;
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 16px;
+  border-radius: 16px;
+  margin-top: 8px;
   font-size: 14px;
+  font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  max-width: 240px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
