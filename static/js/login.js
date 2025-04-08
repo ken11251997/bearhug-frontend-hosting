@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded",function(){
             setTimeout(() => {
                 intro.remove(); // アニメーション終了後削除
             }, 2000); // slide-upのdurationと同じ
-        }, 5000); // 表示から5秒待つ
+        }, 4000); // 表示から5秒待つ
     }
         
     
