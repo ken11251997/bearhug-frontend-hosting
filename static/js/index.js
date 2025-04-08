@@ -75,6 +75,17 @@ document.addEventListener("DOMContentLoaded",function(){
                 console.log("Login Response:", result);
                 sessionStorage.setItem("user_id", result.user_id);
                 console.log(sessionStorage.getItem("user_id"));
+
+
+
+                if (window.ReactNativeWebView) {
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                        type: "LOGIN_SUCCESS",
+                        user_id: result.user_id
+                    }));
+                    console.log("✅ user_id sent to React Native via postMessage");
+                }
+
                 setTimeout(() => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     localStorage.setItem("subs", result.subs);

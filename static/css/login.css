@@ -189,7 +189,7 @@ h1 {
 
 @keyframes bear-slide-down {
   0% {
-    transform: translate(-50%, -200%);
+    transform: translate(-50%, -400%);
     opacity: 0;
   }
   50% {
