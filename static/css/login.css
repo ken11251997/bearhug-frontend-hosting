@@ -189,15 +189,15 @@ h1 {
 
 @keyframes bear-slide-down {
   0% {
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
   50% {
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     opacity: 1;
   }
 }
@@ -208,7 +208,7 @@ h1 {
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -200%);
     opacity: 0;
   }
 }
