@@ -61,9 +61,10 @@ document.addEventListener("DOMContentLoaded",function(){
             // console.group(data.status)
             // console.group(data.matched_users)
             if (data.status === "success" && data.matched_users) {
-                showPopup(
-                    `マッチングしました！\n相手: ${data.matched_users.username}\nMBTI: ${data.matched_users.mbti}\n年齢: ${data.matched_users.age}\n性別: ${data.matched_users.gender}`
-                );
+                // showPopup(
+                //     `マッチングしました！\n相手: ${data.matched_users.username}\nMBTI: ${data.matched_users.mbti}\n年齢: ${data.matched_users.age}\n性別: ${data.matched_users.gender}`
+                // );
+                showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 showPopup("マッチング回数の上限（5回）に達しました。\nもっと探したい方は、アップグレードをご検討ください。\n※回数は毎日4時・16時にリセットされます。");
             } else if (data.status === "error" && data.message === "Nobudy") {
@@ -186,7 +187,28 @@ document.addEventListener("DOMContentLoaded",function(){
             }, 2000); // slide-upのdurationと同じ
         }, 4000); // 表示から5秒待つ
     }
+
+
+
+    function showPoyonMatch(myMBTI, partnerMBTI, partnerName) {
+        const popup = document.getElementById("match-animation");
+        const leftBear = document.getElementById("left-bear");
+        const rightBear = document.getElementById("right-bear");
+        const text = document.getElementById("encounter-text");
+      
+        leftBear.src = `static/img/${partnerMBTI}.png`;
+        rightBear.src = `static/img/${myMBTI}.png`;
+        text.textContent = `${partnerName}さんと遭遇しました！`;
+      
+        // 表示＆初期化
+        popup.classList.remove("hidden");
+        text.style.opacity = 0;
+      
+        // アニメーション終了後に表示しっぱなし
+        setTimeout(() => {
+            // そのまま並んで残す（チャットへ遷移 or ボタン表示も追加可）
+          }, 3000);
+        }
         
-    
        
 });
