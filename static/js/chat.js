@@ -12,12 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(other_mbti)
 
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.classList.remove("hidden");
     
-
-    
-
-
     const leaveButton = document.getElementById("leave-btn");
     const sendButton = document.getElementById("send-btn");
     const chatBox = document.getElementById("chat-box");
@@ -147,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     socket.on("load_messages", function (messages) {
+        loadingOverlay.classList.remove("hidden");
         console.log("📩 メッセージ履歴をロード:", messages);
         chatBox.innerHTML = "";  
     
@@ -194,13 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     messageDiv.appendChild(mediaElement);
                 }
             }
-            loadingOverlay.classList.add("hidden");
+
             chatBox.appendChild(messageDiv);
             // chatBox.appendChild(document.createElement("br"));
              // 初回ロード時にスクロールを一番下に移動
             
         });
         scrollToBottom();
+        loadingOverlay.classList.add("hidden");
     });
     
 
