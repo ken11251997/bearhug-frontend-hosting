@@ -208,7 +208,7 @@ h1 {
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -200%);
+    transform: translate(-50%, -400%);
     opacity: 0;
   }
 }
