@@ -244,3 +244,71 @@ h1 {
   max-width: 240px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+
+#match-animation {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+}
+
+.bear-row {
+  position: relative;
+  width: 300px;
+  height: 100px;
+}
+
+.bear-img {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.bear-left {
+  left: -100px;
+  animation: left-hop 1.4s ease-out forwards;
+}
+
+.bear-right {
+  right: -100px;
+  animation: right-hop 1.4s ease-out forwards;
+}
+
+@keyframes left-hop {
+  0% { left: -100px; }
+  50% { left: 110px; transform: scale(1.1); }
+  65% { left: 95px; transform: scale(0.95); }
+  80% { left: 100px; transform: scale(1.02); }
+  100% { left: 100px; transform: scale(1); }
+}
+
+@keyframes right-hop {
+  0% { right: -100px; }
+  50% { right: 110px; transform: scale(1.1); }
+  65% { right: 95px; transform: scale(0.95); }
+  80% { right: 100px; transform: scale(1.02); }
+  100% { right: 100px; transform: scale(1); }
+}
+
+.encounter-text {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #8b4513;
+  animation: fadeIn 0.8s ease 1.5s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
