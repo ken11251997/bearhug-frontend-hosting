@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded",function(){
         "ISTP": "mbti-yellow", "ISFP": "mbti-yellow", "ESTP": "mbti-yellow", "ESFP": "mbti-yellow",
         "ISTJ": "mbti-blue", "ISFJ": "mbti-yellow", "ESTJ": "mbti-blue", "ESFJ": "mbti-blue"
     };
-    const restartBtn = document.getElementById("bearspage-btn");
+    const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
     
@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("match-btn").addEventListener("click",function(event){
         event.preventDefault();
-
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matching",{
             method:"POST",
@@ -143,21 +142,22 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(error => console.error("リスト更新エラー:", error));
     };
 
-    // function markAsRead(room_id) {
-    //     const userItem = document.querySelector(`[data-room-id="${room_id}"]`);
-    //     if (userItem) {
-    //         userItem.classList.remove("unread");  // 👈 太字解除
-    //     }
-    // }
 
-    document.getElementById("match_list_reload").addEventListener("click", fetchMatchedUsers);
+    // document.getElementById("match_list_reload").addEventListener("click", fetchMatchedUsers);
+    const ListBtn = document.getElementById("match_list_reload");
+    ListBtn.addEventListener("click", function () {
+        localStorage.setItem("user_id", user_id);
+        localStorage.setItem("backToLogin", window.location.href);
+        console.log("List")
+        window.location.href = `list`;
+    });
 
 
     function joinRoom(roomId, otherUserName,mbti) {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
     }
 
-    restartBtn.addEventListener("click", function () {
+    bearsBtn.addEventListener("click", function () {
         localStorage.setItem("backToLogin", window.location.href);
         console.log("bears")
         window.location.href = `bears`;

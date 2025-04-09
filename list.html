@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI Match - Dashboard</title>
+    <link rel="stylesheet" href="static/css/sanitize.css">
+    <link rel="stylesheet" href="static/css/list.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body::before {
+          content: "";
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-image: url("static/img/paw.png");
+          background-repeat: repeat;
+          background-size: 80px 80px;
+          opacity: 0.05;
+          transform: rotate(-30deg);
+          z-index: 0;
+          pointer-events: none;
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ベアハグリスト</h1>
+        <ul id="matched-user-list" class="chat-list"></ul>
+        <button class="btn" onclick="goBack()">戻る</button>
+    </div>
+    <script src="static/js/list.js" defer></script>
+</body>
+</html>
