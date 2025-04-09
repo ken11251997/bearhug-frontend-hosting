@@ -162,9 +162,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     
             if (msg.message) {
-                let textMessage = document.createElement("p");
-                textMessage.textContent = msg.message;
-                messageDiv.appendChild(textMessage);
+                // let textMessage = document.createElement("p");
+                // textMessage.textContent = msg.message;
+                // messageDiv.appendChild(textMessage);
+                messageDiv.textContent = msg.message;
             } else if (msg.file_url) {
                 let mediaElement = null;
     
