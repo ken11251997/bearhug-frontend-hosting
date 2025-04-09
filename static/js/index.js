@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded",function(){
 
     const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.add("hidden")
     document.getElementById("mbti-test-btn").addEventListener("click", function () {
         window.location.href = 'mbti_test';
     });
