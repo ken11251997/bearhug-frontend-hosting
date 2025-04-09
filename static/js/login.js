@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded",function(){
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
+    
+    const matchAni = document.getElementById("match-animation");
+    matchAni.style.display = "none"; // ← 最初に絶対非表示にする
+
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
     
@@ -67,6 +71,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 //     `マッチングしました！\n相手: ${data.matched_users.username}\nMBTI: ${data.matched_users.mbti}\n年齢: ${data.matched_users.age}\n性別: ${data.matched_users.gender}`
                 // );
                 loadingOverlay.style.display = "none";
+                console.log(mbti, data.matched_users.mbti, data.matched_users.username)
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
@@ -197,7 +202,6 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
 
-
     function showPoyonMatch(mymbti, partnermbti, partnerName) {
         const popup = document.getElementById("match-animation");
         const leftBear = document.getElementById("left-bear");
@@ -209,7 +213,8 @@ document.addEventListener("DOMContentLoaded",function(){
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
-        popup.classList.remove("hidden");
+        // popup.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
         text.style.opacity = 0;
       
         // アニメーション終了後に表示しっぱなし
@@ -217,6 +222,5 @@ document.addEventListener("DOMContentLoaded",function(){
             // そのまま並んで残す（チャットへ遷移 or ボタン表示も追加可）
           }, 3000);
         }
-        
        
 });
