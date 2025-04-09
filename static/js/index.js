@@ -76,8 +76,6 @@ document.addEventListener("DOMContentLoaded",function(){
                 sessionStorage.setItem("user_id", result.user_id);
                 console.log(sessionStorage.getItem("user_id"));
 
-
-
                 if (window.ReactNativeWebView) {
                     window.ReactNativeWebView.postMessage(JSON.stringify({
                         type: "LOGIN_SUCCESS",
@@ -86,15 +84,22 @@ document.addEventListener("DOMContentLoaded",function(){
                     console.log("✅ user_id sent to React Native via postMessage");
                 }
 
-                setTimeout(() => {
+                showPopup("Login success", () => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     localStorage.setItem("subs", result.subs);
                     console.log("✅ 遷移コード実行完了");
-                }, 100);
-                // 勝手にリロードされるためチェック完了後に実施
-                console.log("✅ 遷移コード実行完了2");
-                // alert("Login success");
-                showPopup("Login success");
+                });
+        
+
+                // setTimeout(() => {
+                //     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
+                //     localStorage.setItem("subs", result.subs);
+                //     console.log("✅ 遷移コード実行完了");
+                // }, 100);
+                // // 勝手にリロードされるためチェック完了後に実施
+                // console.log("✅ 遷移コード実行完了2");
+                // // alert("Login success");
+                // showPopup("Login success");
             }
             else{
                 // alert("Error!:"+ result.message);
