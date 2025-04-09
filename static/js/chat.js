@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(other_mbti)
 
     const loadingScreen = document.getElementById("loading-screen");
-    loadingScreen.classList.remove("hidden");
+    loadingScreen.classList.add("hidden");
+    
 
     
 
@@ -193,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     messageDiv.appendChild(mediaElement);
                 }
             }
-            loadingScreen.classList.add("hidden");
+            loadingScreen.classList.remove("hidden");
             chatBox.appendChild(messageDiv);
             // chatBox.appendChild(document.createElement("br"));
              // 初回ロード時にスクロールを一番下に移動
