@@ -42,13 +42,15 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .then(response => response.json())
         .then(result =>{
-            loadingOverlay.classList.add("hidden");
+            // loadingOverlay.classList.add("hidden");
+            loadingOverlay.style.display = "none";
             showPopup(result.message, () => {
                 location.reload();
             });
         })
         .catch(error => {
-            loadingOverlay.classList.add("hidden");
+            // loadingOverlay.classList.add("hidden");
+            loadingOverlay.style.display = "none";
             console.error("reg-Error",error)});
 
     });
@@ -112,7 +114,8 @@ document.addEventListener("DOMContentLoaded",function(){
             }
             else{
                 // alert("Error!:"+ result.message);
-                loadingOverlay.classList.add("hidden");
+                // loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
                 showPopup("Error!:"+ result.message);
             }
         })
