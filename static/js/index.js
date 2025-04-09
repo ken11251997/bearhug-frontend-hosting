@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded",function(){
 
+
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.classList.add("hidden")
+    loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
     document.getElementById("mbti-test-btn").addEventListener("click", function () {
         window.location.href = 'mbti_test';
     });
@@ -9,7 +10,8 @@ document.addEventListener("DOMContentLoaded",function(){
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
         event.preventDefault();
-        loadingOverlay.classList.remove("hidden")
+        // loadingOverlay.classList.remove("hidden")
+        loadingOverlay.style.display = "flex";
         console.log("✅ Login form submitted!");
         // if (footer) {
         //     document.body.classList.add("hide-footer");  // ✅ footerを削除
@@ -58,7 +60,8 @@ document.addEventListener("DOMContentLoaded",function(){
         //     document.body.classList.add("hide-footer"); // ✅ footerを削除
         // }
         console.log("✅ Login form submitted!");
-        loadingOverlay.classList.remove("hidden")
+        // loadingOverlay.classList.remove("hidden")
+        loadingOverlay.style.display = "flex";
 
         const username = document.getElementById("log-username").value
         const password = document.getElementById("log-password").value
