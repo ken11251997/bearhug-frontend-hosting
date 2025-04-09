@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",function(){
 
-    const footer=document.getElementById("footer")
+    const loadingOverlay = document.getElementById("loading-overlay");
     document.getElementById("mbti-test-btn").addEventListener("click", function () {
         window.location.href = 'mbti_test';
     });
@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
         event.preventDefault();
+        loadingOverlay.classList.remove("hidden")
         console.log("✅ Login form submitted!");
         // if (footer) {
         //     document.body.classList.add("hide-footer");  // ✅ footerを削除
@@ -38,11 +39,14 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .then(response => response.json())
         .then(result =>{
+            loadingOverlay.classList.add("hidden");
             showPopup(result.message, () => {
                 location.reload();
             });
         })
-        .catch(error => console.error("reg-Error",error));
+        .catch(error => {
+            loadingOverlay.classList.add("hidden");
+            console.error("reg-Error",error)});
 
     });
 
@@ -53,6 +57,7 @@ document.addEventListener("DOMContentLoaded",function(){
         //     document.body.classList.add("hide-footer"); // ✅ footerを削除
         // }
         console.log("✅ Login form submitted!");
+        loadingOverlay.classList.remove("hidden")
 
         const username = document.getElementById("log-username").value
         const password = document.getElementById("log-password").value
@@ -83,7 +88,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     }));
                     console.log("✅ user_id sent to React Native via postMessage");
                 }
-
+                loadingOverlay.classList.add("hidden");
                 showPopup("Login success", () => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     localStorage.setItem("subs", result.subs);
@@ -103,10 +108,13 @@ document.addEventListener("DOMContentLoaded",function(){
             }
             else{
                 // alert("Error!:"+ result.message);
+                loadingOverlay.classList.add("hidden");
                 showPopup("Error!:"+ result.message);
             }
         })
-        .catch(error => console.error("Error",error));
+        .catch(error =>{
+            loadingOverlay.classList.add("hidden");
+            console.error("Error",error)});
     });
 
     // フッターを非表示にする関数
