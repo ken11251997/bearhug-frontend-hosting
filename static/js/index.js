@@ -94,7 +94,8 @@ document.addEventListener("DOMContentLoaded",function(){
                     }));
                     console.log("✅ user_id sent to React Native via postMessage");
                 }
-                loadingOverlay.classList.add("hidden");
+                // loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
                 showPopup("Login success", () => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     localStorage.setItem("subs", result.subs);

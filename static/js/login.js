@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded",function(){
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
@@ -46,6 +48,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("match-btn").addEventListener("click",function(event){
         event.preventDefault();
+        loadingOverlay.style.display = "flex";
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matching",{
             method:"POST",
@@ -63,18 +66,23 @@ document.addEventListener("DOMContentLoaded",function(){
                 // showPopup(
                 //     `マッチングしました！\n相手: ${data.matched_users.username}\nMBTI: ${data.matched_users.mbti}\n年齢: ${data.matched_users.age}\n性別: ${data.matched_users.gender}`
                 // );
+                loadingOverlay.style.display = "none";
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
+                loadingOverlay.style.display = "none";
                 showPopup("マッチング回数の上限（5回）に達しました。\nもっと探したい方は、アップグレードをご検討ください。\n※回数は毎日4時・16時にリセットされます。");
             } else if (data.status === "error" && data.message === "Nobudy") {
+                loadingOverlay.style.display = "none";
                 showPopup("マッチング相手がいません。");
             } else {
+                loadingOverlay.style.display = "none";
                 showPopup("予期せぬエラーが発生しました。");
             }
         })
         .catch(error => {
             console.error("マッチングエラー:", error);
             // document.getElementById("match-result").innerHTML = `<p>エラーが発生しました。</p>`;
+            loadingOverlay.style.display = "none";
             showPopup("エラーが発生しました。");
         });
     });
