@@ -198,14 +198,14 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 
-    function showPoyonMatch(myMBTI, partnerMBTI, partnerName) {
+    function showPoyonMatch(mymbti, partnermbti, partnerName) {
         const popup = document.getElementById("match-animation");
         const leftBear = document.getElementById("left-bear");
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
       
-        leftBear.src = `static/img/${partnerMBTI}.png`;
-        rightBear.src = `static/img/${myMBTI}.png`;
+        rightBear.src = `static/img/${mymbti}.png`;
+        leftBear.src = `static/img/${partnermbti}.png`;
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
