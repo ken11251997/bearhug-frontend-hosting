@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const user_id = localStorage.getItem("user_id");
     const data ={user_id : user_id}
+    console.log(data)
 
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/reload_list",{
         method:"POST",
