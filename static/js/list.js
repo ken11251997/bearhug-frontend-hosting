@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => response.json())
     .then(data =>{
         if (data.status ==="success"){
-            const listContainer=document.getElementById("matched-user");
+            const listContainer = document.getElementById("matched-user-list");
             listContainer.innerHTML = ""; //既存リストを空白に
             data.matched_users_list.forEach(user => {
                 const listItem = document.createElement("li");
