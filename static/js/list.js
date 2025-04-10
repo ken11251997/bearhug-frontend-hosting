@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
+
+    const BackButton = document.getElementById("buck_btn");
+    BackButton.addEventListener("click", function () {
+        const savedUrl = localStorage.getItem("backToLogin");
+        window.location.href =savedUrl 
+        // history.back()
+    });
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/reload_list",{
         method:"POST",
         mode: "cors",
         credentials: "include",
@@ -49,7 +57,5 @@ document.addEventListener("DOMContentLoaded", function () {
     function joinRoom(roomId, otherUserName,mbti) {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
     }
-
-
 
 })
