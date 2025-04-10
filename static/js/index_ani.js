@@ -52,19 +52,125 @@ document.addEventListener("DOMContentLoaded", function () {
     // const balloon = document.getElementById("balloon");
     // balloon.classList.remove("hidden");
 
-    const bearImg = document.getElementById("bear-img");
-    const bubbleText = document.getElementById("bear-bubble-text");
+    function createBearWithBalloon(imgSrc, bearX, bearY, balloonX, balloonY) {
+        const balloonMessages = [
+            "頭からっぽにして答えてね～",
+            "気軽にチャットしてみてね！",
+            "相性ピッタリな相手がいるかも？",
+            "いい出会いがありますように✨",
+            "マッチしたらメッセージ！",
+            "クマたちが応援してるよ！"
+        ];
+    
+        bearImage = document.createElement("img");
+        bearImage.src = imgSrc;
+        bearImage.alt = "Bear";
+        bearImage.style.position = "absolute";
+        bearImage.style.left = bearX;
+        bearImage.style.top = bearY;
+        bearImage.style.width = "240px";
+        bearImage.style.zIndex = "500";
+        bearImage.style.cursor = "pointer";
+        bearImage.style.transition = "transform 0.5s ease";
+        bearImage.id = "bear-1";
+    
+        // ✅ クマをクリックしたときの吹き出し表示
+        bearImage.addEventListener("click", () => {
+            // 既存の吹き出しがあれば削除
+            document.getElementById("balloon")?.remove();
+            document.getElementById("balloon-1")?.remove();
+    
+            const randomIndex = Math.floor(Math.random() * balloonMessages.length);
+            const randomMessage = balloonMessages[randomIndex];
+    
+            const balloon = document.createElement("div");
+            balloon.innerHTML = `
+                ${randomMessage}
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: -12px;
+                    width: 0;
+                    height: 0;
+                    border-top: 10px solid transparent;
+                    border-bottom: 10px solid transparent;
+                    border-right: 12px solid #fffaf0;
+                    transform: translateY(-50%);
+                "></div>
+            `;
+            balloon.style.position = "absolute";
+            balloon.style.left = balloonX;
+            balloon.style.top = balloonY;
+            balloon.style.padding = "10px 16px";
+            balloon.style.background = "#fffaf0";
+            balloon.style.border = "2px solid #8b4513";
+            balloon.style.borderRadius = "12px";
+            balloon.style.color = "#8b4513";
+            balloon.style.fontWeight = "bold";
+            balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+            balloon.style.zIndex = "600";
+            balloon.style.whiteSpace = "nowrap";
+            balloon.id = "balloon-1";
+    
+            document.body.appendChild(balloon);
+    
+            setTimeout(() => {
+                balloon.remove();
+            }, 3000);
+        });
+    
+        bearImage.addEventListener("mouseenter", () => {
+            bearImage.style.transform = "scale(1.05)";
+        });
+        bearImage.addEventListener("mouseleave", () => {
+            bearImage.style.transform = "scale(1)";
+        });
+    
+        document.body.appendChild(bearImage);
+    }
+    
 
-    const messages = [
-        "いい出会いが待ってるかも…？",
-        "相性ピッタリな相手がいるかも！",
-        "クマたちが応援してるよ🧸",
-        "チャットしてみてね✨",
-        "ベアと一緒にマッチング体験しよう！"
-    ];
+    // ✅ 任意の座標で実行（例）
+    createBearWithBalloon(
+        "static/img/bear_2.png",  // クマ画像
+        "25%", "68%",              // クマの位置
+        "calc(30% + 130px)", "75%",// 吹き出しの位置
+    );
 
-    bearImg.addEventListener("click", () => {
-        const random = messages[Math.floor(Math.random() * messages.length)];
-        bubbleText.textContent = random;
-    });
+    setTimeout(() => {
+        const balloon = document.createElement("div");
+        balloon.innerHTML = `
+            MBTIが分からない人は<br>まずはMBTI診断から!
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: -12px;
+                width: 0;
+                height: 0;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                border-right: 12px solid #fffaf0;
+                transform: translateY(-50%);
+            "></div>
+        `;
+        balloon.style.position = "absolute";
+        balloon.style.left = "calc(30% + 130px)";
+        balloon.style.top = "75%";
+        balloon.style.padding = "10px 16px";
+        balloon.style.background = "#fffaf0";
+        balloon.style.border = "2px solid #8b4513";
+        balloon.style.borderRadius = "12px";
+        balloon.style.color = "#8b4513";
+        balloon.style.fontWeight = "bold";
+        balloon.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+        balloon.style.zIndex = "600";
+        balloon.style.whiteSpace = "nowrap";
+        balloon.id = "balloon-1";
+    
+        document.body.appendChild(balloon);
+    
+        setTimeout(() => {
+            balloon.remove();
+        }, 3000);
+    }, 1500);  // 少し遅れて表示（任意）
 });
