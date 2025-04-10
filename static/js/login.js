@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded",function(){
     matchAni.style.display = "none"; // ← 最初に絶対非表示にする
 
     const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.style.display = "none";
 
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
