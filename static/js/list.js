@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
         "ISTP": "mbti-yellow", "ISFP": "mbti-yellow", "ESTP": "mbti-yellow", "ESFP": "mbti-yellow",
         "ISTJ": "mbti-blue", "ISFJ": "mbti-yellow", "ESTJ": "mbti-blue", "ESFJ": "mbti-blue"
     };
-    if (mbti in mbtiColorClasses) {
-        mbtiElement.classList.add(mbtiColorClasses[mbti]);
-    }
-    
+    // if (mbti in mbtiColorClasses) {
+    //     mbtiElement.classList.add(mbtiColorClasses[mbti]);
+    // }
+
     const user_id = localStorage.getItem("user_id");
     const data ={user_id : user_id}
     console.log(data)
