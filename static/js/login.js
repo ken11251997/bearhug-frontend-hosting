@@ -213,13 +213,14 @@ document.addEventListener("DOMContentLoaded",function(){
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
-        // popup.classList.remove("hidden");
+        popup.classList.remove("hidden");
         loadingOverlay.style.display = "flex";
         text.style.opacity = 0;
       
         // アニメーション終了後に表示しっぱなし
         setTimeout(() => {
             // そのまま並んで残す（チャットへ遷移 or ボタン表示も追加可）
+            loadingOverlay.style.display = "none";
           }, 3000);
         }
        
