@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 // showPopup(
                 //     `マッチングしました！\n相手: ${data.matched_users.username}\nMBTI: ${data.matched_users.mbti}\n年齢: ${data.matched_users.age}\n性別: ${data.matched_users.gender}`
                 // );
-                loadingOverlay.style.display = "none";
+                // loadingOverlay.style.display = "none";
                 console.log(mbti, data.matched_users.mbti, data.matched_users.username)
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
