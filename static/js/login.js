@@ -215,11 +215,8 @@ document.addEventListener("DOMContentLoaded",function(){
         popup.classList.remove("hidden");  // ✅ 表示
         text.style.opacity = 0;
       
-        // アニメーション終了後に表示しっぱなし
         setTimeout(() => {
-            // そのまま並んで残す（チャットへ遷移 or ボタン表示も追加可）
-            loadingOverlay.style.display = "none";
-          }, 3000);
+            document.getElementById("loading-overlay").style.display = "none";
+          }, 500); // 0.5秒後なら十分自然
         }
-       
 });
