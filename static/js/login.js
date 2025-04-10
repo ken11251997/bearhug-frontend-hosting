@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded",function(){
+    const matchAni = document.getElementById("match-animation");
+    matchAni.style.display = "none"; // ← 最初に絶対非表示にする
+
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
+
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
     const user_name = new URLSearchParams(window.location.search).get("user_name");
@@ -21,12 +27,6 @@ document.addEventListener("DOMContentLoaded",function(){
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
-    
-    const matchAni = document.getElementById("match-animation");
-    matchAni.style.display = "none"; // ← 最初に絶対非表示にする
-
-    const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
