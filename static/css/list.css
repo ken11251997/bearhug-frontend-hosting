@@ -1,9 +1,23 @@
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
-    /* background-color: #fffef8; */
+    background-color: #fffef8;
     background: linear-gradient(135deg, #d2b48c, #f5deb3);
+    
     margin: 0;
     padding: 0;
+  } */
+
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #d2b48c, #f5deb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    flex-direction: column;
   }
   
   .container {
