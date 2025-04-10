@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded",function(){
     matchAni.style.display = "none"; // ← 最初に絶対非表示にする
 
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
 
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
@@ -213,8 +212,7 @@ document.addEventListener("DOMContentLoaded",function(){
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
-        popup.classList.remove("hidden");
-        loadingOverlay.style.display = "flex";
+        popup.classList.remove("hidden");  // ✅ 表示
         text.style.opacity = 0;
       
         // アニメーション終了後に表示しっぱなし
