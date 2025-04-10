@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // history.back()
     });
 
+    const user_id = localStorage.getItem("user_id");
+    const data ={user_id : user_id}
+
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/reload_list",{
         method:"POST",
         mode: "cors",
