@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded",function(){
-    const matchAni = document.getElementById("match-animation");
+    // const matchAni = document.getElementById("match-animation");
     // matchAni.style.display = "none"; 
 
     const loadingOverlay = document.getElementById("loading-overlay");

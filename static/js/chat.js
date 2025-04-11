@@ -88,6 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.on("error_message", (data) => {
         showPopup(data.message); // or 任意のUI表示
     });
+
+    socket.on("ad_message", (data) => {
+        showAdPopup(data.admessage); // or 任意のUI表示
+    });
     
     // ログインページへ
     // BackButton.addEventListener("click", function () {
@@ -374,5 +378,67 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => popup.remove(), 1500);
         }, 1000);
     }
+
+    function showAdPopup({ message, onWatchAd }) {
+        // 既存ポップアップを削除
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+      
+        // ポップアップ要素作成
+        const popup = document.createElement("div");
+        popup.className = "popup-message persistent-popup"; // カスタムクラスで非フェード化
+        popup.innerHTML = `
+          <div class="popup-header">
+            <span>${message}</span>
+            <button class="popup-close-btn">✕</button>
+          </div>
+          <div class="popup-actions">
+            <button class="popup-watch-ad-btn">広告を見て使えるようにする</button>
+          </div>
+        `;
+      
+        document.body.appendChild(popup);
+      
+        // ✕ボタンで閉じる
+        popup.querySelector(".popup-close-btn").addEventListener("click", () => {
+          popup.remove();
+        });
+      
+        // 広告再生ボタン
+        popup.querySelector(".popup-watch-ad-btn").addEventListener("click", () => {
+          if (onWatchAd) onWatchAd();
+          popup.remove(); // 再生後に閉じる
+        });
+      }
+
+
+      
+
+    function onWatchAd() {
+        // ✅ 1. フェイク広告表示（本番は AdMob APIなど）
+        alert("📺 広告（仮）を見ています...");
+        
+        // ✅ 2. 実際にはここで広告SDKの成功コールバックが必要
+        // 今はテストとして直接成功と仮定
+        const userId = localStorage.getItem("user_id");
+        
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, type: "chat" })  // または type: "match"
+        })
+            .then(res => res.json())
+            .then(data => {
+            if (data.status === "success") {
+                showPopup("✅ チャット回数が1回復しました！");
+            } else {
+                showPopup("⚠️ 回復に失敗しました：" + data.message);
+            }
+            })
+            .catch(err => {
+            console.error("回復通信エラー", err);
+            showPopup("❌ 回復通信に失敗しました");
+            });
+        }
+      
     
 })
