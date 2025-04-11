@@ -213,12 +213,15 @@ document.addEventListener("DOMContentLoaded",function(){
       
         // 表示＆初期化
 
+
         popup.classList.remove("hidden");
+        popup.style.display = "flex";
         text.style.opacity = 0;
       
         setTimeout(() => {
             document.getElementById("loading-overlay").style.display = "none";
             popup.classList.add("hidden");
+            popup.style.display = "none";
           }, 500); // 0.5秒後なら十分自然
         }
 });

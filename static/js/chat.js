@@ -408,10 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (onWatchAd) onWatchAd();
           popup.remove(); // 再生後に閉じる
         });
-      }
-
-
-      
+      }  
 
     function onWatchAd() {
         // ✅ 1. フェイク広告表示（本番は AdMob APIなど）
