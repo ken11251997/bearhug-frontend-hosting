@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const BackButton = document.getElementById("buck_btn");
+    const loginUrl = localStorage.getItem("backToLogin");
     BackButton.addEventListener("click", function () {
-        const savedUrl = localStorage.getItem("backToLogin");
-        window.location.href =savedUrl 
+        window.location.href =loginUrl 
         // history.back()
     });
 

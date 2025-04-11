@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    const BackButton = document.getElementById("back-btn");
+    const ListBtn = document.getElementById("back-btn");
     const sendFileButton = document.getElementById("send-file-btn");
 
     const fileInput = document.getElementById("file-input");
@@ -90,18 +90,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     // ログインページへ
-    BackButton.addEventListener("click", function () {
-        if (user_id && room_id) {
-            // window.location.href =`/login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
-            socket.emit("back", { user_id , room_id });
-        }
+    // BackButton.addEventListener("click", function () {
+    //     if (user_id && room_id) {
+    //         // window.location.href =`/login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
+    //         socket.emit("back", { user_id , room_id });
+    //     }
+    // });
+
+    // const ListBtn = document.getElementById("match_list_reload");
+    ListBtn.addEventListener("click", function () {
+        localStorage.setItem("user_id", user_id);
+        console.log("List")
+        window.location.href = `list`;
     });
 
-    socket.on("back", function (msg) {
-        if(msg.user_id==user_id){
-            window.location.href = `login?user_id=${msg.user_id}&user_name=${msg.user_name}&mbti=${msg.mbti}`;
-            }
-    });
+    // socket.on("back", function (msg) {
+    //     if(msg.user_id==user_id){
+    //         window.location.href = `login?user_id=${msg.user_id}&user_name=${msg.user_name}&mbti=${msg.mbti}`;
+    //         }
+    // });
 
     // ルームを退出
     leaveButton.addEventListener("click", function () {
