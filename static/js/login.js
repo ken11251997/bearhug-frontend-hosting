@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",function(){
     const matchAni = document.getElementById("match-animation");
-    matchAni.style.display = "none"; // ← 最初に絶対非表示にする
+    // matchAni.style.display = "none"; 
 
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.style.display = "none";
@@ -212,11 +212,13 @@ document.addEventListener("DOMContentLoaded",function(){
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
-        popup.classList.remove("hidden");  // ✅ 表示
+
+        popup.classList.remove("hidden");
         text.style.opacity = 0;
       
         setTimeout(() => {
             document.getElementById("loading-overlay").style.display = "none";
+            popup.classList.add("hidden");
           }, 500); // 0.5秒後なら十分自然
         }
 });
