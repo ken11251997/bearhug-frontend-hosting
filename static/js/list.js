@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.style.display = "none";
+    // loadingOverlay.style.display = "none";
+    loadingOverlay.style.display = "flex";
 
 
     const BackButton = document.getElementById("buck_btn");
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const data ={user_id : user_id}
     console.log(data)
 
-    loadingOverlay.style.display = "flex";
+    
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/reload_list",{
         method:"POST",
         mode: "cors",
