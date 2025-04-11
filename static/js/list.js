@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.style.display = "none";
+
 
     const BackButton = document.getElementById("buck_btn");
     BackButton.addEventListener("click", function () {
@@ -22,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const data ={user_id : user_id}
     console.log(data)
 
+    loadingOverlay.style.display = "flex";
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/reload_list",{
         method:"POST",
         mode: "cors",
@@ -81,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
     .catch(error => console.error("リスト更新エラー:", error));
+    loadingOverlay.style.display = "none";
 
 
     function joinRoom(roomId, otherUserName,mbti) {
