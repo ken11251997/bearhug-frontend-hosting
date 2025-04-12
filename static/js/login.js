@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
-                showPopup("マッチング回数の上限（5回）に達しました。\nもっと探したい方は、アップグレードをご検討ください。\n※回数は毎日4時・16時にリセットされます。");
+                showPopup("マッチング回数の上限（5回）に達しました。\nもっと探したい方は、アップグレードをご検討ください。");
             } else if (data.status === "error" && data.message === "Nobudy") {
                 loadingOverlay.style.display = "none";
                 showPopup("マッチング相手がいません。");
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded",function(){
             document.getElementById("loading-overlay").style.display = "none";
             popup.classList.add("hidden");
             popup.style.display = "none";
-          }, 4000); // 0.5秒後なら十分自然
+          }, 3500); // 0.5秒後なら十分自然
         }
 
 
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded",function(){
             confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 4000); // 4秒後に消す
+            setTimeout(() => confetti.remove(), 3500); // 4秒後に消す
         }
     }
 });
