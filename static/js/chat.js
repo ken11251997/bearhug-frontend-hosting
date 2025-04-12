@@ -90,7 +90,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     socket.on("ad_message", (data) => {
-        showAdPopup(data.admessage); // or 任意のUI表示
+        // showAdPopup(data.admessage);
+        showAdPopup({
+            message: data.admessage || "広告を見るとチャット回数が回復します！",
+            onWatchAd: onWatchAd
+          });
     });
     
     // ログインページへ
@@ -379,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
-    function showAdPopup({ message, onWatchAd }) {
+    function showAdPopup({message,onWatchAd}) {
         // 既存ポップアップを削除
         document.querySelectorAll(".popup-message").forEach(p => p.remove());
       
