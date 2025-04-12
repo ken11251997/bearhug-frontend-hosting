@@ -99,12 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     listItem.classList.add(mbtiColorClasses[user.mbti]);
                 }
             
-                if (user.unread) {
-                    listItem.classList.add("unread");
-                    const blueDot = document.createElement("span");
-                    blueDot.classList.add("unread-indicator");
-                    listItem.appendChild(blueDot);
-                }
+                // if (user.unread) {
+                //     listItem.classList.add("unread");
+                //     const blueDot = document.createElement("span");
+                //     blueDot.classList.add("unread-indicator");
+                //     listItem.appendChild(blueDot);
+                // }
             
                 listContainer.appendChild(listItem);
             });
