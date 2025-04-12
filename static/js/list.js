@@ -113,9 +113,16 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("マッチングリストの取得に失敗しました。");
         }
     })
-    .catch(error => console.error("リスト更新エラー:", error));
-    loadingOverlay.classList.add("hidden");
-    loadingOverlay.style.display = "none";
+    .catch(error => {
+        console.error("リスト更新エラー:", error);
+        alert("エラーが発生しました");
+      })
+    .finally(() => {
+        // ✅ fetch 成功・失敗問わず確実にローディングを非表示に
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+      });
+    
 
 
     function joinRoom(roomId, otherUserName,mbti) {
