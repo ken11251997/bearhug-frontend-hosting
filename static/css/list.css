@@ -221,3 +221,36 @@
   .hidden {
     display: none;
   }
+
+
+  .chat-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .chat-left-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  /* 名前 */
+  .chat-main-row {
+    font-weight: bold;
+    font-size: 16px;
+    color: #8b4513;
+  }
+  
+  /* メッセージ：右寄せ、前半のみ表示（省略） */
+  .chat-sub-row {
+    font-size: 14px;
+    color: #555;
+    margin-top: 0;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+  }

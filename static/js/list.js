@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingOverlay.classList.remove("hidden");
     loadingOverlay.style.display = "flex";
 
-
     const BackButton = document.getElementById("buck_btn");
     const loginUrl = localStorage.getItem("backToLogin");
     BackButton.addEventListener("click", function () {
