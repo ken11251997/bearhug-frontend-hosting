@@ -40,22 +40,49 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data =>{
         if (data.status ==="success"){
             const listContainer = document.getElementById("matched-user-list");
-            listContainer.innerHTML = ""; //既存リストを空白に
+            // listContainer.innerHTML = ""; //既存リストを空白に
+            // data.matched_users_list.forEach(user => {
+            //     const listItem = document.createElement("li");
+            //     listItem.classList.add("chat-list-item");
+            
+            //     const mainRow = document.createElement("div");
+            //     mainRow.classList.add("chat-main-row");
+            //     mainRow.textContent = user.username;
+            
+            //     const subRow = document.createElement("div");
+            //     subRow.classList.add("chat-sub-row");
+            //     subRow.textContent = user.latest_message || "（メッセージはまだありません）";
+            
+            //     listItem.appendChild(mainRow);
+            //     listItem.appendChild(subRow);
+            
+            //     listItem.setAttribute("data-user-id", user.id);
+            //     listItem.setAttribute("data-room-id", user.room_id);
+
+            listContainer.innerHTML = "";
             data.matched_users_list.forEach(user => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("chat-list-item");
-            
+
+                const blueDot = document.createElement("span");
+                blueDot.classList.add("unread-indicator");
+
                 const mainRow = document.createElement("div");
                 mainRow.classList.add("chat-main-row");
                 mainRow.textContent = user.username;
-            
+
                 const subRow = document.createElement("div");
                 subRow.classList.add("chat-sub-row");
                 subRow.textContent = user.latest_message || "（メッセージはまだありません）";
-            
-                listItem.appendChild(mainRow);
+
+                const leftGroup = document.createElement("div");
+                leftGroup.classList.add("chat-left-group");
+                if (user.unread) leftGroup.appendChild(blueDot);
+                leftGroup.appendChild(mainRow);
+
+                listItem.appendChild(leftGroup);
                 listItem.appendChild(subRow);
-            
+
                 listItem.setAttribute("data-user-id", user.id);
                 listItem.setAttribute("data-room-id", user.room_id);
             
