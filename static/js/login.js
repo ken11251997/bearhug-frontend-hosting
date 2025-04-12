@@ -222,6 +222,6 @@ document.addEventListener("DOMContentLoaded",function(){
             document.getElementById("loading-overlay").style.display = "none";
             popup.classList.add("hidden");
             popup.style.display = "none";
-          }, 500); // 0.5秒後なら十分自然
+          }, 1000); // 0.5秒後なら十分自然
         }
 });

@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const loadingOverlay = document.getElementById("loading-overlay");
     // loadingOverlay.style.display = "none";
+    // loadingOverlay.style.display = "flex";
+    loadingOverlay.classList.remove("hidden");
     loadingOverlay.style.display = "flex";
 
 
@@ -86,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
     .catch(error => console.error("リスト更新エラー:", error));
+    loadingOverlay.classList.add("hidden");
     loadingOverlay.style.display = "none";
 
 
@@ -93,4 +96,20 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
     }
 
+
+    function showPopup(message) {
+        // Remove existing popups
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+
+        const popup = document.createElement("div");
+        popup.className = "popup-message";
+        popup.innerText = message;
+        document.body.appendChild(popup);
+        console.log("funshow")
+        
+        setTimeout(() => {
+            popup.classList.add("fade-out");
+            setTimeout(() => popup.remove(), 1500);
+        }, 1000);
+    }
 })
