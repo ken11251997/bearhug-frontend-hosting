@@ -124,6 +124,16 @@ body {
     max-width: 60%;
     min-width: 100px;
     padding: 6px;
+    display: inline-block;
+    /* padding: 10px; */
+    border-radius: 12px;
+    margin: 6px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+    white-space: normal;      /* ✅ 折り返しを許可 */
+    overflow-wrap: break-word;
+    max-width: 80%;           /* ✅ 画面の8割を最大幅に */
 }
 
 .my-message {
@@ -361,7 +371,7 @@ button:hover {
   }
 
 
-  
+
   .persistent-popup {
     position: fixed;
     top: 20%;
