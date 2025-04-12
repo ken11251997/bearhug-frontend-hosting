@@ -206,9 +206,11 @@ document.addEventListener("DOMContentLoaded",function(){
         const leftBear = document.getElementById("left-bear");
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
-      
-        rightBear.src = `static/img/${mymbti}.png`;
+
+        
         leftBear.src = `static/img/${partnermbti}.png`;
+        rightBear.src = `static/img/${mymbti}.png`;
+        
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
         // 表示＆初期化
