@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
 
-        
+
         leftBear.src = `static/img/${partnermbti}.png`;
         rightBear.src = `static/img/${mymbti}.png`;
         
@@ -219,6 +219,7 @@ document.addEventListener("DOMContentLoaded",function(){
         popup.classList.remove("hidden");
         popup.style.display = "flex";
         text.style.opacity = 0;
+        startConfetti();
       
         setTimeout(() => {
             document.getElementById("loading-overlay").style.display = "none";
@@ -226,4 +227,19 @@ document.addEventListener("DOMContentLoaded",function(){
             popup.style.display = "none";
           }, 4000); // 0.5秒後なら十分自然
         }
+
+
+    function startConfetti() {
+        const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
+        for (let i = 0; i < 30; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 4000); // 4秒後に消す
+        }
+    }
 });
+
