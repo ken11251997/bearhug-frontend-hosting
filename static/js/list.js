@@ -75,6 +75,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 subRow.textContent = user.latest_message || "";
                 "（メッセージはまだありません）"
 
+                const bearIcon = document.createElement("img");
+                bearIcon.src = `static/img/mbti/${data.mbti}.png`; // MBTI名に基づく画像
+                bearIcon.alt = `${data.mbti} icon`;
+                bearIcon.classList.add("bear-icon"); // CSSでサイズ調整用クラス
+                // 青丸 → クマ画像 → 名前の順に表示
+                if (user.unread) leftGroup.appendChild(blueDot);
+                leftGroup.appendChild(bearIcon);
+                leftGroup.appendChild(mainRow);
+
                 const leftGroup = document.createElement("div");
                 leftGroup.classList.add("chat-left-group");
                 if (user.unread) leftGroup.appendChild(blueDot);
