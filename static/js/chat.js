@@ -90,11 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     socket.on("ad_message", (data) => {
-        // showAdPopup(data.admessage);
-        showAdPopup({
-            message: data.admessage || "広告を見るとチャット回数が回復します！",
-            onWatchAd: onWatchAd
-          });
+        if (data.type == "chat") {
+            showAdPopup({
+                message: "広告を見ればチャット回数が回復します！",
+                onWatchAd: () => onWatchAd("chat")  // ✅ type指定
+            });
+        }
+        if (data.type == "match") { 
+            showAdPopup({
+                message: "広告を見ればマッチ検索が回復します！",
+                onWatchAd: () => onWatchAd("match")  // ✅ type指定
+            });
+        }
     });
     
     // ログインページへ
@@ -415,23 +422,52 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }  
 
-    function onWatchAd() {
-        // ✅ 1. フェイク広告表示（本番は AdMob APIなど）
+    // function onWatchAd() {
+    //     // ✅ 1. フェイク広告表示（本番は AdMob APIなど）
+    //     alert("📺 広告（仮）を見ています...");
+        
+    //     // ✅ 2. 実際にはここで広告SDKの成功コールバックが必要
+    //     // 今はテストとして直接成功と仮定
+    //     // const userId = localStorage.getItem("user_id");
+        
+    //     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ user_id: user_id, type: "chat" })  // または type: "match"
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //         if (data.status === "success") {
+    //             showPopup("✅ チャット回数が1回復しました！");
+    //         } else {
+    //             showPopup("⚠️ 回復に失敗しました：" + data.message);
+    //         }
+    //         })
+    //         .catch(err => {
+    //         console.error("回復通信エラー", err);
+    //         showPopup("❌ 回復通信に失敗しました");
+    //         });
+    //     }
+    function onWatchAd(type) {
         alert("📺 広告（仮）を見ています...");
         
-        // ✅ 2. 実際にはここで広告SDKの成功コールバックが必要
-        // 今はテストとして直接成功と仮定
-        // const userId = localStorage.getItem("user_id");
+        const user_id = sessionStorage.getItem("user_id");
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user_id, type: "chat" })  // または type: "match"
+            body: JSON.stringify({ user_id: user_id, type: type })  // type を動的に
         })
             .then(res => res.json())
             .then(data => {
             if (data.status === "success") {
+                if (type === "chat") {
                 showPopup("✅ チャット回数が1回復しました！");
+                } else if (type === "match") {
+                showPopup("✅ マッチ検索が1回復しました！");
+                } else {
+                showPopup("✅ 回復しました！");
+                }
             } else {
                 showPopup("⚠️ 回復に失敗しました：" + data.message);
             }
@@ -441,6 +477,5 @@ document.addEventListener("DOMContentLoaded", function () {
             showPopup("❌ 回復通信に失敗しました");
             });
         }
-      
     
 })

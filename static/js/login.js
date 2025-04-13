@@ -74,7 +74,10 @@ document.addEventListener("DOMContentLoaded",function(){
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
-                showPopup("マッチング回数の上限（5回）に達しました。\nもっと探したい方は、アップグレードをご検討ください。");
+                showAdPopup({
+                    message: "広告を見ればマッチ検索が回復します！",
+                    onWatchAd: () => onWatchAd("match")  // ✅ type指定
+                });
             } else if (data.status === "error" && data.message === "Nobudy") {
                 loadingOverlay.style.display = "none";
                 showPopup("マッチング相手がいません。");
@@ -241,5 +244,67 @@ document.addEventListener("DOMContentLoaded",function(){
             setTimeout(() => confetti.remove(), 3500); // 4秒後に消す
         }
     }
+
+    function showAdPopup({message,onWatchAd}) {
+        // 既存ポップアップを削除
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+      
+        // ポップアップ要素作成
+        const popup = document.createElement("div");
+        popup.className = "popup-message persistent-popup"; // カスタムクラスで非フェード化
+        popup.innerHTML = `
+          <div class="popup-header">
+            <span>${message}</span>
+            <button class="popup-close-btn">✕</button>
+          </div>
+          <div class="popup-actions">
+            <button class="popup-watch-ad-btn">広告を見て使えるようにする</button>
+          </div>
+        `;
+      
+        document.body.appendChild(popup);
+      
+        // ✕ボタンで閉じる
+        popup.querySelector(".popup-close-btn").addEventListener("click", () => {
+          popup.remove();
+        });
+      
+        // 広告再生ボタン
+        popup.querySelector(".popup-watch-ad-btn").addEventListener("click", () => {
+          if (onWatchAd) onWatchAd();
+          popup.remove(); // 再生後に閉じる
+        });
+    }
+
+
+    function onWatchAd(type) {
+        alert("📺 広告（仮）を見ています...");
+        
+        const user_id = sessionStorage.getItem("user_id");
+        
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: user_id, type: type })  // type を動的に
+        })
+            .then(res => res.json())
+            .then(data => {
+            if (data.status === "success") {
+                if (type === "chat") {
+                showPopup("✅ チャット回数が1回復しました！");
+                } else if (type === "match") {
+                showPopup("✅ マッチ検索が1回復しました！");
+                } else {
+                showPopup("✅ 回復しました！");
+                }
+            } else {
+                showPopup("⚠️ 回復に失敗しました：" + data.message);
+            }
+            })
+            .catch(err => {
+            console.error("回復通信エラー", err);
+            showPopup("❌ 回復通信に失敗しました");
+            });
+        }
 });
 
