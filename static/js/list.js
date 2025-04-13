@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const bearIcon = document.createElement("img");
                 bearIcon.src = `static/img/${user.mbti}.png`; // MBTI名に基づく画像
+                console.log(user.mbti)
                 bearIcon.alt = `${user.mbti} icon`;
                 bearIcon.classList.add("bear-icon"); // CSSでサイズ調整用クラス
                 // 青丸 → クマ画像 → 名前の順に表示
