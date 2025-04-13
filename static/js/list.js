@@ -72,7 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const subRow = document.createElement("div");
                 subRow.classList.add("chat-sub-row");
-                subRow.textContent = user.latest_message || "（メッセージはまだありません）";
+                subRow.textContent = user.latest_message || "";
+                "（メッセージはまだありません）"
 
                 const leftGroup = document.createElement("div");
                 leftGroup.classList.add("chat-left-group");
