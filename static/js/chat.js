@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId, type: "chat" })  // または type: "match"
+            body: JSON.stringify({ user_id: user_id, type: "chat" })  // または type: "match"
         })
             .then(res => res.json())
             .then(data => {
