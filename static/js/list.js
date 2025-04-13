@@ -62,38 +62,37 @@ document.addEventListener("DOMContentLoaded", function () {
             data.matched_users_list.forEach(user => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("chat-list-item");
-
+            
+                const leftGroup = document.createElement("div");
+                leftGroup.classList.add("chat-left-group");
+            
+                // 🔵 未読マーク
                 const blueDot = document.createElement("span");
                 blueDot.classList.add("unread-indicator");
-
+                if (!user.unread) blueDot.style.visibility = "hidden";
+                leftGroup.appendChild(blueDot);
+            
+                // 🐻 MBTIアイコン
+                const bearIcon = document.createElement("img");
+                bearIcon.src = `static/img/${user.mbti}.png`;
+                bearIcon.alt = `${user.mbti} icon`;
+                bearIcon.classList.add("bear-icon");
+                leftGroup.appendChild(bearIcon);
+            
+                // 👤 ユーザー名
                 const mainRow = document.createElement("div");
                 mainRow.classList.add("chat-main-row");
                 mainRow.textContent = user.username;
-
+                leftGroup.appendChild(mainRow);
+            
+                // 💬 最新メッセージ
                 const subRow = document.createElement("div");
                 subRow.classList.add("chat-sub-row");
                 subRow.textContent = user.latest_message || "";
-                "（メッセージはまだありません）"
-
-                
-
-                const leftGroup = document.createElement("div");
-                leftGroup.classList.add("chat-left-group");
-                if (user.unread) leftGroup.appendChild(blueDot);
-                leftGroup.appendChild(mainRow);
-
-
-                const bearIcon = document.createElement("img");
-                bearIcon.src = `static/img/${user.mbti}.png`; // MBTI名に基づく画像
-                console.log(user.mbti)
-                bearIcon.alt = `${user.mbti} icon`;
-                bearIcon.classList.add("bear-icon"); // CSSでサイズ調整用クラス
-                // 青丸 → クマ画像 → 名前の順に表示
-                leftGroup.appendChild(bearIcon);
-
+            
                 listItem.appendChild(leftGroup);
                 listItem.appendChild(subRow);
-
+            
                 listItem.setAttribute("data-user-id", user.id);
                 listItem.setAttribute("data-room-id", user.room_id);
             
@@ -110,13 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.mbti in mbtiColorClasses) {
                     listItem.classList.add(mbtiColorClasses[user.mbti]);
                 }
-            
-                // if (user.unread) {
-                //     listItem.classList.add("unread");
-                //     const blueDot = document.createElement("span");
-                //     blueDot.classList.add("unread-indicator");
-                //     listItem.appendChild(blueDot);
-                // }
             
                 listContainer.appendChild(listItem);
             });
