@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // BackButton.addEventListener("click", function () {
     //     if (user_id && room_id) {
     //         // window.location.href =`/login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
-    //         socket.emit("back", { user_id , room_id });
+            // socket.emit("back", { user_id , room_id });
     //     }
     // });
 
@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ListBtn.addEventListener("click", function () {
         localStorage.setItem("user_id", user_id);
         console.log("List")
+        socket.emit("back", { user_id , room_id });
         window.location.href = `list`;
     });
 
