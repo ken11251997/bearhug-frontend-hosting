@@ -373,6 +373,17 @@ button:hover {
 
 
   .persistent-popup {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #deb887;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: #8b4513;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+
+  .persistent-popup {
     position: fixed;
     top: 20%;
     left: 50%;
@@ -395,24 +406,41 @@ button:hover {
     margin-bottom: 10px;
     font-weight: bold;
   }
-  
-  .popup-close-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-  }
+
   
   .popup-actions {
     text-align: center;
   }
   
-  .popup-watch-ad-btn {
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
+  /* persistent-popup を showPopup に近い雰囲気に調整 */
+
+
+/* ✕ボタンを茶色系に変更 */
+.popup-close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #8b4513; /* ← ここを茶色に */
+  cursor: pointer;
+}
+
+/* ✕ボタンの hover 時に少し濃く */
+.popup-close-btn:hover {
+  color: #5c3317;
+}
+
+/* 広告視聴ボタンのスタイルも柔らかく */
+.popup-watch-ad-btn {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup-watch-ad-btn:hover {
+  background: linear-gradient(135deg, #a0522d, #8b4513);
+}

@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // ✅ 2. 実際にはここで広告SDKの成功コールバックが必要
         // 今はテストとして直接成功と仮定
-        const userId = localStorage.getItem("user_id");
+        // const userId = localStorage.getItem("user_id");
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
             method: "POST",
