@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(other_mbti)
 
     const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
     
     const leaveButton = document.getElementById("leave-btn");
     const sendButton = document.getElementById("send-btn");
@@ -165,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     socket.on("load_messages", function (messages) {
-        loadingOverlay.classList.remove("hidden");
+
         console.log("📩 メッセージ履歴をロード:", messages);
         chatBox.innerHTML = "";  
     
@@ -221,6 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         scrollToBottom();
         loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
     });
     
 
