@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded",function(){
         
         const user_id = sessionStorage.getItem("user_id");
         
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: user_id, type: type })  // type を動的に
