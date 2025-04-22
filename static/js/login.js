@@ -210,9 +210,9 @@ document.addEventListener("DOMContentLoaded",function(){
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
 
-
-        leftBear.src = `static/img/${partnermbti}.png`;
-        rightBear.src = `static/img/${mymbti}.png`;
+        
+        leftBear.src = `static/img/${mymbti}.png`;
+        rightBear.src = `static/img/${partnermbti}.png`;
         
         text.textContent = `${partnerName}さんと遭遇しました！`;
       
