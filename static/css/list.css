@@ -303,8 +303,20 @@
   border-left: 4px solid orange; 
 }
 
+
+/* 📱 スマホでもスクロールバー付きの固定リスト */
 #matched-user-list {
-  max-height: 400px; /* 必要に応じて高さを調整 */
+  max-height: 400px; /* 必要に応じて調整。例：vhで高さの割合指定も可 */
   overflow-y: auto;
-  padding-right: 5px; /* スクロールバーと文字の余白 */
+  -webkit-overflow-scrolling: touch; /* iOS用の慣性スクロール */
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* スクロールバーをより見やすくする（オプション） */
+#matched-user-list::-webkit-scrollbar {
+  width: 6px;
+}
+#matched-user-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
