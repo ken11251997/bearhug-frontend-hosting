@@ -313,6 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
         chatBox.appendChild(messageDiv);
         // chatBox.appendChild(document.createElement('br'));
         scrollToBottom();
+
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
     });
     
 
@@ -320,6 +323,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const MAX_VIDEO_SIZE_MB = 5;
 
     sendFileButton.addEventListener("click", function () {
+
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
+
         let file = fileInput.files[0];
         if (!file) {
             console.error("❌ ファイルが選択されていません！");
