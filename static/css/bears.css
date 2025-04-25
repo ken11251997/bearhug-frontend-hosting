@@ -125,3 +125,12 @@ body {
     }
   }
   
+
+  .title-row {
+    font-weight: bold;
+    font-size: 18px;
+    color: #8b4513;
+    margin-bottom: 6px;
+    text-align: center;
+    width: 100%;
+  }
