@@ -109,6 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.mbti in mbtiColorClasses) {
                     listItem.classList.add(mbtiColorClasses[user.mbti]);
                 }
+
+                if (user.unread) {
+                    listItem.classList.add("has-unread");
+                }
             
                 listContainer.appendChild(listItem);
             });
