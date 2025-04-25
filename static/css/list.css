@@ -304,7 +304,7 @@
 }
 
 
-//* 📱 マッチリスト：高さ固定・スクロール可能・右寄せ */
+/* 📱 マッチリスト：高さ固定・スクロール可能・右寄せ */
 #matched-user-list {
   max-height: 400px;
   overflow-y: auto;
