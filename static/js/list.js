@@ -59,6 +59,22 @@ document.addEventListener("DOMContentLoaded", function () {
             //     listItem.setAttribute("data-room-id", user.room_id);
 
             listContainer.innerHTML = "";
+
+            data.matched_users_list.sort((a, b) => {
+                // ① 未読かどうか（true=1, false=0）
+                const unreadA = a.unread ? 1 : 0;
+                const unreadB = b.unread ? 1 : 0;
+                if (unreadA !== unreadB) {
+                    return unreadB - unreadA; // 未読を先に
+                }
+            
+                // ② 最新メッセージのタイムスタンプ比較（降順）
+                const timeA = new Date(a.latest_message_time || 0).getTime();
+                const timeB = new Date(b.latest_message_time || 0).getTime();
+                console.log("timeA",timeA,"timeB",timeB)
+                return timeB - timeA;
+            });
+
             data.matched_users_list.forEach(user => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("chat-list-item");
