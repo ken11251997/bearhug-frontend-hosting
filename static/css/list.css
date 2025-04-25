@@ -304,19 +304,35 @@
 }
 
 
-/* 📱 スマホでもスクロールバー付きの固定リスト */
+//* 📱 マッチリスト：高さ固定・スクロール可能・右寄せ */
 #matched-user-list {
-  max-height: 400px; /* 必要に応じて調整。例：vhで高さの割合指定も可 */
+  max-height: 400px;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* iOS用の慣性スクロール */
-  scrollbar-width: thin; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; /* Firefox用 */
+  padding-right: 8px; /* スクロールバーと文字の余白を調整 */
 }
 
-/* スクロールバーをより見やすくする（オプション） */
+/* ✅ Chrome / Safari 用：見やすいスクロールバー */
 #matched-user-list::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
+
+#matched-user-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 #matched-user-list::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background-color: rgba(100, 100, 100, 0.5);  /* ← 濃いめのグレーに変更 */
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+/* スクロールバーを右側にしっかり寄せる */
+#matched-user-list {
+  direction: rtl; /* 一時的に右寄せのために使う */
+}
+
+#matched-user-list > * {
+  direction: ltr; /* コンテンツは通常の左寄せ */
 }
