@@ -1,147 +1,142 @@
 body {
-    background: linear-gradient(135deg, #d2b48c, #f5deb3);
-    margin: 0;
-    padding: 40px 20px;
-  }
-  
-  .page-title {
-    text-align: center;
-    font-size: 32px;
-    color: #8b4513;
-    margin-bottom: 40px;
-  }
-  
-  .mbti-group {
-    margin-bottom: 60px;
-  }
-  
-  .mbti-character {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 20px 0;
-    background: #fffaf0;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  }
+  background: linear-gradient(135deg, #d2b48c, #f5deb3);
+  margin: 0;
+  padding: 40px 20px;
+}
 
- 
-  
-  .mbti-character.left {
-    flex-direction: row;
-  }
-  
-  .mbti-character.right {
-    flex-direction: row-reverse;
-  }
-  
-  .bear-icon {
-    width: 120px;
-    height: auto;
-    border-radius: 50%;
-    margin: 0 20px;
-  }
-  
-  .description {
-    flex: 1;
-  }
-  
-  .description h2 {
-    margin: 0 0 10px;
-    color: #8b4513;
-  }
-  
-  .description p {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  /* 色分け */
-  .purple-group .mbti-character {
-    border-left: 6px solid #b82da3a3;
-  }
-  
-  .green-group .mbti-character {
-    border-left: 6px solid #27ae60;
-  }
-  
-  .blue-group .mbti-character {
-    border-left: 6px solid #3e70c8;
-  }
-  
-  .yellow-group .mbti-character {
-    border-left: 6px solid #daef1b;
-  }
+.page-title {
+  text-align: center;
+  font-size: 32px;
+  color: #8b4513;
+  margin-bottom: 40px;
+}
 
-  .back-button {
-    display: inline-block;
-    font-size: 16px;
-    color: #8b4513;
-    text-decoration: none;
-    padding: 10px 16px;
-    border: 2px solid #8b4513;
-    border-radius: 6px;
-    background-color: #fffaf0;
-    font-weight: bold;
-    transition: background-color 0.3s;
-  }
-  
-  .back-button:hover {
-    background-color: #f0e6d6;
-  }
-  
-  /* 左上固定ボタン */
-  .back-button.fixed {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 999;
-  }
-  
-  /* レスポンシブ */
-  @media (max-width: 768px) {
-    .mbti-character {
-      flex-direction: inherit !important;
-      flex-wrap: wrap;
-    }
-  
-    .title-row {
-      text-align: center;
-      width: 100%;
-    }
-  
-    .description p {
-      text-align: left;
-    }
-  
-    .bear-icon {
-      width: 100px;
-      margin: 0 10px;
-    }
-  
-    .description {
-      margin: 0 10px;
-      flex: 1;
-    }
-  }
-  
+.mbti-group {
+  margin-bottom: 60px;
+}
 
-  .title-row {
-    font-weight: bold;
-    font-size: 18px;
-    color: #8b4513;
-    margin-bottom: 6px;
-    text-align: center;
-    width: 100%;
-  }
+.mbti-character {
+  display: flex;
+  align-items: center; /* アイコンとテキストを上下中央揃え */
+  justify-content: space-between;
+  margin: 20px 0;
+  background: #fffaf0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
-  /* 「性格」「座右の銘」「趣味」だけ中央寄せ */
+.mbti-character.left {
+  flex-direction: row;
+}
+
+.mbti-character.right {
+  flex-direction: row-reverse;
+}
+
+.bear-icon {
+  width: 120px;
+  height: auto;
+  border-radius: 50%;
+  margin: 0 20px;
+}
+
+.description {
+  flex: 1;
+}
+
+.title-row {
+  font-weight: bold;
+  font-size: 18px;
+  color: #8b4513;
+  margin-bottom: 6px;
+  text-align: center;
+  width: 100%;
+}
+
+.description p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.4; /* 行間を少し詰める */
+}
+
 .center-keyword {
   display: block;
   text-align: center;
   font-weight: bold;
-  margin: 8px 0 4px 0;
+  margin: 4px 0 2px 0; /* 上下の余白をさらに詰める */
   color: #8b4513;
+  font-size: 15px;
+}
+
+/* 色分け */
+.purple-group .mbti-character {
+  border-left: 6px solid #b82da3a3;
+}
+
+.green-group .mbti-character {
+  border-left: 6px solid #27ae60;
+}
+
+.blue-group .mbti-character {
+  border-left: 6px solid #3e70c8;
+}
+
+.yellow-group .mbti-character {
+  border-left: 6px solid #daef1b;
+}
+
+.back-button {
+  display: inline-block;
+  font-size: 16px;
+  color: #8b4513;
+  text-decoration: none;
+  padding: 10px 16px;
+  border: 2px solid #8b4513;
+  border-radius: 6px;
+  background-color: #fffaf0;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #f0e6d6;
+}
+
+/* 左上固定ボタン */
+.back-button.fixed {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .mbti-character {
+      flex-direction: inherit !important;
+      flex-wrap: wrap;
+      align-items: center;
+  }
+
+  .title-row {
+      text-align: center;
+      width: 100%;
+  }
+
+  .description p {
+      text-align: left;
+      line-height: 1.4;
+  }
+
+  .bear-icon {
+      width: 100px;
+      margin: 0 10px;
+  }
+
+  .description {
+      margin: 0 10px;
+      flex: 1;
+  }
 }
