@@ -103,19 +103,21 @@ body {
   /* レスポンシブ */
   @media (max-width: 768px) {
     .mbti-character {
-      /* flex-direction: column !important; ← 削除またはコメントアウト */
-      flex-direction: inherit !important; /* 追加：left/rightで指定した方向を維持 */
-      text-align: left; /* 中央揃えを解除 */
-      flex-wrap: wrap; /* 必要に応じて折り返し可能に */
+      flex-direction: inherit !important;
+      flex-wrap: wrap;
     }
-
-    .mbti-character h2 {
-        text-align: center !important;
-        width: 100%;
-      }
+  
+    .title-row {
+      text-align: center;
+      width: 100%;
+    }
+  
+    .description p {
+      text-align: left;
+    }
   
     .bear-icon {
-      width: 100px; /* 例：少し小さくしてモバイル対応 */
+      width: 100px;
       margin: 0 10px;
     }
   
@@ -134,3 +136,12 @@ body {
     text-align: center;
     width: 100%;
   }
+
+  /* 「性格」「座右の銘」「趣味」だけ中央寄せ */
+.center-keyword {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  margin: 8px 0 4px 0;
+  color: #8b4513;
+}
