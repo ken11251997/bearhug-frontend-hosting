@@ -17,13 +17,20 @@ body {
 
 .mbti-character {
   display: flex;
-  align-items: center; /* アイコンとテキストを上下中央揃え */
+  align-items: center;
   justify-content: space-between;
   margin: 20px 0;
   background: #fffaf0;
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  max-width: 500px; /* ← これを追加 */
+  width: 100%;
+}
+
+.description {
+  flex: 1;
+  min-width: 0; /* ← これを追加 */
 }
 
 .mbti-character.left {
@@ -39,10 +46,6 @@ body {
   height: auto;
   border-radius: 50%;
   margin: 0 20px;
-}
-
-.description {
-  flex: 1;
 }
 
 .title-row {
