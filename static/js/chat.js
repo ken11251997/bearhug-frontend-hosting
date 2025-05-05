@@ -235,6 +235,16 @@ document.addEventListener("DOMContentLoaded", function () {
             socket.emit("message",{room : room_id,message :message, sender_id: user_id});
             console.log(message)
             messageInput.value = "";
+
+            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/token/chat_notification", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  receiver_name: Partnername, // 相手のユーザーネーム
+                  sender_id: user_id,
+                  message: message
+                })
+            })
         }
     });
 
