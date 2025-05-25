@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded",function(){
 
 
+
+        let receivedFcmToken = null;
+    // 🔽 App.js（ネイティブ）から FCM トークンを受け取る
+    window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
+    receivedFcmToken = event.detail;
+    console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
+    });
+
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.style.display = "none"; // ← 最初に絶対非表示にする
     document.getElementById("mbti-test-btn").addEventListener("click", function () {
         window.location.href = 'mbti_test';
     });
+
+    
     
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
@@ -30,7 +40,8 @@ document.addEventListener("DOMContentLoaded",function(){
             mbti : mbti,
             prefecture : prefecture,
             age : age,
-            gender : gender
+            gender : gender,
+            fcm_token: receivedFcmToken  // ← ここがポイント
         }
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
@@ -44,6 +55,7 @@ document.addEventListener("DOMContentLoaded",function(){
         .then(result =>{
             // loadingOverlay.classList.add("hidden");
             loadingOverlay.style.display = "none";
+            console.log("登録結果:", result);
             showPopup(result.message, () => {
                 location.reload();
             });
