@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",function(){
             prefecture : prefecture,
             age : age,
             gender : gender,
-            fcm_token: received  // ← ここがポイント
+            fcm_token: receivedFcmToken  // ← ここがポイント
         }
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(error => {
             // loadingOverlay.classList.add("hidden");
             loadingOverlay.style.display = "none";
-            console.error("FcmTokenreg-Error",error)});
+            console.error("reg-Error",error)});
 
     });
 
