@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(){
     let receivedFcmToken = null;
     // 🔽 App.js（ネイティブ）から FCM トークンを受け取る
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
-    const receivedFcmToken = event.detail;
+    receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
     alert("FCM TOKEN: " + receivedFcmToken);
     localStorage.setItem("fcmToken", receivedFcmToken);
@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded",function(){
           })
             .then(() => {
               console.log("✅ fcm_token 更新完了");
+              alert("fcm_token: " + fcmToken);
             })
             .catch(err => {
               console.error("❌ fcm_token 更新失敗:", err);
