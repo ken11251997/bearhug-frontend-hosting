@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const age = document.getElementById("age").value
         const gender = document.getElementById("gender").value
         const fcmToken = receivedFcmToken || localStorage.getItem("fcmToken");
+        console.log(fcmToken)
 
         const data ={
             username : username,
