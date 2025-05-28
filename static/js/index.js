@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
     receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
     localStorage.setItem("fcmToken", receivedFcmToken);
+    
     });
 
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const prefecture = document.getElementById("prefecture").value
         const age = document.getElementById("age").value
         const gender = document.getElementById("gender").value
+        const fcmToken = receivedFcmToken || localStorage.getItem("fcmToken");
 
         const data ={
             username : username,
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded",function(){
             prefecture : prefecture,
             age : age,
             gender : gender,
-            fcm_token: receivedFcmToken  // ← ここがポイント
+            fcm_token: fcmToken  // ← ここがポイント
         }
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
@@ -85,6 +87,28 @@ document.addEventListener("DOMContentLoaded",function(){
             username : username,
             password : password
         }
+
+        const fcmToken = receivedFcmToken || localStorage.getItem("fcmToken");
+        if (fcmToken) {
+          fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/update-token", {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              user_name: username,
+              fcm_token: fcmToken
+            })
+          })
+            .then(() => {
+              console.log("✅ fcm_token 更新完了");
+            })
+            .catch(err => {
+              console.error("❌ fcm_token 更新失敗:", err);
+            });
+        }
+
+
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/login",{
             method :"POST",
