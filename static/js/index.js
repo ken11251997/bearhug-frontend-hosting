@@ -5,11 +5,10 @@ document.addEventListener("DOMContentLoaded",function(){
     let receivedFcmToken = null;
     // 🔽 App.js（ネイティブ）から FCM トークンを受け取る
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
-    receivedFcmToken = event.detail;
+    const receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
     alert("FCM TOKEN: " + receivedFcmToken);
     localStorage.setItem("fcmToken", receivedFcmToken);
-    
     });
 
     const loadingOverlay = document.getElementById("loading-overlay");
