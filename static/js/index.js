@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded",function(){
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
     receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
+    alert("FCM TOKEN: " + receivedFcmToken);
     localStorage.setItem("fcmToken", receivedFcmToken);
     
     });
@@ -17,7 +18,6 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = 'mbti_test';
     });
 
-    
     
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const gender = document.getElementById("gender").value
         const fcmToken = receivedFcmToken || localStorage.getItem("fcmToken");
         console.log(fcmToken)
+        alert("fcm_token: " + fcmToken);
 
         const data ={
             username : username,
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded",function(){
             gender : gender,
             fcm_token: fcmToken  // ← ここがポイント
         }
+        
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
             method:"POST",
