@@ -2,11 +2,12 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 
-        let receivedFcmToken = null;
+    let receivedFcmToken = null;
     // 🔽 App.js（ネイティブ）から FCM トークンを受け取る
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
     receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
+    localStorage.setItem("fcmToken", receivedFcmToken);
     });
 
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded",function(){
             prefecture : prefecture,
             age : age,
             gender : gender,
-            fcm_token: receivedFcmToken  // ← ここがポイント
+            fcm_token: received  // ← ここがポイント
         }
         
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/register",{
@@ -63,7 +64,7 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(error => {
             // loadingOverlay.classList.add("hidden");
             loadingOverlay.style.display = "none";
-            console.error("reg-Error",error)});
+            console.error("FcmTokenreg-Error",error)});
 
     });
 
