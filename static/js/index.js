@@ -104,14 +104,13 @@ document.addEventListener("DOMContentLoaded",function(){
           })
             .then(() => {
               console.log("✅ fcm_token 更新完了");
-              alert("fcm_token: " + fcmToken);
+              
             })
             .catch(err => {
               console.error("❌ fcm_token 更新失敗:", err);
             });
         }
-
-
+        alert("fcm_token: " + fcmToken);
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/login",{
             method :"POST",
