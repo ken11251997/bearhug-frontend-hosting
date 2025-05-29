@@ -193,6 +193,11 @@ document.addEventListener("DOMContentLoaded",function(){
         observer.observe(registerForm, { attributes: true, attributeFilter: ['class'] });
     }
 
+    //WebView 側で準備完了通知を出す
+    if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'WEB_READY' }));
+    }
+
     // Function to show popup
     function showPopup(message,callback) {
         // Remove existing popups
