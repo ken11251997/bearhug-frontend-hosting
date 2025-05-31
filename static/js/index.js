@@ -130,10 +130,11 @@ document.addEventListener("DOMContentLoaded",function(){
                 if (window.ReactNativeWebView) {
                     window.ReactNativeWebView.postMessage(JSON.stringify({
                         type: "LOGIN_SUCCESS",
-                        user_id: result.user_id
+                        username: username,
+                        password: password
                     }));
-                    console.log("✅ user_id sent to React Native via postMessage");
                 }
+
                 // loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
                 showPopup("Login success", () => {
@@ -197,6 +198,16 @@ document.addEventListener("DOMContentLoaded",function(){
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'WEB_READY' }));
     }
+
+    window.addEventListener("AUTO_LOGIN_CREDENTIALS", (event) => {
+    const { username, password } = event.detail;
+    if (username && password) {
+        // 自動ログイン実行
+        document.getElementById("log-username").value = username;
+        document.getElementById("log-password").value = password;
+        document.getElementById("login-form").dispatchEvent(new Event("submit"));
+    }
+    });
 
     // Function to show popup
     function showPopup(message,callback) {
