@@ -136,6 +136,27 @@ h1 {
   background: linear-gradient(135deg, #f8c471, #f4d03f);
 }
 
+.logout-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.logout-button:hover {
+  background: linear-gradient(135deg, #a0522d, #8b4513);
+}
+
 /* 初回表示時の軽いアニメーション */
 @keyframes bounceIn {
   0% {

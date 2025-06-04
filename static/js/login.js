@@ -27,6 +27,15 @@ document.addEventListener("DOMContentLoaded",function(){
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
+
+    document.getElementById("logout-btn").addEventListener("click", function () {
+    // セッションやローカルストレージのクリーンアップ
+    sessionStorage.clear();
+    localStorage.removeItem("subs");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("backToLogin");
+    // indexページへリダイレクト
+    window.location.href = "index.html";});
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
