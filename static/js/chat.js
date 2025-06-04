@@ -376,24 +376,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });  // ✅ バイナリデータに変換
 
 
-    function showInAppNotification(message) {
-        // 既存通知があれば削除
-        const existing = document.getElementById("in-app-banner");
-        if (existing) existing.remove();
+    // function showInAppNotification(message) {
+    //     // 既存通知があれば削除
+    //     const existing = document.getElementById("in-app-banner");
+    //     if (existing) existing.remove();
     
-        const banner = document.createElement("div");
-        banner.id = "in-app-banner";
-        banner.className = "in-app-banner";
-        banner.textContent = message;
+    //     const banner = document.createElement("div");
+    //     banner.id = "in-app-banner";
+    //     banner.className = "in-app-banner";
+    //     banner.textContent = message;
     
-        document.body.appendChild(banner);
+    //     document.body.appendChild(banner);
     
-        // 3秒後に消す
-        setTimeout(() => {
-            banner.classList.add("fade-out");
-            setTimeout(() => banner.remove(), 500); // アニメ後に削除
-        }, 3000);
-    }
+    //     // 3秒後に消す
+    //     setTimeout(() => {
+    //         banner.classList.add("fade-out");
+    //         setTimeout(() => banner.remove(), 500); // アニメ後に削除
+    //     }, 3000);
+    // }
 
     function showPopup(message) {
         // Remove existing popups
@@ -442,60 +442,49 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }  
 
-    // function onWatchAd() {
-    //     // ✅ 1. フェイク広告表示（本番は AdMob APIなど）
-    //     alert("📺 広告（仮）を見ています...");
-        
-    //     // ✅ 2. 実際にはここで広告SDKの成功コールバックが必要
-    //     // 今はテストとして直接成功と仮定
-    //     // const userId = localStorage.getItem("user_id");
-        
-    //     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ user_id: user_id, type: "chat" })  // または type: "match"
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //         if (data.status === "success") {
-    //             showPopup("✅ チャット回数が1回復しました！");
-    //         } else {
-    //             showPopup("⚠️ 回復に失敗しました：" + data.message);
-    //         }
-    //         })
-    //         .catch(err => {
-    //         console.error("回復通信エラー", err);
-    //         showPopup("❌ 回復通信に失敗しました");
-    //         });
-    //     }
     function onWatchAd(type) {
-        alert("📺 広告（仮）を見ています...");
-        
-        const user_id = sessionStorage.getItem("user_id");
-        
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        // ✅ ネイティブアプリ環境なら ReactNativeWebView で広告を表示
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: "SHOW_REWARD_AD",
+            adType: type
+            }));
+        } else {
+            // ✅ Webだけで実行する場合の仮処理（開発用）
+            alert("📺 広告（仮）を見ています...");
+
+            const user_id = sessionStorage.getItem("user_id");
+
+            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user_id, type: type })  // type を動的に
-        })
+            body: JSON.stringify({ user_id: user_id, type: type })
+            })
             .then(res => res.json())
             .then(data => {
-            if (data.status === "success") {
-                if (type === "chat") {
-                showPopup("✅ チャット回数が1回復しました！");
-                } else if (type === "match") {
-                showPopup("✅ マッチ検索が1回復しました！");
+                if (data.status === "success") {
+                showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
                 } else {
-                showPopup("✅ 回復しました！");
-                }
-            } else {
                 showPopup("⚠️ 回復に失敗しました：" + data.message);
-            }
+                }
             })
             .catch(err => {
-            console.error("回復通信エラー", err);
-            showPopup("❌ 回復通信に失敗しました");
+                console.error("回復通信エラー", err);
+                showPopup("❌ 回復通信に失敗しました");
             });
         }
+    }
+    
+    window.addEventListener("AD_WATCHED", (event) => {
+        const type = event.detail.type;
+        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
+    });
+
+        // ✅ 広告失敗イベントを受信
+    window.addEventListener("AD_FAILED", (event) => {
+        const message = event.detail.message || "⚠️ 広告の再生に失敗しました";
+        showPopup(message);
+    });
+
     
 })
