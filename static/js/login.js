@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded",function(){
     localStorage.removeItem("subs");
     localStorage.removeItem("user_id");
     localStorage.removeItem("backToLogin");
+    localStorage.setItem("logoutFlag", "true"); 
     // indexページへリダイレクト
     window.location.href = "index.html";});
     

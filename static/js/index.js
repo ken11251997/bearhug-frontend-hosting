@@ -199,15 +199,22 @@ document.addEventListener("DOMContentLoaded",function(){
         window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'WEB_READY' }));
     }
 
+    
     window.addEventListener("AUTO_LOGIN_CREDENTIALS", (event) => {
+    const isLogout = localStorage.getItem("logoutFlag");
+    if (isLogout === "true") {
+        console.log("⏹️ 自動ログイン抑制中（ログアウト直後）");
+        localStorage.removeItem("logoutFlag"); // ✅ 1度だけ抑制
+        return;
+    }
+
     const { username, password } = event.detail;
     if (username && password) {
-        // 自動ログイン実行
         document.getElementById("log-username").value = username;
         document.getElementById("log-password").value = password;
         document.getElementById("login-form").dispatchEvent(new Event("submit"));
     }
-    });
+});
 
     // Function to show popup
     function showPopup(message,callback) {
