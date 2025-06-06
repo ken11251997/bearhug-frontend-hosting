@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded",function(){
                         type: "LOGIN_SUCCESS",
                         username: username,
                         password: password,
-                        user_id: result.user_id 
+                        user_id: String(result.user_id) 
                     }));
                 }
 
