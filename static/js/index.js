@@ -131,7 +131,8 @@ document.addEventListener("DOMContentLoaded",function(){
                     window.ReactNativeWebView.postMessage(JSON.stringify({
                         type: "LOGIN_SUCCESS",
                         username: username,
-                        password: password
+                        password: password,
+                        user_id: result.user_id 
                     }));
                 }
 

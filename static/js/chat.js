@@ -449,6 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "SHOW_REWARD_AD",
             adType: type
             }));
+        
         } else {
             // ✅ Webだけで実行する場合の仮処理（開発用）
             alert("📺 広告（仮）を見ています...");
