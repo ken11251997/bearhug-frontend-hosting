@@ -286,29 +286,29 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
     function onWatchAd(type) {
-        // ✅ ネイティブアプリ環境なら ReactNativeWebView で広告を表示
+        const user_id =
+        sessionStorage.getItem("user_id") ||
+        new URLSearchParams(window.location.search).get("user_id");
+
         if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
-            type: "SHOW_REWARD_AD",
-            adType: type
+                type: "SHOW_REWARD_AD",
+                adType: type
             }));
         } else {
-            // ✅ Webだけで実行する場合の仮処理（開発用）
             alert("📺 広告（仮）を見ています...");
 
-            const user_id = sessionStorage.getItem("user_id");
-
             fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user_id, type: type })
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: user_id, type: type })
             })
             .then(res => res.json())
             .then(data => {
                 if (data.status === "success") {
-                showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
+                    showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
                 } else {
-                showPopup("⚠️ 回復に失敗しました：" + data.message);
+                    showPopup("⚠️ 回復に失敗しました：" + data.message);
                 }
             })
             .catch(err => {
@@ -317,15 +317,6 @@ document.addEventListener("DOMContentLoaded",function(){
             });
         }
     }
-    window.addEventListener("AD_WATCHED", (event) => {
-        const type = event.detail.type;
-        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
-    });
 
-        // ✅ 広告失敗イベントを受信
-    window.addEventListener("AD_FAILED", (event) => {
-        const message = event.detail.message || "⚠️ 広告の再生に失敗しました";
-        showPopup(message);
-    });
 });
 
