@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded",function(){
         setTimeout(() => {
             popup.classList.add("fade-out");
             setTimeout(() => popup.remove(), 1500);
-        }, 2000);
+        }, 1000);
     }
 
 
@@ -214,33 +214,41 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
 
+    // 🎉 マッチング演出
     function showPoyonMatch(mymbti, partnermbti, partnerName) {
         const popup = document.getElementById("match-animation");
         const leftBear = document.getElementById("left-bear");
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
 
-        
+        // クマ画像設定
         leftBear.src = `static/img/${mymbti}.png`;
         rightBear.src = `static/img/${partnermbti}.png`;
-        
+
+        // メッセージ設定
         text.textContent = `${partnerName}さんと遭遇しました！`;
-      
+
         // 表示＆初期化
         popup.classList.remove("hidden");
         popup.style.display = "flex";
         text.style.opacity = 0;
+
+        // === 1) 花吹雪スタート ===
         startConfetti();
-      
+
+        // === 2) 0.5秒後にクラッカー ===
+        setTimeout(showPartyCrackers, 500);
+
+        // === 3) 一定時間後に非表示 ===
         setTimeout(() => {
             document.getElementById("loading-overlay").style.display = "none";
             popup.classList.add("hidden");
             popup.style.display = "none";
-          }, 3500); // 0.5秒後なら十分自然
+        }, 3500);
         }
 
-
-    function startConfetti() {
+        // 🎊 花吹雪生成
+        function startConfetti() {
         const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
         for (let i = 0; i < 30; i++) {
             const confetti = document.createElement("div");
@@ -249,9 +257,28 @@ document.addEventListener("DOMContentLoaded",function(){
             confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3500); // 4秒後に消す
+            setTimeout(() => confetti.remove(), 3500);
         }
-    }
+        }
+
+        // 🎉 クラッカー
+        function showPartyCrackers() {
+        // 右下クラッカー
+        const crackerRight = document.createElement("div");
+        crackerRight.className = "party-cracker right";
+        document.body.appendChild(crackerRight);
+
+        // 左下クラッカー
+        const crackerLeft = document.createElement("div");
+        crackerLeft.className = "party-cracker left";
+        document.body.appendChild(crackerLeft);
+
+        // アニメーション終了後に削除
+        setTimeout(() => {
+            crackerRight.remove();
+            crackerLeft.remove();
+        }, 2000);
+        }
 
     function showAdPopup({message,onWatchAd}) {
         // 既存ポップアップを削除
@@ -286,9 +313,10 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
     function onWatchAd(type) {
-        const user_id =
-        sessionStorage.getItem("user_id") ||
-        new URLSearchParams(window.location.search).get("user_id");
+        const loadingOverlay = document.getElementById("loading-overlay");
+        // ✅ 広告開始前にロード画面を表示
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
 
         if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -296,7 +324,10 @@ document.addEventListener("DOMContentLoaded",function(){
                 adType: type
             }));
         } else {
+            // ✅ Webのみ仮動作
             alert("📺 広告（仮）を見ています...");
+
+            const user_id = sessionStorage.getItem("user_id");
 
             fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
                 method: "POST",
@@ -314,9 +345,37 @@ document.addEventListener("DOMContentLoaded",function(){
             .catch(err => {
                 console.error("回復通信エラー", err);
                 showPopup("❌ 回復通信に失敗しました");
+            })
+            .finally(() => {
+                // ✅ 通信後は必ずロード画面を隠す
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
             });
         }
     }
+
+    window.addEventListener("message", (event) => {
+        try {
+            const data = JSON.parse(event.data);
+            console.log("[DEBUG] login.js メッセージ受信:", data);
+
+            if (data.type === "AD_WATCHED") {
+                if (data.adType === "chat") {
+                    showPopup("✅ 広告を見てチャット回数が回復しました！");
+                } else if (data.adType === "match") {
+                    showPopup("✅ 広告を見てマッチング回数が回復しました！");
+                }
+
+                // ✅ 広告完了時にロード画面を閉じる
+                const loadingOverlay = document.getElementById("loading-overlay");
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+            }
+        } catch (e) {
+            console.error("[ERROR] メッセージ処理失敗:", e);
+        }
+    });
+
 
 });
 

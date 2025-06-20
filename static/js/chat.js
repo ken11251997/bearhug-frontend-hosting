@@ -442,39 +442,47 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }  
 
-    // function onWatchAd(type) {
-    //     // ✅ ネイティブアプリ環境なら ReactNativeWebView で広告を表示
-    //     if (window.ReactNativeWebView) {
-    //         window.ReactNativeWebView.postMessage(JSON.stringify({
-    //         type: "SHOW_REWARD_AD",
-    //         adType: type
-    //         }));
-        
-    //     } else {
-    //         // ✅ Webだけで実行する場合の仮処理（開発用）
-    //         alert("📺 広告（仮）を見ています...");
+    function onWatchAd(type) {
+        const loadingOverlay = document.getElementById("loading-overlay");
+        // ✅ 広告開始前にロード画面を表示
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
 
-    //         const user_id = sessionStorage.getItem("user_id");
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: "SHOW_REWARD_AD",
+                adType: type
+            }));
+        } else {
+            // ✅ Webのみ仮動作
+            alert("📺 広告（仮）を見ています...");
 
-    //         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ user_id: user_id, type: type })
-    //         })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.status === "success") {
-    //             showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
-    //             } else {
-    //             showPopup("⚠️ 回復に失敗しました：" + data.message);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.error("回復通信エラー", err);
-    //             showPopup("❌ 回復通信に失敗しました");
-    //         });
-    //     }
-    // }
+            const user_id = sessionStorage.getItem("user_id");
+
+            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: user_id, type: type })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
+                } else {
+                    showPopup("⚠️ 回復に失敗しました：" + data.message);
+                }
+            })
+            .catch(err => {
+                console.error("回復通信エラー", err);
+                showPopup("❌ 回復通信に失敗しました");
+            })
+            .finally(() => {
+                // ✅ 通信後は必ずロード画面を隠す
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+            });
+        }
+    }
     
     // window.addEventListener("AD_WATCHED", (event) => {
     //     const type = event.detail.type;
@@ -486,30 +494,30 @@ document.addEventListener("DOMContentLoaded", function () {
     //     const message = event.detail.message || "⚠️ 広告の再生に失敗しました";
     //     showPopup(message);
     // });
+    
+    window.addEventListener("message", (event) => {
+        try {
+            const data = JSON.parse(event.data);
+            console.log("[DEBUG] login.js メッセージ受信:", data);
 
-    function onWatchAd(type) {
+            if (data.type === "AD_WATCHED") {
+                if (data.adType === "chat") {
+                    showPopup("✅ 広告を見てチャット回数が回復しました！");
+                } else if (data.adType === "match") {
+                    showPopup("✅ 広告を見てマッチング回数が回復しました！");
+                }
 
-        const user_id = sessionStorage.getItem("user_id");
-        console.log("[DEBUG] onWatchAd CALLED:", { type, user_id });
-
-        if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-            type: "SHOW_REWARD_AD",
-            adType: type,
-            }));
-        } else {
-            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                user_id: user_id,
-                type: type,
-            }),
-            })
-            .then(res => res.json())
-            .then(console.log)
-            .catch(console.error);
+                // ✅ 広告完了時にロード画面を閉じる
+                const loadingOverlay = document.getElementById("loading-overlay");
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+            }
+        } catch (e) {
+            console.error("[ERROR] メッセージ処理失敗:", e);
         }
-    }
+    });
+
+
+
     
 })

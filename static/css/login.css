@@ -391,6 +391,7 @@ h1 {
   display: none;
 }
 
+
 .confetti {
   position: fixed;
   top: -10px;
@@ -411,5 +412,37 @@ h1 {
   100% {
     transform: translateY(100vh) rotate(360deg);
     opacity: 0;
+  }
+}
+
+
+/* 🎉 クラッカー */
+.party-cracker {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background: url('https://cdn-icons-png.flaticon.com/512/3132/3132693.png') no-repeat center/contain;
+  z-index: 9999;
+  animation: cracker-shoot 1s forwards;
+}
+
+.party-cracker.right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.party-cracker.left {
+  bottom: 20px;
+  left: 20px;
+}
+
+@keyframes cracker-shoot {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-300px) translateX(0);
   }
 }
