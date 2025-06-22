@@ -468,8 +468,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ 広告開始前に必ずロードを表示
     function onWatchAd(type) {
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.classList.remove("hidden");
-    loadingOverlay.style.display = "flex";
+    // loadingOverlay.classList.remove("hidden");
+    // loadingOverlay.style.display = "flex";
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
