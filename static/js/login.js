@@ -375,7 +375,11 @@ document.addEventListener("DOMContentLoaded",function(){
             console.error("[ERROR] メッセージ処理失敗:", e);
         }
     });
-
+    document.getElementById("test-match-animation").addEventListener("click", () => {
+        // 例: 自分INTJ・相手ENTP・相手名テスト
+        showPoyonMatch("INTJ", "ENTP", "テストさん");
+        }
+    );
 
 });
 
