@@ -416,33 +416,53 @@ h1 {
 }
 
 
-/* 🎉 クラッカー */
-.party-cracker {
+.party-cracker.center {
   position: fixed;
   width: 50px;
   height: 50px;
   background: url('https://cdn-icons-png.flaticon.com/512/3132/3132693.png') no-repeat center/contain;
+  top: 50vh;
   z-index: 9999;
-  animation: cracker-shoot 1s forwards;
+  animation: cracker-pop 0.5s forwards;
 }
 
-.party-cracker.right {
-  bottom: 20px;
-  right: 20px;
+.party-cracker.center.left {
+  left: calc(50% - 40px);
 }
 
-.party-cracker.left {
-  bottom: 20px;
-  left: 20px;
+.party-cracker.center.right {
+  left: calc(50% + 40px);
 }
 
-@keyframes cracker-shoot {
+/* 💥 クラッカーの縮小→拡大→パン */
+@keyframes cracker-pop {
   0% {
-    opacity: 1;
-    transform: scale(1) translateY(0) translateX(0);
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
   }
   100% {
+    transform: scale(1.5);
     opacity: 0;
-    transform: scale(0) translateY(-300px) translateX(0);
+  }
+}
+
+/* 🎵 音符 */
+.music-note {
+  position: fixed;
+  font-size: 24px;
+  animation: note-fly 1.5s forwards;
+  z-index: 9999;
+}
+
+@keyframes note-fly {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) rotate(360deg);
+    opacity: 0;
   }
 }

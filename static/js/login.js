@@ -263,22 +263,37 @@ document.addEventListener("DOMContentLoaded",function(){
 
         // 🎉 クラッカー
         function showPartyCrackers() {
-        // 右下クラッカー
-        const crackerRight = document.createElement("div");
-        crackerRight.className = "party-cracker right";
-        document.body.appendChild(crackerRight);
+            // 🎉 クラッカー本体（左右2つ）
+            const crackerLeft = document.createElement("div");
+            const crackerRight = document.createElement("div");
 
-        // 左下クラッカー
-        const crackerLeft = document.createElement("div");
-        crackerLeft.className = "party-cracker left";
-        document.body.appendChild(crackerLeft);
+            crackerLeft.className = "party-cracker center left";
+            crackerRight.className = "party-cracker center right";
 
-        // アニメーション終了後に削除
-        setTimeout(() => {
-            crackerRight.remove();
-            crackerLeft.remove();
-        }, 2000);
-        }
+            document.body.appendChild(crackerLeft);
+            document.body.appendChild(crackerRight);
+
+            // 🎵 音符をパンの瞬間に飛ばす
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                const note = document.createElement("div");
+                note.className = "music-note";
+                note.textContent = "🎵";
+                note.style.left = 50 + Math.random() * 20 - 10 + "vw"; // 画面中央±10vw
+                note.style.top = "50vh"; // 画面中央
+                note.style.animationDuration = (Math.random() * 1 + 1) + "s";
+                document.body.appendChild(note);
+
+                setTimeout(() => note.remove(), 1500);
+                }
+            }, 300); // パンの瞬間と合わせる
+
+            // 🎉 一定時間後にクラッカー削除
+            setTimeout(() => {
+                crackerLeft.remove();
+                crackerRight.remove();
+            }, 1500);
+            }
 
     function showAdPopup({message,onWatchAd}) {
         // 既存ポップアップを削除
