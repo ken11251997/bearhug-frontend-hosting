@@ -221,33 +221,39 @@ document.addEventListener("DOMContentLoaded",function(){
         const rightBear = document.getElementById("right-bear");
         const text = document.getElementById("encounter-text");
 
-        // クマ画像設定
         leftBear.src = `static/img/${mymbti}.png`;
         rightBear.src = `static/img/${partnermbti}.png`;
-
-        // メッセージ設定
         text.textContent = `${partnerName}さんと遭遇しました！`;
 
-        // 表示＆初期化
+        // 表示
         popup.classList.remove("hidden");
         popup.style.display = "flex";
-        text.style.opacity = 0;
 
-        // === 1) 花吹雪スタート ===
+        // 花吹雪スタート
         startConfetti();
 
-        // === 2) 0.5秒後にクラッカー ===
-        setTimeout(showPartyCrackers, 500);
+        // クマを中央へ
+        leftBear.classList.add("bear-left");
+        rightBear.classList.add("bear-right");
 
-        // === 3) 一定時間後に非表示 ===
+        // 衝突タイミングで音符発生
         setTimeout(() => {
-            document.getElementById("loading-overlay").style.display = "none";
+            spawnMusicNotes();
+        }, 700);
+
+        setTimeout(() => {
+            text.style.opacity = 1;
+        }, 800);
+
+        setTimeout(() => {
             popup.classList.add("hidden");
             popup.style.display = "none";
+            leftBear.classList.remove("bear-left");
+            rightBear.classList.remove("bear-right");
+            text.style.opacity = 0;
         }, 3500);
         }
 
-        // 🎊 花吹雪生成
         function startConfetti() {
         const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
         for (let i = 0; i < 30; i++) {
@@ -257,43 +263,24 @@ document.addEventListener("DOMContentLoaded",function(){
             confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3500);
+            setTimeout(() => confetti.remove(), 4000);
         }
         }
 
-        // 🎉 クラッカー
-        function showPartyCrackers() {
-            // 🎉 クラッカー本体（左右2つ）
-            const crackerLeft = document.createElement("div");
-            const crackerRight = document.createElement("div");
-
-            crackerLeft.className = "party-cracker center left";
-            crackerRight.className = "party-cracker center right";
-
-            document.body.appendChild(crackerLeft);
-            document.body.appendChild(crackerRight);
-
-            // 🎵 音符をパンの瞬間に飛ばす
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                const note = document.createElement("div");
-                note.className = "music-note";
-                note.textContent = "🎵";
-                note.style.left = 50 + Math.random() * 20 - 10 + "vw"; // 画面中央±10vw
-                note.style.top = "50vh"; // 画面中央
-                note.style.animationDuration = (Math.random() * 1 + 1) + "s";
-                document.body.appendChild(note);
-
-                setTimeout(() => note.remove(), 1500);
-                }
-            }, 300); // パンの瞬間と合わせる
-
-            // 🎉 一定時間後にクラッカー削除
-            setTimeout(() => {
-                crackerLeft.remove();
-                crackerRight.remove();
-            }, 1500);
-            }
+        function spawnMusicNotes() {
+        for (let i = 0; i < 10; i++) {
+            const note = document.createElement("div");
+            note.className = "music-note";
+            note.textContent = "🎵";
+            note.style.left = "50%";
+            note.style.top = "50%";
+            note.style.animationDuration = (Math.random() * 1 + 1.5) + "s";
+            note.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(note);
+            setTimeout(() => note.remove(), 2000);
+        }
+        }
+                    
 
     function showAdPopup({message,onWatchAd}) {
         // 既存ポップアップを削除

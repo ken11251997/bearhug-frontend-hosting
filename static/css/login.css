@@ -416,38 +416,6 @@ h1 {
 }
 
 
-.party-cracker.center {
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  background: url('https://cdn-icons-png.flaticon.com/512/3132/3132693.png') no-repeat center/contain;
-  top: 50vh;
-  z-index: 9999;
-  animation: cracker-pop 0.5s forwards;
-}
-
-.party-cracker.center.left {
-  left: calc(50% - 40px);
-}
-
-.party-cracker.center.right {
-  left: calc(50% + 40px);
-}
-
-/* 💥 クラッカーの縮小→拡大→パン */
-@keyframes cracker-pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.5);
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
 /* 🎵 音符 */
 .music-note {
   position: fixed;
@@ -458,11 +426,11 @@ h1 {
 
 @keyframes note-fly {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
     opacity: 1;
   }
   100% {
-    transform: translateY(-150px) rotate(360deg);
+    transform: translate(-50%, -50%) translate(calc(100px * (random() - 0.5)), -150px) rotate(360deg);
     opacity: 0;
   }
 }
