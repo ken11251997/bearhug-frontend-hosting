@@ -268,14 +268,19 @@ document.addEventListener("DOMContentLoaded",function(){
         }
 
         function spawnMusicNotes() {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 12; i++) {
             const note = document.createElement("div");
             note.className = "music-note";
             note.textContent = "🎵";
-            note.style.left = "50%";
-            note.style.top = "50%";
-            note.style.animationDuration = (Math.random() * 1 + 1.5) + "s";
-            note.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+            // 中央を基準に ±20px ずらす
+            const offsetX = (Math.random() - 0.5) * 40; 
+            const offsetY = (Math.random() - 0.5) * 40;
+            note.style.left = `calc(50% + ${offsetX}px)`;
+            note.style.top = `calc(50% + ${offsetY}px)`;
+            note.style.animationDuration = (Math.random() * 0.8 + 1.2) + "s";
+            // アニメに渡すカスタム変数
+            note.style.setProperty('--moveX', `${(Math.random() - 0.5) * 200}px`);
+            note.style.setProperty('--moveY', `${-Math.random() * 200}px`);
             document.body.appendChild(note);
             setTimeout(() => note.remove(), 2000);
         }
@@ -317,8 +322,8 @@ document.addEventListener("DOMContentLoaded",function(){
     function onWatchAd(type) {
         const loadingOverlay = document.getElementById("loading-overlay");
         // ✅ 広告開始前にロード画面を表示
-        loadingOverlay.classList.remove("hidden");
-        loadingOverlay.style.display = "flex";
+        // loadingOverlay.classList.remove("hidden");
+        // loadingOverlay.style.display = "flex";
 
         if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -357,6 +362,7 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     window.addEventListener("message", (event) => {
+        alert("pop")
         try {
             const data = JSON.parse(event.data);
             console.log("[DEBUG] login.js メッセージ受信:", data);

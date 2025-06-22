@@ -425,12 +425,12 @@ h1 {
 }
 
 @keyframes note-fly {
-  0% {
-    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  from {
+    transform: translate(0, 0) rotate(0deg);
     opacity: 1;
   }
-  100% {
-    transform: translate(-50%, -50%) translate(calc(100px * (random() - 0.5)), -150px) rotate(360deg);
+  to {
+    transform: translate(var(--moveX), var(--moveY)) rotate(360deg);
     opacity: 0;
   }
 }
