@@ -498,26 +498,28 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("message", (event) => {
         try {
             const data = JSON.parse(event.data);
-            console.log("[DEBUG] login.js メッセージ受信:", data);
+            console.log("[DEBUG] AD_WATCHED 受信:", data);
 
             if (data.type === "AD_WATCHED") {
-                if (data.adType === "chat") {
-                    showPopup("✅ 広告を見てチャット回数が回復しました！");
-                } else if (data.adType === "match") {
-                    showPopup("✅ 広告を見てマッチング回数が回復しました！");
-                }
+            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
 
-                // ✅ 広告完了時にロード画面を閉じる
-                const loadingOverlay = document.getElementById("loading-overlay");
-                loadingOverlay.classList.add("hidden");
-                loadingOverlay.style.display = "none";
+            const loadingOverlay = document.getElementById("loading-overlay");
+            loadingOverlay.classList.add("hidden");
+            loadingOverlay.style.display = "none";
             }
         } catch (e) {
-            console.error("[ERROR] メッセージ処理失敗:", e);
+            console.error("[ERROR] AD_WATCHED parse失敗:", e);
         }
     });
 
 
-
-    
+    ad.addAdEventListener('closed', () => {
+    console.log('📴 広告が閉じられました');
+    if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "AD_WATCHED",
+        adType: type
+        }));
+    }
+    });
 })
