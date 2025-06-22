@@ -322,8 +322,8 @@ document.addEventListener("DOMContentLoaded",function(){
     function onWatchAd(type) {
         const loadingOverlay = document.getElementById("loading-overlay");
         // ✅ 広告開始前にロード画面を表示
-        // loadingOverlay.classList.remove("hidden");
-        // loadingOverlay.style.display = "flex";
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
 
         if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({

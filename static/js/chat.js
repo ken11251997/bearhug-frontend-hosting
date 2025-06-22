@@ -442,79 +442,52 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }  
 
-    function onWatchAd(type) {
-        const loadingOverlay = document.getElementById("loading-overlay");
-        // ✅ 広告開始前にロード画面を表示
-        loadingOverlay.classList.remove("hidden");
-        loadingOverlay.style.display = "flex";
-
-        if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: "SHOW_REWARD_AD",
-                adType: type
-            }));
-        } else {
-            // ✅ Webのみ仮動作
-            alert("📺 広告（仮）を見ています...");
-
-            const user_id = sessionStorage.getItem("user_id");
-
-            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_id: user_id, type: type })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
-                } else {
-                    showPopup("⚠️ 回復に失敗しました：" + data.message);
-                }
-            })
-            .catch(err => {
-                console.error("回復通信エラー", err);
-                showPopup("❌ 回復通信に失敗しました");
-            })
-            .finally(() => {
-                // ✅ 通信後は必ずロード画面を隠す
-                loadingOverlay.classList.add("hidden");
-                loadingOverlay.style.display = "none";
-            });
-        }
-    }
-    
-    // window.addEventListener("AD_WATCHED", (event) => {
-    //     const type = event.detail.type;
-    //     showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ検索'}回数が1回復しました！`);
-    // });
-
-    //     // ✅ 広告失敗イベントを受信
-    // window.addEventListener("AD_FAILED", (event) => {
-    //     const message = event.detail.message || "⚠️ 広告の再生に失敗しました";
-    //     showPopup(message);
-    // });
-    
     window.addEventListener("message", (event) => {
-        try {
-            const data = JSON.parse(event.data);
-            console.log("[DEBUG] AD_WATCHED 受信:", data);
+    try {
+        const data = JSON.parse(event.data);
+        console.log("[DEBUG] chat.js メッセージ受信:", data);
 
-            if (data.type === "AD_WATCHED") {
-            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-
-            const loadingOverlay = document.getElementById("loading-overlay");
-            loadingOverlay.classList.add("hidden");
-            loadingOverlay.style.display = "none";
-            }
-        } catch (e) {
-            console.error("[ERROR] AD_WATCHED parse失敗:", e);
+        if (data.type === "AD_WATCHED") {
+        showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        closeLoadingOverlay();
         }
+    } catch (e) {
+        console.error("[ERROR] AD_WATCHED parse失敗:", e);
+    }
     });
 
+// ローディングを閉じる共通関数
+    function closeLoadingOverlay() {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+    }
+    }
+
+    // ✅ 広告開始前に必ずロードを表示
+    function onWatchAd(type) {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
+
+    if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SHOW_REWARD_AD",
+        adType: type
+        }));
+    } else {
+        // Web fallback
+        console.log("📺 (仮) 広告再生開始");
+        setTimeout(() => {
+        closeLoadingOverlay();
+        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        }, 2000);
+    }
+    }
 
     ad.addAdEventListener('closed', () => {
-    console.log('📴 広告が閉じられました');
+    alert('📴 広告が閉じられました');
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
         type: "AD_WATCHED",
