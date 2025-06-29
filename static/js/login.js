@@ -61,6 +61,21 @@ document.addEventListener("DOMContentLoaded",function(){
     planDisplay.innerText = planText;
     }
 
+    const badge = document.createElement("div");
+    badge.id = "message-notification";
+    badge.className = "unread-indicator hidden"; // list.cssと同じ
+
+    const btn = document.querySelector("#match_list_reload");  // ✅ 対象ボタンのIDを修正
+    if (btn) {
+        btn.style.position = "relative";  // 念のため再指定
+        btn.appendChild(badge);
+    }
+
+    const storedUserId = localStorage.getItem("user_id");
+    if (storedUserId) {
+        checkUnreadMessages(storedUserId);  // ✅ 引数に渡すよう変更
+    }
+
     document.getElementById("match-btn").addEventListener("click",function(event){
         event.preventDefault();
         loadingOverlay.style.display = "flex";
@@ -139,22 +154,7 @@ document.addEventListener("DOMContentLoaded",function(){
         .catch(err => console.error("未読チェック失敗:", err));
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const badge = document.createElement("div");
-        badge.id = "message-notification";
-        badge.className = "unread-indicator hidden"; // list.cssと同じ
 
-        const btn = document.querySelector("#match_list_reload");  // ✅ 対象ボタンのIDを修正
-        if (btn) {
-            btn.style.position = "relative";  // 念のため再指定
-            btn.appendChild(badge);
-        }
-
-        const storedUserId = localStorage.getItem("user_id");
-        if (storedUserId) {
-            checkUnreadMessages(storedUserId);  // ✅ 引数に渡すよう変更
-        }
-    });
 
     function fetchMatchedUsers(){ fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
             method:"POST",
