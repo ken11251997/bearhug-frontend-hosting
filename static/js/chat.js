@@ -485,18 +485,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 2000);
     }
     }
-
-    ad.addAdEventListener('closed', () => {
-    alert('📴 広告が閉じられました');
-    if (window.ReactNativeWebView) {
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: "AD_WATCHED",
-        adType: type
-        }));
-    }
-    setTimeout(() => {
-        closeLoadingOverlay();
-        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        }, 2000);
-    });
 })
