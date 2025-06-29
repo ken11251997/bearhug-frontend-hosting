@@ -122,27 +122,40 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     function checkUnreadMessages() {
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user_id })
-        })
+    if (!user_id) return;
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user_id })
+    })
         .then(res => res.json())
         .then(data => {
-            if (data.status === "success" && data.has_unread) {
-                const icon = document.getElementById("match_list_reload");
-                if (icon) {
-                    const dot = document.createElement("span");
-                    dot.className = "unread-indicator";
-                    icon.appendChild(dot);
-                }
-            }
+        if (data.status === "success" && data.has_unread) {
+            const badge = document.getElementById("message-notification");
+            if (badge) badge.classList.remove("hidden");
+        }
         })
-        .catch(err => {
-            console.error("未読チェック失敗:", err);
-        });
+        .catch(err => console.error("未読チェック失敗:", err));
     }
-    checkUnreadMessages();
+
+    document.addEventListener("DOMContentLoaded", () => {
+    // 通知バッジ DOM 生成
+    const badge = document.createElement("div");
+    badge.id = "message-notification";
+    badge.className = "notification-dot hidden";
+
+    const btn = document.querySelector("#go-matching-list");
+    if (btn) {
+        btn.style.position = "relative";
+        btn.appendChild(badge);
+    }
+
+    const storedUserId = localStorage.getItem("user_id");
+    if (storedUserId) {
+        user_id = storedUserId;
+        checkUnreadMessages();
+    }
+    });
 
 
     function fetchMatchedUsers(){ fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
