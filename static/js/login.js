@@ -30,13 +30,14 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("logout-btn").addEventListener("click", function () {
     // セッションやローカルストレージのクリーンアップ
-    sessionStorage.clear();
-    localStorage.removeItem("subs");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("backToLogin");
-    localStorage.setItem("logoutFlag", "true"); 
-    // indexページへリダイレクト
-    window.location.href = "index.html";});
+        sessionStorage.clear();
+        localStorage.removeItem("subs");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("backToLogin");
+        localStorage.setItem("logoutFlag", "true"); 
+        // indexページへリダイレクト
+        window.location.href = "index.html";}
+    );
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);

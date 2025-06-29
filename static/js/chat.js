@@ -476,6 +476,10 @@ document.addEventListener("DOMContentLoaded", function () {
         type: "SHOW_REWARD_AD",
         adType: type
         }));
+        setTimeout(() => {
+        closeLoadingOverlay();
+        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        }, 2000);
     } else {
         // Web fallback
         console.log("📺 (仮) 広告再生開始");
@@ -488,6 +492,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ad.addAdEventListener('closed', () => {
     alert('📴 広告が閉じられました');
+    setTimeout(() => {
+        closeLoadingOverlay();
+        showPopup(`✅ ${type === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        }, 2000);
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
         type: "AD_WATCHED",
