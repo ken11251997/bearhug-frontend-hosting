@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded",function(){
         btn.style.position = "relative";  // 念のため再指定
         btn.appendChild(badge);
     }
-
-    const storedUserId = localStorage.getItem("user_id");
-    if (storedUserId) {
-        checkUnreadMessages(storedUserId);  // ✅ 引数に渡すよう変更
-    }
+    checkUnreadMessages(user_id)
+    // const storedUserId = localStorage.getItem("user_id");
+    // if (storedUserId) {
+    //     checkUnreadMessages(storedUserId);  // ✅ 引数に渡すよう変更
+    // }
 
     document.getElementById("match-btn").addEventListener("click",function(event){
         event.preventDefault();
@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded",function(){
             if (data.status === "success" && data.has_unread) {
                 const badge = document.getElementById("message-notification");
                 if (badge) badge.classList.remove("hidden"); // ✅ 表示にする
+                console.log("midokuhyouzi")
             }
         })
         .catch(err => console.error("未読チェック失敗:", err));
