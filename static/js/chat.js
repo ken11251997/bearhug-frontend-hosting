@@ -444,19 +444,30 @@ document.addEventListener("DOMContentLoaded", function () {
       }  
 
     window.addEventListener("message", (event) => {
-        aleret("[RECEIVE] message event:", event);
+        alert("[RECEIVE] message event received");
+        console.log("[DEBUG] raw message event:", event);
+
         try {
             const data = JSON.parse(event.data);
-            console.log("[DEBUG] chat.js メッセージ受信:", data);
+            console.log("[DEBUG] parsed data:", data);
 
             if (data.type === "AD_WATCHED") {
-            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-            closeLoadingOverlay();
+                alert("✅ AD_WATCHED received");
+                closeLoadingOverlay();
+                showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
             }
+
+            if (data.type === "AD_FAILED") {
+                alert("❌ AD_FAILED received");
+                closeLoadingOverlay();
+                showPopup("❌ 広告の視聴に失敗しました");
+            }
+
         } catch (e) {
             console.error("[ERROR] AD_WATCHED parse失敗:", e);
+            alert("❌ メッセージ解析エラー");
         }
-    });
+    })
 
 // ローディングを閉じる共通関数
     function closeLoadingOverlay() {
