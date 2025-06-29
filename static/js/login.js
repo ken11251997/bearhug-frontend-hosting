@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     function checkUnreadMessages() {
     if (!user_id) return;
+    console.log("midokutyekku")
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -155,6 +156,7 @@ document.addEventListener("DOMContentLoaded",function(){
         user_id = storedUserId;
         checkUnreadMessages();
     }
+    console.log("botannseisei")
     });
 
 
