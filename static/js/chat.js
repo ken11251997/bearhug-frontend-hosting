@@ -235,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
             socket.emit("message",{room : room_id,message :message, sender_id: user_id});
             console.log(message)
             messageInput.value = "";
+            messageInput.focus();  // ✅ これを追加：再フォーカスしてキーボードを維持！
 
             fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/token/chat_notification", {
                 method: "POST",
@@ -486,4 +487,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 2000);
     }
     }
+
+    messageInput.addEventListener("focus", () => {
+        setTimeout(() => {
+            messageInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 300);
+    });
 })
