@@ -444,30 +444,39 @@ document.addEventListener("DOMContentLoaded", function () {
       }  
 
     window.addEventListener("message", (event) => {
-        alert("[RECEIVE] message event received");
-        console.log("[DEBUG] raw message event:", event);
+        alert("📩 message 受信しました");
 
+        let data;
         try {
-            const data = JSON.parse(event.data);
-            console.log("[DEBUG] parsed data:", data);
-
-            if (data.type === "AD_WATCHED") {
-                alert("✅ AD_WATCHED received");
-                closeLoadingOverlay();
-                showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+            if (typeof event.data === "string") {
+                alert("🔍 event.data は string です");
+                data = JSON.parse(event.data);
+            } else if (typeof event.data === "object") {
+                alert("🔍 event.data は object です");
+                data = event.data;
+            } else {
+                alert("⚠️ 未対応のメッセージ形式: " + typeof event.data);
+                return;
             }
-
-            if (data.type === "AD_FAILED") {
-                alert("❌ AD_FAILED received");
-                closeLoadingOverlay();
-                showPopup("❌ 広告の視聴に失敗しました");
-            }
-
         } catch (e) {
-            console.error("[ERROR] AD_WATCHED parse失敗:", e);
-            alert("❌ メッセージ解析エラー");
+            alert("❌ JSON parse に失敗しました: " + e.message);
+            return;
         }
-    })
+
+        alert("✅ 解析成功: type = " + data.type + ", adType = " + data.adType);
+
+        if (data.type === "AD_WATCHED") {
+            alert("🎉 AD_WATCHED を受信しました");
+            closeLoadingOverlay();
+            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        } else if (data.type === "AD_FAILED") {
+            alert("❌ AD_FAILED を受信しました");
+            closeLoadingOverlay();
+            showPopup("❌ 広告の視聴に失敗しました");
+        } else {
+            alert("📭 未対応のメッセージタイプ: " + data.type);
+        }
+});
 
 // ローディングを閉じる共通関数
     function closeLoadingOverlay() {
