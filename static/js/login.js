@@ -141,6 +141,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.addEventListener("DOMContentLoaded", () => {
     // 通知バッジ DOM 生成
+    console.log("botannseisei0")
     const badge = document.createElement("div");
     badge.id = "message-notification";
     badge.className = "notification-dot hidden";
