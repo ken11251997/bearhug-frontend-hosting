@@ -121,45 +121,40 @@ document.addEventListener("DOMContentLoaded",function(){
         }, 1000);
     }
 
-    function checkUnreadMessages() {
-    if (!user_id) return;
-    console.log("midokutyekku")
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: user_id })
-    })
+    function checkUnreadMessages(uid) {
+        if (!uid) return;
+        console.log("midokutyekku")
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: uid })
+        })
         .then(res => res.json())
         .then(data => {
-        if (data.status === "success" && data.has_unread) {
-            const badge = document.getElementById("message-notification");
-            if (badge) badge.classList.remove("hidden");
-        }
+            if (data.status === "success" && data.has_unread) {
+                const badge = document.getElementById("message-notification");
+                if (badge) badge.classList.remove("hidden"); // ✅ 表示にする
+            }
         })
         .catch(err => console.error("未読チェック失敗:", err));
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-    // 通知バッジ DOM 生成
-    console.log("botannseisei0")
-    const badge = document.createElement("div");
-    badge.id = "message-notification";
-    badge.className = "notification-dot hidden";
+        const badge = document.createElement("div");
+        badge.id = "message-notification";
+        badge.className = "unread-indicator hidden"; // list.cssと同じ
 
-    const btn = document.querySelector("#go-matching-list");
-    if (btn) {
-        btn.style.position = "relative";
-        btn.appendChild(badge);
-    }
+        const btn = document.querySelector("#match_list_reload");  // ✅ 対象ボタンのIDを修正
+        if (btn) {
+            btn.style.position = "relative";  // 念のため再指定
+            btn.appendChild(badge);
+        }
 
-    const storedUserId = localStorage.getItem("user_id");
-    if (storedUserId) {
-        user_id = storedUserId;
-        checkUnreadMessages();
-    }
-    console.log("botannseisei")
+        const storedUserId = localStorage.getItem("user_id");
+        if (storedUserId) {
+            checkUnreadMessages(storedUserId);  // ✅ 引数に渡すよう変更
+        }
     });
-
 
     function fetchMatchedUsers(){ fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
             method:"POST",

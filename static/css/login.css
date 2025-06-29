@@ -383,13 +383,14 @@ h1 {
   color: #8b4513;
 }
 
+
 .unread-indicator {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: #1e90ff; /* 青色 */
-    border-radius: 50%;
-    margin-left: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #1e90ff; /* リストと同じ濃い青 */
+  border-radius: 50%;
+  margin-left: 10px; /* リストに合わせる */
+  display: inline-block;
 }
 
 @keyframes spin {
