@@ -443,17 +443,18 @@ document.addEventListener("DOMContentLoaded", function () {
       }  
 
     window.addEventListener("message", (event) => {
-    try {
-        const data = JSON.parse(event.data);
-        console.log("[DEBUG] chat.js メッセージ受信:", data);
+        aleret("[RECEIVE] message event:", event);
+        try {
+            const data = JSON.parse(event.data);
+            console.log("[DEBUG] chat.js メッセージ受信:", data);
 
-        if (data.type === "AD_WATCHED") {
-        showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        closeLoadingOverlay();
+            if (data.type === "AD_WATCHED") {
+            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+            closeLoadingOverlay();
+            }
+        } catch (e) {
+            console.error("[ERROR] AD_WATCHED parse失敗:", e);
         }
-    } catch (e) {
-        console.error("[ERROR] AD_WATCHED parse失敗:", e);
-    }
     });
 
 // ローディングを閉じる共通関数
