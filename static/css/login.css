@@ -382,6 +382,16 @@ h1 {
   font-weight: bold;
   color: #8b4513;
 }
+
+.unread-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #1e90ff; /* 青色 */
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

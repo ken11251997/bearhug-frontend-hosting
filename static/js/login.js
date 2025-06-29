@@ -120,6 +120,29 @@ document.addEventListener("DOMContentLoaded",function(){
         }, 1000);
     }
 
+    function checkUnreadMessages() {
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: user_id })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success" && data.has_unread) {
+                const icon = document.getElementById("match_list_reload");
+                if (icon) {
+                    const dot = document.createElement("span");
+                    dot.className = "unread-indicator";
+                    icon.appendChild(dot);
+                }
+            }
+        })
+        .catch(err => {
+            console.error("未読チェック失敗:", err);
+        });
+    }
+    checkUnreadMessages();
+
 
     function fetchMatchedUsers(){ fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matched_list",{
             method:"POST",
