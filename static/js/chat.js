@@ -271,6 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     socket.on("new_file", function(data) {
         console.log("✅ receive new_file event:", data);
+        closeLoadingOverlay(); 
         showPopup("🔔 画像/動画が送信されました");
     
         var chatBox = document.getElementById('chat-box');
@@ -342,6 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!file) {
             console.error("❌ ファイルが選択されていません！");
             showPopup("ファイルを選択してください！");
+            closeLoadingOverlay(); 
             return;
         }
 
@@ -354,6 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(file.size)
             alert(`${isImage ? '画像' : '動画'}のサイズは${maxSizeMB}MB以下にしてください`);
             fileInput.value = ""; // クリア
+            closeLoadingOverlay(); // ✅ サイズ超過時にもローディングを閉じる
             return;
           }
 
@@ -412,36 +415,43 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
     }
 
-    function showAdPopup({message,onWatchAd}) {
-        // 既存ポップアップを削除
-        document.querySelectorAll(".popup-message").forEach(p => p.remove());
-      
-        // ポップアップ要素作成
+    function showAdPopup({message, onWatchAd}) {
+        // 既存のポップアップとオーバーレイを削除
+        document.querySelectorAll(".popup-message, .popup-overlay").forEach(e => e.remove());
+
+        // ✅ オーバーレイを作成
+        const overlay = document.createElement("div");
+        overlay.className = "popup-overlay";
+
+        // ✅ ポップアップ本体
         const popup = document.createElement("div");
-        popup.className = "popup-message persistent-popup"; // カスタムクラスで非フェード化
+        popup.className = "popup-message persistent-popup";
         popup.innerHTML = `
-          <div class="popup-header">
-            <span>${message}</span>
-            <button class="popup-close-btn">✕</button>
-          </div>
-          <div class="popup-actions">
-            <button class="popup-watch-ad-btn">広告を見る</button>
-          </div>
+            <div class="popup-header">
+                <span>${message}</span>
+                <button class="popup-close-btn">✕</button>
+            </div>
+            <div class="popup-actions">
+                <button class="popup-watch-ad-btn">広告を見る</button>
+            </div>
         `;
-      
+
+        document.body.appendChild(overlay);
         document.body.appendChild(popup);
-      
+
         // ✕ボタンで閉じる
         popup.querySelector(".popup-close-btn").addEventListener("click", () => {
-          popup.remove();
+            popup.remove();
+            overlay.remove(); // ✅ オーバーレイも削除
         });
-      
-        // 広告再生ボタン
+
+        // 広告視聴ボタン
         popup.querySelector(".popup-watch-ad-btn").addEventListener("click", () => {
-          if (onWatchAd) onWatchAd();
-          popup.remove(); // 再生後に閉じる
+            if (onWatchAd) onWatchAd();
+            popup.remove();
+            overlay.remove();
         });
-      }  
+    }  
 
 //     window.addEventListener("message", (event) => {
 //         alert("📩 message 受信しました");

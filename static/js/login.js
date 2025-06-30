@@ -331,34 +331,41 @@ document.addEventListener("DOMContentLoaded",function(){
         }
                     
 
-    function showAdPopup({message,onWatchAd}) {
-        // 既存ポップアップを削除
-        document.querySelectorAll(".popup-message").forEach(p => p.remove());
-      
-        // ポップアップ要素作成
+    function showPopup(message, callback = null) {
+        // 既存ポップアップ・オーバーレイを削除
+        document.querySelectorAll(".popup-message, .popup-overlay").forEach(e => e.remove());
+
+        // ✅ オーバーレイ
+        const overlay = document.createElement("div");
+        overlay.className = "popup-overlay";
+
+        // ✅ ポップアップ本体
         const popup = document.createElement("div");
-        popup.className = "popup-message persistent-popup"; // カスタムクラスで非フェード化
+        popup.className = "popup-message persistent-popup";
         popup.innerHTML = `
-          <div class="popup-header">
-            <span>${message}</span>
-            <button class="popup-close-btn">✕</button>
-          </div>
-          <div class="popup-actions">
-            <button class="popup-watch-ad-btn">広告を見る</button>
-          </div>
+            <div class="popup-header">
+                <span>${message}</span>
+                <button class="popup-close-btn">✕</button>
+            </div>
+            <div class="popup-actions">
+                <button class="popup-ok-btn">OK</button>
+            </div>
         `;
-      
+
+        document.body.appendChild(overlay);
         document.body.appendChild(popup);
-      
-        // ✕ボタンで閉じる
+
+        // ✕ ボタンで閉じる
         popup.querySelector(".popup-close-btn").addEventListener("click", () => {
-          popup.remove();
+            popup.remove();
+            overlay.remove();
         });
-      
-        // 広告再生ボタン
-        popup.querySelector(".popup-watch-ad-btn").addEventListener("click", () => {
-          if (onWatchAd) onWatchAd();
-          popup.remove(); // 再生後に閉じる
+
+        // OKボタン
+        popup.querySelector(".popup-ok-btn").addEventListener("click", () => {
+            if (callback) callback();
+            popup.remove();
+            overlay.remove();
         });
     }
 
