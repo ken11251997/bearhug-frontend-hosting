@@ -1,3 +1,12 @@
+html, body {
+  overscroll-behavior: none;         /* Android Chrome */
+  -webkit-overflow-scrolling: auto;  /* iOS bounce無効化 */
+  touch-action: manipulation;        /* スクロールのみ許可 */
+  overflow: hidden;                  /* body自体はスクロールしない */
+  height: 100%;
+}
+
+
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #d2b48c, #f5deb3);
@@ -190,3 +199,5 @@ body {
     from { opacity: 1; transform: translate(-50%, -50%); }
     to { opacity: 0; transform: translate(-50%, -60%); }
   }
+
+  

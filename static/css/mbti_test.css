@@ -7,6 +7,14 @@ body {
     height: 100vh;
     margin: 0;
 }
+html, body {
+  overscroll-behavior: none;         /* Android Chrome */
+  -webkit-overflow-scrolling: auto;  /* iOS bounce無効化 */
+  touch-action: manipulation;        /* スクロールのみ許可 */
+  overflow: hidden;                  /* body自体はスクロールしない */
+  height: 100%;
+}
+
 
 .container {
     background: #fffaf0; /* default.cssのベースカラー */

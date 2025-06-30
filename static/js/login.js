@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     document.getElementById("match-btn").addEventListener("click",function(event){
         event.preventDefault();
+        const loadingOverlay = document.getElementById("loading-overlay");
         loadingOverlay.style.display = "flex";
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/match/matching",{
             method:"POST",

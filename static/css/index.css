@@ -1,4 +1,11 @@
 
+html, body {
+  overscroll-behavior: none;         /* Android Chrome */
+  -webkit-overflow-scrolling: auto;  /* iOS bounce無効化 */
+  touch-action: manipulation;        /* スクロールのみ許可 */
+  overflow: hidden;                  /* body自体はスクロールしない */
+  height: 100%;
+}
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -343,3 +350,4 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
