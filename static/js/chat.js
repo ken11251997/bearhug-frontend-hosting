@@ -94,13 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.on("ad_message", (data) => {
         if (data.type == "chat") {
             showAdPopup({
-                message: "広告を見ればチャット回数が回復します！",
+                message: "広告を見てチャット開始！",
                 onWatchAd: () => onWatchAd("chat")  // ✅ type指定
             });
         }
         if (data.type == "match") { 
             showAdPopup({
-                message: "広告を見ればマッチ検索が回復します！",
+                message: "広告を見てマッチング開始！",
                 onWatchAd: () => onWatchAd("match")  // ✅ type指定
             });
         }
@@ -425,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <button class="popup-close-btn">✕</button>
           </div>
           <div class="popup-actions">
-            <button class="popup-watch-ad-btn">広告を見て使えるようにする</button>
+            <button class="popup-watch-ad-btn">広告を見る</button>
           </div>
         `;
       

@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded",function(){
     // const matchAni = document.getElementById("match-animation");
     // matchAni.style.display = "none"; 
 
-    const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.style.display = "none";
+    // const loadingOverlay = document.getElementById("loading-overlay");
+    // loadingOverlay.style.display = "none";
 
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded",function(){
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
                 showAdPopup({
-                    message: "広告を見ればマッチ検索が回復します！",
+                    message: "広告を見てマッチング開始！",
                     onWatchAd: () => onWatchAd("match")  // ✅ type指定
                 });
             } else if (data.status === "error" && data.message === "Nobudy") {
@@ -137,9 +137,7 @@ document.addEventListener("DOMContentLoaded",function(){
     }
 
     function checkUnreadMessages(uid) {
-        if (!uid) return;
-        console.log("midokutyekku")
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
+        return fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: uid })
@@ -148,12 +146,22 @@ document.addEventListener("DOMContentLoaded",function(){
         .then(data => {
             if (data.status === "success" && data.has_unread) {
                 const badge = document.getElementById("message-notification");
-                if (badge) badge.classList.remove("hidden"); // ✅ 表示にする
-                console.log("midokuhyouzi")
+                if (badge) badge.classList.remove("hidden");
+                console.log("midokuhyouzi");
             }
-        })
-        .catch(err => console.error("未読チェック失敗:", err));
+        });
     }
+
+    checkUnreadMessages(user_id)
+    .then(() => {
+        const loadingOverlay = document.getElementById("loading-overlay");
+        loadingOverlay.style.display = "none";
+    })
+    .catch(err => {
+        console.error("未読チェック失敗:", err);
+        const loadingOverlay = document.getElementById("loading-overlay");
+        loadingOverlay.style.display = "none"; // エラー時もとりあえず非表示に
+    });
 
 
 
@@ -336,7 +344,7 @@ document.addEventListener("DOMContentLoaded",function(){
             <button class="popup-close-btn">✕</button>
           </div>
           <div class="popup-actions">
-            <button class="popup-watch-ad-btn">広告を見て使えるようにする</button>
+            <button class="popup-watch-ad-btn">広告を見る</button>
           </div>
         `;
       
