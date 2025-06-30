@@ -397,28 +397,44 @@ document.addEventListener("DOMContentLoaded",function(){
         }
     }
 
-    window.addEventListener("message", (event) => {
-        alert("pop")
-        try {
-            const data = JSON.parse(event.data);
-            console.log("[DEBUG] login.js メッセージ受信:", data);
+    // window.addEventListener("message", (event) => {
+    //     alert("pop")
+    //     try {
+    //         const data = JSON.parse(event.data);
+    //         console.log("[DEBUG] login.js メッセージ受信:", data);
 
-            if (data.type === "AD_WATCHED") {
-                if (data.adType === "chat") {
-                    showPopup("✅ 広告を見てチャット回数が回復しました！");
-                } else if (data.adType === "match") {
-                    showPopup("✅ 広告を見てマッチング回数が回復しました！");
-                }
+    //         if (data.type === "AD_WATCHED") {
+    //             if (data.adType === "chat") {
+    //                 showPopup("✅ 広告を見てチャット回数が回復しました！");
+    //             } else if (data.adType === "match") {
+    //                 showPopup("✅ 広告を見てマッチング回数が回復しました！");
+    //             }
 
-                // ✅ 広告完了時にロード画面を閉じる
-                const loadingOverlay = document.getElementById("loading-overlay");
-                loadingOverlay.classList.add("hidden");
-                loadingOverlay.style.display = "none";
-            }
-        } catch (e) {
-            console.error("[ERROR] メッセージ処理失敗:", e);
-        }
+    //             // ✅ 広告完了時にロード画面を閉じる
+    //             const loadingOverlay = document.getElementById("loading-overlay");
+    //             loadingOverlay.classList.add("hidden");
+    //             loadingOverlay.style.display = "none";
+    //         }
+    //     } catch (e) {
+    //         console.error("[ERROR] メッセージ処理失敗:", e);
+    //     }
+    // });
+
+    // ✅ React Native WebView から送信される CustomEvent を受け取る
+    window.addEventListener("AD_WATCHED", (event) => {
+        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+        const adType = event.detail?.type || "unknown";
+        closeLoadingOverlay();
+        showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
     });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    });
+
     document.getElementById("test-match-animation").addEventListener("click", () => {
         // 例: 自分INTJ・相手ENTP・相手名テスト
         showPoyonMatch("INTJ", "ENTP", "テストさん");

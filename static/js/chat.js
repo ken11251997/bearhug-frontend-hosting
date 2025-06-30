@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => {
             popup.classList.add("fade-out");
             setTimeout(() => popup.remove(), 1500);
-        }, 1000);
+        }, 1500);
     }
 
     function showAdPopup({message,onWatchAd}) {
@@ -443,40 +443,40 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }  
 
-    window.addEventListener("message", (event) => {
-        alert("📩 message 受信しました");
+//     window.addEventListener("message", (event) => {
+//         alert("📩 message 受信しました");
 
-        let data;
-        try {
-            if (typeof event.data === "string") {
-                alert("🔍 event.data は string です");
-                data = JSON.parse(event.data);
-            } else if (typeof event.data === "object") {
-                alert("🔍 event.data は object です");
-                data = event.data;
-            } else {
-                alert("⚠️ 未対応のメッセージ形式: " + typeof event.data);
-                return;
-            }
-        } catch (e) {
-            alert("❌ JSON parse に失敗しました: " + e.message);
-            return;
-        }
+//         let data;
+//         try {
+//             if (typeof event.data === "string") {
+//                 alert("🔍 event.data は string です");
+//                 data = JSON.parse(event.data);
+//             } else if (typeof event.data === "object") {
+//                 alert("🔍 event.data は object です");
+//                 data = event.data;
+//             } else {
+//                 alert("⚠️ 未対応のメッセージ形式: " + typeof event.data);
+//                 return;
+//             }
+//         } catch (e) {
+//             alert("❌ JSON parse に失敗しました: " + e.message);
+//             return;
+//         }
 
-        alert("✅ 解析成功: type = " + data.type + ", adType = " + data.adType);
+//         alert("✅ 解析成功: type = " + data.type + ", adType = " + data.adType);
 
-        if (data.type === "AD_WATCHED") {
-            alert("🎉 AD_WATCHED を受信しました");
-            closeLoadingOverlay();
-            showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        } else if (data.type === "AD_FAILED") {
-            alert("❌ AD_FAILED を受信しました");
-            closeLoadingOverlay();
-            showPopup("❌ 広告の視聴に失敗しました");
-        } else {
-            alert("📭 未対応のメッセージタイプ: " + data.type);
-        }
-});
+//         if (data.type === "AD_WATCHED") {
+//             alert("🎉 AD_WATCHED を受信しました");
+//             closeLoadingOverlay();
+//             showPopup(`✅ ${data.adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+//         } else if (data.type === "AD_FAILED") {
+//             alert("❌ AD_FAILED を受信しました");
+//             closeLoadingOverlay();
+//             showPopup("❌ 広告の視聴に失敗しました");
+//         } else {
+//             alert("📭 未対応のメッセージタイプ: " + data.type);
+//         }
+// });
 
 // ローディングを閉じる共通関数
     function closeLoadingOverlay() {
@@ -510,14 +510,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ React Native WebView から送信される CustomEvent を受け取る
     window.addEventListener("AD_WATCHED", (event) => {
-        alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
         const adType = event.detail?.type || "unknown";
         closeLoadingOverlay();
         showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
     });
 
     window.addEventListener("AD_FAILED", (event) => {
-        alert("❌ AD_FAILED カスタムイベントを受信しました");
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
         const msg = event.detail?.message || "不明なエラー";
         closeLoadingOverlay();
         showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
