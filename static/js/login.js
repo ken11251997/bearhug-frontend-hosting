@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 showPoyonMatch(mbti, data.matched_users.mbti, data.matched_users.username);
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
-                showAdPopup({
+                showPopup({
                     message: "広告を見てマッチング開始！",
                     onWatchAd: () => onWatchAd("match")  // ✅ type指定
                 });
