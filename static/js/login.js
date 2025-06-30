@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .catch(error => {
             console.error("マッチングエラー:", error);
+            alert(error)
             // document.getElementById("match-result").innerHTML = `<p>エラーが発生しました。</p>`;
             loadingOverlay.style.display = "none";
             showPopup("エラーが発生しました。");
