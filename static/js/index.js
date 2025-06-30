@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded",function(){
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
     receivedFcmToken = event.detail;
     console.log("✅ Web側でFCMトークン受信:", receivedFcmToken);
-    alert("FCM TOKEN: " + receivedFcmToken);
+    // alert("FCM TOKEN: " + receivedFcmToken);
     localStorage.setItem("fcmToken", receivedFcmToken);
     });
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const gender = document.getElementById("gender").value
         const fcmToken = receivedFcmToken || localStorage.getItem("fcmToken");
         console.log(fcmToken)
-        alert("fcm_token: " + fcmToken);
+        // alert("fcm_token: " + fcmToken);
 
         const data ={
             username : username,
@@ -104,14 +104,14 @@ document.addEventListener("DOMContentLoaded",function(){
           })
             .then(() => {
               console.log("✅ fcm_token 更新完了");
-              alert("fcm_token1: " + fcmToken);
+            //   alert("fcm_token1: " + fcmToken);
             })
             .catch(err => {
               console.error("❌ fcm_token 更新失敗:", err);
-              alert("fcm_token2: " + fcmToken);
+            //   alert("fcm_token2: " + fcmToken);
             });
         }
-        alert("fcm_token3: " + fcmToken);
+        // alert("fcm_token3: " + fcmToken);
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/login",{
             method :"POST",
