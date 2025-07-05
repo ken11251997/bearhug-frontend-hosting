@@ -318,8 +318,8 @@ h1 {
 
 .bear-img {
   position: absolute;
-  width: 160px;
-  height: 160px;
+  width: 100px;
+  height: 100px;
   top: 10px;
   transition: transform 0.4s ease-in-out;
 }

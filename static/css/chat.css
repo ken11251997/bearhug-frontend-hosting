@@ -13,7 +13,13 @@ body {
 
 html, body {
     height: 100%;
-    overflow: auto;  /* ✅ スクロール許可 */
+}
+html, body {
+  overscroll-behavior: none;      /* ✅ オーバースクロール無効化（Chrome, Android） */
+  -webkit-overflow-scrolling: auto; /* ✅ iOSのバウンス抑止 */
+  touch-action: manipulation;     /* ✅ タッチ操作を制限（ズーム/二本指など） */
+  height: 100%;
+  overflow: hidden;               /* ✅ 画面本体はスクロール禁止 */
 }
 
 .container {
@@ -61,6 +67,11 @@ html, body {
     flex-direction: column;
     height: 400px;
     overflow-y: auto;
+}
+
+#chat-container, #chat-box {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 
