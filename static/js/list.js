@@ -115,6 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
                         showPopup("相手からマッチされています！\nアップグレードで相手の情報が見られます✨");
+                        showPopup({
+                        message: "相手からマッチされています！\広告を見てチャット開始！✨",
+                        onWatchAd: () => onWatchAd("match")  // ✅ type指定
+                });
                     };
                 } else {
                     listItem.onclick = () => {
@@ -168,5 +172,47 @@ document.addEventListener("DOMContentLoaded", function () {
             popup.classList.add("fade-out");
             setTimeout(() => popup.remove(), 1500);
         }, 1000);
+    }
+
+    function onWatchAd(type) {
+        const loadingOverlay = document.getElementById("loading-overlay");
+        // ✅ 広告開始前にロード画面を表示
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
+
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: "SHOW_REWARD_AD",
+                adType: type
+            }));
+        } else {
+            // ✅ Webのみ仮動作
+            alert("📺 広告（仮）を見ています...");
+
+            const user_id = sessionStorage.getItem("user_id");
+
+            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: user_id, type: type })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    showPopup(`チャット開始🎉`);
+                } else {
+                    showPopup("⚠️ 回復に失敗しました：" + data.message);
+                }
+            })
+            .catch(err => {
+                console.error("回復通信エラー", err);
+                showPopup("❌ 回復通信に失敗しました");
+            })
+            .finally(() => {
+                // ✅ 通信後は必ずロード画面を隠す
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+            });
+        }
     }
 })
