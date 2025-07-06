@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    window.socket = io("https://bearhug-6c58c8d5bd0e.herokuapp.com");
+    // window.socket = io("https://bearhug-6c58c8d5bd0e.herokuapp.com");
+    window.socket = io("https://bearhug-6c58c8d5bd0e.herokuapp.com", {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
+    });
     const urlParams = new URLSearchParams(window.location.search);
     const room_id = urlParams.get("room_id");
     const Partnername = decodeURIComponent(urlParams.get("username"));
