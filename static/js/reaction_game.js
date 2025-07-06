@@ -22,13 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let timerInterval = null;
   let currentExpression = "";
 
-  // ✅ 表情セット
+  // 🧸 クマの表情セット
   const bearExpressions = {
-    joy:    { label: "joy",    image: "static/img/expression_default.png"},
-    anger:  { label: "anger",  image: "static/img/expression_angry.png"},
-    sadness:{ label: "sadness",image: "static/img/expression_cry.png"},
-    doya:    { label: "doya",    image: "static/img/expression_doya.png"},
-    normal:    { label: "normal",    image: "static/img/expression_normal.png"}
+    joy:    { label: "joy",    image: "static/img/bear_joy.png" },
+    anger:  { label: "anger",  image: "static/img/bear_anger.png" },
+    sadness:{ label: "sadness",image: "static/img/bear_sad.png" },
+    fun:    { label: "fun",    image: "static/img/bear_fun.png" }
   };
   const expressionKeys = Object.keys(bearExpressions);
 
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => {
       console.error("ゲーム開始エラー:", err);
-      beginGameFlow();
+      beginGameFlow(); // 失敗しても続行
     });
   });
 
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
           clearInterval(timerInterval);
           liveTimer.classList.add("hidden");
           reactionText.textContent = "おそい！😵";
-          setTimeout(() => showResult(null), 2000);
+          setTimeout(() => showResult(null), 1500);
         }
       }, 10000);
     } else {
@@ -158,69 +157,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // 📺 広告再生
+  function onWatchAd(type) {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
 
-  // ✅ 広告視聴完了（WebView）
-    // window.addEventListener("AD_WATCHED", (event) => {
-    //     const adType = event.detail?.type || "unknown";
-    //     if (adType === "reaction") {
-    //     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ user_id })
-    //     });
-    //     beginGameFlow();
-    //     }
-    // });
-
-
-    function onWatchAd(type) {
-        const loadingOverlay = document.getElementById("loading-overlay");
-        // ✅ 広告開始前にロード画面を表示
-        loadingOverlay.classList.remove("hidden");
-        loadingOverlay.style.display = "flex";
-
-        if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: "SHOW_REWARD_AD",
-                adType: type
-            }));
-        } else {
-            // ✅ Webのみ仮動作
-            alert("📺 広告（仮）を見ています...");
-
-            const user_id = sessionStorage.getItem("user_id");
-
-            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_id: user_id, type: type })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    console.error("リセット成功", err);
-                    // showPopup(`チャット開始🎉`);
-                } else {
-                    console.error("リセット失敗", err);
-                    // showPopup("⚠️ 回復に失敗しました：" + data.message);
-                }
-            })
-            .catch(err => {
-                console.error("回復通信エラー", err);
-                // showPopup("❌ 回復通信に失敗しました");
-            })
-            .finally(() => {
-                // ✅ 通信後は必ずロード画面を隠す
-                loadingOverlay.classList.add("hidden");
-                loadingOverlay.style.display = "none";
-            });
-        }
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SHOW_REWARD_AD",
+        adType: type
+      }));
+    } else {
+      alert("📺 広告（仮）を見ています...");
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type })
+      })
+      .finally(() => {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        beginGameFlow();
+      });
     }
+  }
 
-    window.addEventListener("AD_WATCHED", (event) => {
-        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-        const adType = event.detail?.type || "unknown";
-        closeLoadingOverlay();
-        // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+  // 📲 アプリ内通知から受け取り（広告完了）
+  window.addEventListener("AD_WATCHED", (event) => {
+    const adType = event.detail?.type || "unknown";
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id, type: adType })
+    }).finally(() => {
+      const loadingOverlay = document.getElementById("loading-overlay");
+      loadingOverlay.classList.add("hidden");
+      loadingOverlay.style.display = "none";
+      beginGameFlow();
     });
+  });
 });

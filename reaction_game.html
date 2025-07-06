@@ -1,60 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>MBTI 診断</title>
-    <link rel="stylesheet" href="static/css/sanitize.css">
-    <link rel="stylesheet" href="static/css/mbti_test.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/reaction_game.css') }}">
-    <link rel="stylesheet" href="static/css/ranking_modal.css" />
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body::before {
-          content: "";
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background-image: url("static/img/paw.png");
-          background-repeat: repeat;
-          background-size: 80px 80px;
-          opacity: 0.05;
-          transform: rotate(-30deg);
-          z-index: 0;
-          pointer-events: none;
-        }
-      </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>反応速度ゲーム</title>
+  <link rel="stylesheet" href="static/css/reaction_game.css" />
+  <link rel="stylesheet" href="static/css/ranking_modal.css" />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- 🔙 左上戻るボタン -->
-  <a href="minigame_list.html" class="back-button">← 戻る</a>
+  <!-- 🐻 戻るボタン（固定） -->
+  <a id="back-button" href="minigame_list.html" class="back-button">← 戻る</a>
 
+  <!-- 🔳 ゲームコンテンツ -->
   <div class="container">
+
+    <!-- タイトル -->
     <h1>反応速度ゲーム</h1>
 
-    <!-- 🟡 スタート画面 -->
+    <!-- 🟠 スタート画面 -->
     <div id="instruction" class="section">
+      <p class="desc">笑ったクマをすばやくタップしよう！</p>
       <button id="start-btn" class="btn">ゲーム開始</button>
       <button id="ranking-btn" class="btn">ランキング</button>
     </div>
 
-    <!-- 🟡 説明表示 -->
+    <!-- 🟡 説明中 -->
     <div id="explanation" class="section hidden">
-      <p>🐻 クマが笑ったら画面をタップ！</p>
+      <p class="desc">🧸 クマの表情をよく見てね...</p>
     </div>
 
-    <!-- 🔵 ゲーム中画面 -->
+    <!-- 🟢 ゲーム中 -->
     <div id="game-area" class="section hidden">
-      <img id="bear-face" src="static/img/neutral.png" alt="くまの顔" />
       <p id="reaction-text">よーい...スタート！</p>
-      <p id="live-timer" class="hidden">0.000 秒</p> <!-- ✅ デジタルタイマー -->
+      <img id="bear-face" src="static/img/expression_normal.png" alt="くまの顔" />
+      <p id="live-timer" class="hidden">0.000 秒</p>
     </div>
 
-    <!-- 🟢 結果画面 -->
+    <!-- 🔵 結果表示 -->
     <div id="result-area" class="section hidden">
       <p id="result-score">スコア：--</p>
       <p id="best-score" class="small-text hidden">自己ベスト：--</p>
@@ -64,36 +47,27 @@
     </div>
   </div>
 
-  <script src="static/js/reaction_game.js"></script>
-  <script src="static/js/ranking_modal.js"></script>
-
-  <div id="loading-overlay" class="hidden">
-        <div class="loading-box">
-            <div class="spinner"></div>
-            <img src="static/img/bear_3.png" alt="ローディングくま" class="bear-loader">
-            <p class="loading-text">ロード中...</p>
-        </div>
-    </div>
-
-  <!-- ランキングモーダル -->
-    <div id="ranking-modal" class="modal hidden">
+  <!-- 📊 ランキングモーダル -->
+  <div id="ranking-modal" class="modal hidden">
     <div class="modal-content">
-        <!-- 🔼 タブ切り替え -->
-        <div class="tab-container">
+      <div class="tab-container">
         <button class="ranking-tab active" data-type="mbti_median">MBTI中央値</button>
         <button class="ranking-tab" data-type="mbti_max">MBTI最高</button>
         <button class="ranking-tab" data-type="personal">個人</button>
         <button class="ranking-tab" data-type="all">ALL</button>
-        </div>
-
-        <!-- 📋 ランキングリスト -->
-        <div id="ranking-list" class="ranking-list">
-        <!-- JSでスコア行をここに追加 -->
-        </div>
-
-        <!-- ❌ 閉じるボタン -->
-        <button id="close-ranking" class="btn">閉じる</button>
+      </div>
+      <div id="ranking-list" class="ranking-list"></div>
+      <button id="close-ranking" class="btn">閉じる</button>
     </div>
+  </div>
+
+  <!-- ⏳ ローディング画面 -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <img src="static/img/bear_3.png" class="bear-loader" />
+      <p class="loading-text">ロード中...</p>
     </div>
+  </div>
 </body>
 </html>

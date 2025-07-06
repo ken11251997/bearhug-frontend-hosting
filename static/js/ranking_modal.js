@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadRanking(type) {
     showLoadingOverlay();
 
-    const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ranking/reaction_speed?type=${type}&user_id=${user_id}`;
+    const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/ranking/reaction_speed?type=${type}&user_id=${user_id}`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
