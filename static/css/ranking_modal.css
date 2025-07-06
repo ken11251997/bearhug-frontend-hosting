@@ -1,0 +1,123 @@
+/* === ランキングモーダル全体 === */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fffaf0;
+  border-radius: 16px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* === タブUI === */
+.tab-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.ranking-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background-color: #d2b48c;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.ranking-tab.active {
+  background-color: #8b4513;
+}
+
+/* === ランキング行 === */
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ranking-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.mbti-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.mbti-type {
+  flex: 1;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-name {
+  flex: 1;
+  text-align: left;
+  color: #555;
+}
+
+.score {
+  font-weight: bold;
+  font-family: monospace;
+  color: #222;
+}
+
+/* === 閉じるボタン === */
+#close-ranking {
+  margin-top: 12px;
+  width: 100%;
+  padding: 10px;
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#close-ranking:hover {
+  background-color: #a0522d;
+}
+
+/* === MBTIカラークラス === */
+.mbti-blue    { background-color: #cce5ff; }
+.mbti-green   { background-color: #d4edda; }
+.mbti-yellow  { background-color: #fff3cd; }
+.mbti-orange  { background-color: #ffe5b4; }
+.mbti-red     { background-color: #f8d7da; }
+.mbti-pink    { background-color: #f9e0f0; }
+.mbti-purple  { background-color: #e6ccff; }
+.mbti-gray    { background-color: #e2e3e5; }

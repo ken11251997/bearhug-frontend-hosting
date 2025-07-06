@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #d2b48c, #f5deb3);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #fffaf0;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+h1 {
+  color: #8b4513;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#bear-face {
+  width: 150px;
+  height: auto;
+  margin: 20px auto;
+}
+
+#reaction-text, #result-score {
+  font-size: 18px;
+  color: #8b4513;
+  margin: 12px 0;
+}
+
+#live-timer {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d35400;
+  margin-top: 8px;
+}
+
+.btn {
+  background-color: #8b4513;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #a0522d;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 左上固定の戻るボタン */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #fffaf0;
+  color: #8b4513;
+  padding: 8px 14px;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 999;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.back-button:hover {
+  background-color: #f0e6d6;
+}
+
+/* 広告ポップアップ用 */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.popup-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fffaf0;
+  border: 2px solid #8b4513;
+  border-radius: 14px;
+  padding: 1.5rem;
+  z-index: 1001;
+  width: 300px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #8b4513;
+  margin-bottom: 10px;
+}
+
+.popup-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #8b4513;
+}
+
+.popup-actions {
+  text-align: center;
+}
+
+.popup-watch-ad-btn {
+  background-color: #d35400;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.popup-watch-ad-btn:hover {
+  background-color: #e67e22;
+}
+
+.small-text {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+}

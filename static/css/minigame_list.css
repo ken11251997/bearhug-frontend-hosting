@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+  touch-action: manipulation;
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #d2b48c, #f5deb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  background: #fffaf0;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #8b4513;
+}
+
+/* ボタン類共通 */
+.btn {
+  background-color: #8b4513;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #a0522d;
+}
+
+/* 戻るボタン（左上固定） */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #fffaf0;
+  color: #8b4513;
+  padding: 8px 14px;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 999;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.back-button:hover {
+  background-color: #f0e6d6;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-card {
+  background-color: #fff;
+  border: 2px solid #d2b48c;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.game-card:hover {
+  transform: scale(1.02);
+}
+
+.game-thumbnail {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.game-info {
+  flex: 1;
+  text-align: left;
+}
+
+.game-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #8b4513;
+}
+
+.game-desc {
+  font-size: 14px;
+  color: #555;
+}

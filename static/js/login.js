@@ -241,6 +241,13 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = `contact`;
     });
 
+    document.getElementById("minigame-btn").addEventListener("click", () => {
+        localStorage.setItem("user_id", user_id);  // user_id, mbti を保存
+        localStorage.setItem("user_mbti", mbti);
+        localStorage.setItem("backToLogin", window.location.href);
+        window.location.href = "minigame_list";
+        });
+
     SubsBtn.addEventListener("click", function () {
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("backToLogin", window.location.href);
