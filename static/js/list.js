@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
                         showPopup("相手からマッチされています！\n広告を見てチャット開始✨");
-                        setTimeout(() => onWatchAd("match", user.room_id, user_id), 1000);
+                        setTimeout(() => onWatchAd("list", user.room_id, user_id), 1000);
                     };
                 } else {
                     listItem.onclick = () => {
@@ -153,38 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 例：再度 fetch して DOM 更新
     fetchMatchedUsers();
     }
-
-    function finishAd(room_id, user_id) {
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chatroom/unlock_by_ad", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            room_id: room_id,
-            user_id: user_id
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === "success") {
-            showPopup("チャットが開放されました🎉");
-            setTimeout(() => refreshMatchedList(), 1000);  // リスト再取得 or ページリロード
-            } else {
-            showPopup("⚠️ 開放に失敗：" + data.message);
-            }
-        })
-        .catch(err => {
-            console.error("開放エラー:", err);
-            showPopup("❌ 通信エラーが発生しました");
-        })
-        .finally(() => {
-            
-            overlay.classList.add("hidden");
-            overlay.style.display = "none";
-        });
-    }
-
-
-
 
     function joinRoom(roomId, otherUserName,mbti) {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
@@ -235,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.status === "success") {
                 showPopup("チャットが開放されました🎉");
-                setTimeout(() => refreshMatchedList(), 1000);  // リスト再取得 or ページリロード
+                  // リスト再取得 or ページリロード
                 } else {
                 showPopup("⚠️ 開放に失敗：" + data.message);
                 }
@@ -246,9 +214,32 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .finally(() => {
                 // ✅ 通信後は必ずロード画面を隠す
+                setTimeout(() => refreshMatchedList(), 1000);
                 loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
             });
+        }
+    }
+
+    window.addEventListener("AD_WATCHED", (event) => {
+        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+        const adType = event.detail?.type || "unknown";
+        closeLoadingOverlay();
+        showPopup(`✅ チャット開始！`);
+    });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    });
+
+    function closeLoadingOverlay() {
+        const loadingOverlay = document.getElementById("loading-overlay");
+        if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
+            loadingOverlay.classList.add("hidden");
+            loadingOverlay.style.display = "none";
         }
     }
 })
