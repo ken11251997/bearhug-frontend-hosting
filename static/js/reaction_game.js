@@ -113,6 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
+  function startConfetti() {
+    const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
+    }
+  }
+
   function showResult(score) {
     gameArea.classList.add("hidden");
     resultArea.classList.remove("hidden");
@@ -133,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(res => res.json())
       .then(data => {
         if (data.best !== undefined) {
+          startConfetti();
           bestScoreEl.classList.remove("hidden");
           bestScoreEl.textContent = `自己ベスト：${parseFloat(data.best).toFixed(3)} 秒`;
         }
@@ -157,6 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
       loadRanking("mbti_median");
     });
   });
+
+
+
 
   // 📺 広告再生
   function onWatchAd(type) {

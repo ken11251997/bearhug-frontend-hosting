@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
                         showPopup("相手からマッチされています！\n広告を見てチャット開始✨");
-                        setTimeout(() => onWatchAd("match"), 1000);
+                        setTimeout(() => onWatchAd("match", user.room_id, user_id), 1000);
                     };
                 } else {
                     listItem.onclick = () => {
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
-    function onWatchAd(type) {
+    function onWatchAd(type, room_id, user_id) {
         const loadingOverlay = document.getElementById("loading-overlay");
         // ✅ 広告開始前にロード画面を表示
         loadingOverlay.classList.remove("hidden");
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // ✅ Webのみ仮動作
             alert("📺 広告（仮）を見ています...");
 
-            const user_id = sessionStorage.getItem("user_id");
+            // const user_id = sessionStorage.getItem("user_id");
 
             fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
                 method: "POST",
