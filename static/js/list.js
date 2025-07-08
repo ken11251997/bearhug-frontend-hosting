@@ -115,8 +115,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
                         showPopup("相手からマッチされています！\n広告を見てチャット開始✨");
+                        try {
+                            // ✅ React Native 側の AsyncStorage に room_id を保存するよう命令
+                            if (window.ReactNativeWebView) {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({
+                                type: "SET_STORAGE",
+                                key: "current_room_id",
+                                value: user.room_id
+                            }));
+                            }
                         setTimeout(() => onWatchAd("list", user.room_id, user_id), 1000);
-                    };
+                        } catch (e) {
+                                console.error("room_id 保存エラー", e);
+                        }
+                    }
                 } else {
                     listItem.onclick = () => {
                         joinRoom(user.room_id, user.username, user.mbti);
