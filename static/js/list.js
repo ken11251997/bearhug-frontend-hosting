@@ -149,6 +149,42 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     
 
+    function refreshMatchedList() {
+    // 例：再度 fetch して DOM 更新
+    fetchMatchedUsers();
+    }
+
+    function finishAd(room_id, user_id) {
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chatroom/unlock_by_ad", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            room_id: room_id,
+            user_id: user_id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+            showPopup("チャットが開放されました🎉");
+            setTimeout(() => refreshMatchedList(), 1000);  // リスト再取得 or ページリロード
+            } else {
+            showPopup("⚠️ 開放に失敗：" + data.message);
+            }
+        })
+        .catch(err => {
+            console.error("開放エラー:", err);
+            showPopup("❌ 通信エラーが発生しました");
+        })
+        .finally(() => {
+            
+            overlay.classList.add("hidden");
+            overlay.style.display = "none";
+        });
+    }
+
+
+
 
     function joinRoom(roomId, otherUserName,mbti) {
         window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
@@ -207,6 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .finally(() => {
                 // ✅ 通信後は必ずロード画面を隠す
+                finishAd(room_id, user_id);
                 loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
             });

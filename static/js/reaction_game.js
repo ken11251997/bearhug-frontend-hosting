@@ -24,10 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🧸 クマの表情セット
   const bearExpressions = {
-    joy:    { label: "joy",    image: "static/img/bear_joy.png" },
-    anger:  { label: "anger",  image: "static/img/bear_anger.png" },
-    sadness:{ label: "sadness",image: "static/img/bear_sad.png" },
-    fun:    { label: "fun",    image: "static/img/bear_fun.png" }
+    joy:    { label: "joy",    image: "static/img/expression_default.png" },
+    anger:  { label: "anger",  image: "static/img/expression_angry.png" },
+    sadness:{ label: "sadness",image: "static/img/expression_cry.png" },
+    normal:    { label: "normal",    image: "static/img/expression_normal.png" },
+
   };
   const expressionKeys = Object.keys(bearExpressions);
 

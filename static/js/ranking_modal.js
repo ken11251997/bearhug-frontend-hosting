@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ MBTI画像パス（MBTI画像は /static/img/mbti_icons/MBTI.png）
   const mbtiIcons = {};
   Object.keys(mbtiColorClasses).forEach(type => {
-    mbtiIcons[type] = `static/img/mbti_icons/${type}.png`;
+    mbtiIcons[type] = `static/img/${type}.png`;
   });
 
   // ✅ タブ切り替え
