@@ -2,13 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameList = document.getElementById("game-list");
   const user_id = localStorage.getItem("user_id");
   const mbti = localStorage.getItem("user_mbti");
-  const backBtn = document.getElementById("back-to-login");
-  if (user_id && mbti) {
-    const user_name = localStorage.getItem("user_name") || "User";
-    backBtn.href = `login.html?user_id=${user_id}&mbti=${mbti}&user_name=${encodeURIComponent(user_name)}`;
-  } else {
-    backBtn.href = "login.html";
-  }
+  const BackButton = document.getElementById("buck_btn");
+  const loginUrl = localStorage.getItem("backToLogin");
+  BackButton.addEventListener("click", function () {
+    window.location.href =loginUrl 
+        // history.back()
+  });
 
   const games = [
     {
