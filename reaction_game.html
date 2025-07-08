@@ -21,7 +21,7 @@
     <!-- 🟠 スタート画面 -->
     <div id="instruction" class="section">
       <p class="desc">クマが笑ったらすばやくタッチ！</p>
-      <img id="bear-face" src="static/img/expression_default.png" alt="くまの顔" />
+      <img id="bear-face-first" src="static/img/expression_default.png" alt="最初のくまの顔" />
       <button id="start-btn" class="btn">ゲーム開始</button>
       <button id="ranking-btn" class="btn">ランキング</button>
     </div>
@@ -29,15 +29,15 @@
     <!-- 🟡 説明中 -->
     <div id="explanation" class="section hidden">
       <p class="desc">🧸 クマの表情をよく見てね...</p>
-      <img id="bear-face" src="static/img/expression_normal.png" alt="くまの顔" />
     </div>
 
     <!-- 🟢 ゲーム中 -->
     <div id="game-area" class="section hidden">
       <p id="reaction-text">よーい...スタート！</p>
-      <img id="bear-face" src="static/img/expression_normal.png" alt="くまの顔" />
       <p id="live-timer" class="hidden">0.000 秒</p>
     </div>
+
+    <img id="bear-face" src="static/img/expression_normal.png" alt="くまの顔" />
 
     <!-- 🔵 結果表示 -->
     <div id="result-area" class="section hidden">
