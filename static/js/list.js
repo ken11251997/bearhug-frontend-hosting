@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("📺 広告（仮）を見ています...");
 
             // const user_id = sessionStorage.getItem("user_id");
-            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chatroom/unlock_by_ad", {
+            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/chatroom/unlock_by_ad", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
