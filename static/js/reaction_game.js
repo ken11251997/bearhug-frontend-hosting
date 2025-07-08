@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   startBtn.addEventListener("click", () => {
+    startBtn.disabled = true; // 🔒 一時無効化（連打防止）
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,6 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function beginGameFlow() {
+    // 🧸 クマの画像を切り替える
+    document.getElementById("bear-face-first").classList.add("hidden");
+    document.getElementById("bear-face").classList.remove("hidden");
+    document.getElementById("bear-face").src = bearExpressions.normal.image;
+
     transition(instruction, explanation);
     setTimeout(() => {
       transition(explanation, gameArea);

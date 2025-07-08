@@ -68,6 +68,12 @@ h1 {
   margin: 12px auto;
   display: block;
 }
+#bear-face-first {
+  width: 220px;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
 
 /* === タイマー === */
 #live-timer {
