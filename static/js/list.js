@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 key: "current_room_id",
                                 value: user.room_id
                             }));
-                            }
+                        }
                         setTimeout(() => onWatchAd("list", user.room_id, user_id), 1000);
                         } catch (e) {
                                 console.error("room_id 保存エラー", e);
@@ -226,9 +226,10 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .finally(() => {
                 // ✅ 通信後は必ずロード画面を隠す
-                setTimeout(() => refreshMatchedList(), 1000);
+                // setTimeout(() => refreshMatchedList(), 1000);
                 loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
+                location.reload();
             });
         }
     }
