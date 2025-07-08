@@ -114,11 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
             
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
-                        showPopup("相手からマッチされています！\nアップグレードで相手の情報が見られます✨");
-                        showPopup({
-                        message: "相手からマッチされています！\広告を見てチャット開始！✨",
-                        onWatchAd: () => onWatchAd("match")  // ✅ type指定
-                });
+                        showPopup("相手からマッチされています！\n広告を見てチャット開始✨");
+                        setTimeout(() => onWatchAd("match"), 1000);
                     };
                 } else {
                     listItem.onclick = () => {
