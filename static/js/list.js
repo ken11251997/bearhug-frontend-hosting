@@ -227,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .finally(() => {
                 // ✅ 通信後は必ずロード画面を隠す
                 // setTimeout(() => refreshMatchedList(), 1000);
+                console.log("reload")
                 loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
                 location.reload();
