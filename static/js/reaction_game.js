@@ -96,25 +96,27 @@ document.addEventListener("DOMContentLoaded", () => {
     currentExpression = expression.label;
 
     if (currentExpression === "joy") {
-      startTime = performance.now();
-      isClickable = true;
-      liveTimer.textContent = "0.000 秒";
-      liveTimer.classList.add("visible");  // ← 表示に変更（高さは保たれる）
+    startTime = performance.now();
+    isClickable = true;
+    liveTimer.textContent = "0.000 秒";
+    liveTimer.classList.remove("hidden");
+    liveTimer.classList.add("visible");
 
-      timerInterval = setInterval(() => {
-        const elapsed = (performance.now() - startTime) / 1000;
-        liveTimer.textContent = elapsed.toFixed(3) + " 秒";
-      }, 30);
+    timerInterval = setInterval(() => {
+      const elapsed = (performance.now() - startTime) / 1000;
+      liveTimer.textContent = elapsed.toFixed(3) + " 秒";
+    }, 30);
 
-      setTimeout(() => {
-        if (isClickable) {
-          isClickable = false;
-          clearInterval(timerInterval);
-          liveTimer.classList.remove("visible");  // ← 非表示に戻す
-          reactionText.textContent = "おそい！😵";
-          setTimeout(() => showResult(null), 1500);
-        }
-      }, 5000);
+    setTimeout(() => {
+      if (isClickable) {
+        isClickable = false;
+        clearInterval(timerInterval);
+        liveTimer.classList.remove("visible");
+        liveTimer.classList.add("hidden");
+        reactionText.textContent = "おそい！😵";
+        setTimeout(() => showResult(null), 1500);
+      }
+    }, 5000);
     } else {
       setTimeout(showRandomFace, 1000 + Math.random() * 2000);
     }
