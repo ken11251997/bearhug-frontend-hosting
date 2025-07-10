@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "計算バトル5！",
       image: "static/img/game_calcbattle.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
       description: "5問の計算クイズをどれだけ早く解けるか！？",
-      link: "calcbattle.html"
+      link: "calcbattle_game.html"
     }
     // 今後の追加用サンプル
     // {
