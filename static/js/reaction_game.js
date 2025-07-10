@@ -59,10 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function beginGameFlow() {
-    // 🧸 クマの画像を切り替える
     document.getElementById("bear-face-first").classList.add("hidden");
-    document.getElementById("bear-face").classList.remove("hidden");
-    document.getElementById("bear-face").src = bearExpressions.normal.image;
+
+    const bear = document.getElementById("bear-face");
+    bear.style.display = "block";                  // 🆕 強制的に表示に切り替え
+    bear.classList.remove("hidden");               // 🆕 hidden クラスを除去
+    bear.src = bearExpressions.normal.image;
 
     transition(instruction, explanation);
     setTimeout(() => {
@@ -71,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(showRandomFace, 2000);
     }, 2000);
   }
+
 
   function showRandomFace() {
     const randomKey = expressionKeys[Math.floor(Math.random() * expressionKeys.length)];
