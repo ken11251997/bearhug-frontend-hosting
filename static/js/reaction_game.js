@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(data => {
       if (data.show_ad) {
-        onWatchAd("reaction");
+        onWatchAd("game");
       } else {
         beginGameFlow();
       }
@@ -95,32 +95,44 @@ document.addEventListener("DOMContentLoaded", () => {
     bear.src = expression.image;
     currentExpression = expression.label;
 
+    // ✅ 表情が joy なら反応計測
     if (currentExpression === "joy") {
-    startTime = performance.now();
-    isClickable = true;
-    liveTimer.textContent = "0.000 秒";
-    liveTimer.classList.remove("hidden");
-    liveTimer.classList.add("visible");
+      startTime = performance.now();
+      isClickable = true;
+      liveTimer.textContent = "0.000 秒";
+      liveTimer.classList.remove("hidden");
+      liveTimer.classList.add("visible");
 
-    timerInterval = setInterval(() => {
-      const elapsed = (performance.now() - startTime) / 1000;
-      liveTimer.textContent = elapsed.toFixed(3) + " 秒";
-    }, 30);
+      timerInterval = setInterval(() => {
+        const elapsed = (performance.now() - startTime) / 1000;
+        liveTimer.textContent = elapsed.toFixed(3) + " 秒";
+      }, 30);
 
-    setTimeout(() => {
-      if (isClickable) {
-        isClickable = false;
-        clearInterval(timerInterval);
-        liveTimer.classList.remove("visible");
-        liveTimer.classList.add("hidden");
-        reactionText.textContent = "おそい！😵";
-        setTimeout(() => showResult(null), 1500);
-      }
-    }, 5000);
+      setTimeout(() => {
+        if (isClickable) {
+          isClickable = false;
+          clearInterval(timerInterval);
+          liveTimer.classList.remove("visible");
+          liveTimer.classList.add("hidden");
+          reactionText.textContent = "おそい！😵";
+          setTimeout(() => showResult(null), 1500);
+        }
+      }, 5000);
     } else {
-      setTimeout(showRandomFace, 1000 + Math.random() * 2000);
+      // ✅ joy以外の時もスタートタイムを記録しておく（タップ検出のため）
+      startTime = performance.now();
+      isClickable = true;
+
+      // ⏳ 表情変更までの時間
+      setTimeout(() => {
+        if (isClickable) {
+          isClickable = false;
+          showRandomFace(); // 次の表情へ
+        }
+      }, 1500 + Math.random() * 1500);
     }
   }
+
 
 
   bear.addEventListener("click", () => {
@@ -220,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
     } else {
       alert("📺 広告（仮）を見ています...");
-      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, type })
@@ -236,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 📲 アプリ内通知から受け取り（広告完了）
   window.addEventListener("AD_WATCHED", (event) => {
     const adType = event.detail?.type || "unknown";
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id, type: adType })

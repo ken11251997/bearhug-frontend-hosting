@@ -82,18 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(res => res.json())
         .then(data => {
         if (data.show_ad) {
-            onWatchAd("calc");
+            onWatchAd("game");
         } else {
-            startGame() ;
+            beginGameFlow();
         }
         })
         .catch(err => {
         console.error("ゲーム開始エラー:", err);
-        startGame(); // 失敗しても続行
+        beginGameFlow(); // 失敗しても続行
         });
     });
 
-  function startGame() {
+  function beginGameFlow() {
     questions = generateQuestions();
     currentQuestionIndex = 0;
     elapsed = 0;
@@ -214,4 +214,44 @@ document.addEventListener("DOMContentLoaded", () => {
   backBtn.addEventListener("click", () => showScreen(startScreen));
 //   rankingBtn.addEventListener("click", showRanking);
 
+
+  function onWatchAd(type) {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
+
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SHOW_REWARD_AD",
+        adType: type
+      }));
+    } else {
+      alert("📺 広告（仮）を見ています...");
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type })
+      })
+      .finally(() => {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        beginGameFlow();
+      });
+    }
+  }
+
+  // 📲 アプリ内通知から受け取り（広告完了）
+  window.addEventListener("AD_WATCHED", (event) => {
+    const adType = event.detail?.type || "unknown";
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id, type: adType })
+    }).finally(() => {
+      const loadingOverlay = document.getElementById("loading-overlay");
+      loadingOverlay.classList.add("hidden");
+      loadingOverlay.style.display = "none";
+      beginGameFlow();
+    });
+  });
 });
