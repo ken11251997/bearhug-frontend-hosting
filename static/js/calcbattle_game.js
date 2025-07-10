@@ -212,6 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //   startBtn.addEventListener("click", startGame);
   retryBtn.addEventListener("click", startGame);
   backBtn.addEventListener("click", () => showScreen(startScreen));
-  rankingBtn.addEventListener("click", showRanking);
+//   rankingBtn.addEventListener("click", showRanking);
 
 });
