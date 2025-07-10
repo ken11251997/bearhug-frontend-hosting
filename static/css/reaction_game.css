@@ -48,6 +48,8 @@ h1 {
   font-size: 18px;
   color: #8b4513;
   margin-bottom: 12px;
+  height: 24px;              /* ← 表示・非表示で高さが変わらないように */
+  text-align: center;
 }
 
 #result-score {
@@ -77,10 +79,15 @@ h1 {
 
 /* === タイマー === */
 #live-timer {
+  height: 24px;                 /* ← 固定高さで位置安定 */
+  visibility: hidden;          /* ← 非表示だがスペース確保 */
   font-size: 18px;
   color: #006400;
   margin-top: 8px;
   font-weight: bold;
+}
+#live-timer.visible {
+  visibility: visible;
 }
 
 /* === 各セクション === */

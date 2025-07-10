@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
 
+  const successSound = new Audio("static/sound/success.mp3");
+  const failSound = new Audio("static/sound/fail.mp3");
+
   let startTime = 0;
   let isClickable = false;
   let timerInterval = null;
@@ -66,10 +69,21 @@ document.addEventListener("DOMContentLoaded", () => {
     bear.classList.remove("hidden");               // 🆕 hidden クラスを除去
     bear.src = bearExpressions.normal.image;
 
+    const title = document.querySelector("h1");
+    if (title) title.style.display = "none";
+
     transition(instruction, explanation);
     setTimeout(() => {
       transition(explanation, gameArea);
+
       reactionText.textContent = "よーい...スタート！";
+      reactionText.style.display = "block"; // 念のため強制表示
+
+      // 🆕 よーいスタートを1秒後に消す
+      setTimeout(() => {
+        reactionText.style.display = "none";
+      }, 1000);
+
       setTimeout(showRandomFace, 2000);
     }, 2000);
   }
@@ -85,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       startTime = performance.now();
       isClickable = true;
       liveTimer.textContent = "0.000 秒";
-      liveTimer.classList.remove("hidden");
+      liveTimer.classList.add("visible");  // ← 表示に変更（高さは保たれる）
 
       timerInterval = setInterval(() => {
         const elapsed = (performance.now() - startTime) / 1000;
@@ -96,27 +110,30 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isClickable) {
           isClickable = false;
           clearInterval(timerInterval);
-          liveTimer.classList.add("hidden");
+          liveTimer.classList.remove("visible");  // ← 非表示に戻す
           reactionText.textContent = "おそい！😵";
           setTimeout(() => showResult(null), 1500);
         }
-      }, 10000);
+      }, 5000);
     } else {
       setTimeout(showRandomFace, 1000 + Math.random() * 2000);
     }
   }
 
-  bear.addEventListener("click", () => {
-    if (!isClickable || !startTime) return;
 
-    const elapsed = (performance.now() - startTime) / 1000;
-    isClickable = false;
+  bear.addEventListener("click", () => {
+    // スタートしてなければ無視
+    if (!startTime) return;
+
     clearInterval(timerInterval);
     liveTimer.classList.add("hidden");
 
-    if (currentExpression === "joy") {
+    if (currentExpression === "joy" && isClickable) {
+      isClickable = false;
+      const elapsed = (performance.now() - startTime) / 1000;
       showResult(elapsed);
     } else {
+      isClickable = false;  // joy以外でも一度で終わるように
       reactionText.textContent = "ミス！😣";
       setTimeout(() => showResult(null), 1000);
     }
@@ -144,6 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const formatted = score.toFixed(3);
       resultScore.textContent = `スコア：${formatted} 秒！`;
 
+      successSound.play(); // ✅ 成功音を再生
+
       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -164,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       resultScore.textContent = "スコア：無効（遅すぎた/ミス）";
       bestScoreEl.classList.add("hidden");
+      failSound.play(); // ✅ 失敗音を再生
     }
   }
 
