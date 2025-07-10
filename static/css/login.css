@@ -277,8 +277,9 @@ h1 {
   text-align: center;
 }
 
+
 .intro-exit {
-  animation: bear-slide-up 2s ease forwards;
+  animation: bear-slide-up 2s ease forwards !important;
 }
 
 .bear-animation {

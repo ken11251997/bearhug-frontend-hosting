@@ -248,17 +248,18 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = "minigame_list";
         });
 
-    SubsBtn.addEventListener("click", function () {
-        localStorage.setItem("user_id", user_id);
-        localStorage.setItem("backToLogin", window.location.href);
-        console.log("kakin")
-        window.location.href = `subscribe`;
-        });
+    // SubsBtn.addEventListener("click", function () {
+    //     localStorage.setItem("user_id", user_id);
+    //     localStorage.setItem("backToLogin", window.location.href);
+    //     console.log("kakin")
+    //     window.location.href = `subscribe`;
+    //     });
 
         
     const intro = document.querySelector('.intro-animation');
     if (intro) {
         setTimeout(() => {
+            intro.style.animation = "";
             intro.classList.add('intro-exit'); // 上に戻るアニメーション開始
 
             // ✅ 上昇アニメーションが終わる2秒後に削除（見た目が完成する）
