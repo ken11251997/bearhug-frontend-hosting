@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🎮 イベント登録
 //   startBtn.addEventListener("click", startGame);
-  retryBtn.addEventListener("click", startGame);
+  retryBtn.addEventListener("click", beginGameFlow());
   backBtn.addEventListener("click", () => showScreen(startScreen));
 //   rankingBtn.addEventListener("click", showRanking);
 
