@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>計算バトル5！</title>
+  <link rel="stylesheet" href="static/css/calcbattle_game.css" />
+  <link rel="stylesheet" href="static/css/reaction_game.css" />
+  <link rel="stylesheet" href="static/css/ranking_modal.css" />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- 🎉 オープニング画面 -->
+    <section id="start-screen" class="screen active">
+      <h1 class="title">🧮 計算バトル5！</h1>
+      <p class="subtitle">かわいいクマと脳トレバトル！</p>
+      <div class="button-group">
+        <button id="start-btn" class="main-button">▶ ゲーム開始</button>
+        <button id="ranking-btn" class="sub-button">🏆 ランキング</button>
+      </div>
+    </section>
+
+    <!-- ✨ ゲーム画面 -->
+    <section id="game-screen" class="screen hidden">
+      <div class="game-header">
+        <div id="timer">タイム: 0.000秒</div>
+        <div id="question-count">第1問 / 5</div>
+      </div>
+      <div id="question" class="question-text">ここに問題が出ます</div>
+      <div id="choices" class="choices">
+        <!-- 選択肢ボタンがJSで生成される -->
+      </div>
+      <div id="feedback" class="feedback"></div>
+    </section>
+
+    <!-- 🎊 エンド画面 -->
+    <section id="end-screen" class="screen hidden">
+      <h2 class="result-title">🎉 ゲームクリア！</h2>
+      <p id="final-time" class="final-time">あなたの記録：0.000秒！</p>
+      <div class="button-group">
+        <button id="retry-btn" class="main-button">🔁 もう一度</button>
+        <button id="back-btn" class="sub-button">🏠 終了</button>
+        <button id="ranking-again-btn" class="sub-button">🏆 ランキング</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 📊 ランキングモーダル -->
+  <div id="ranking-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="tab-container">
+        <button class="ranking-tab active" data-type="mbti_median">MBTI中央値</button>
+        <button class="ranking-tab" data-type="mbti_max">MBTI最高</button>
+        <button class="ranking-tab" data-type="personal">個人</button>
+        <button class="ranking-tab" data-type="all">ALL</button>
+      </div>
+      <div id="ranking-list" class="ranking-list"></div>
+      <button id="close-ranking" class="btn">閉じる</button>
+    </div>
+  </div>
+
+  <!-- ⏳ ローディング画面 -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <img src="static/img/bear_3.png" class="bear-loader" />
+      <p class="loading-text">ロード中...</p>
+    </div>
+  </div>
+
+  <script src="static/js/ranking_modal.js"></script>
+  <script src="static/js/calcbattle_game.js"></script>
+</body>
+</html>
