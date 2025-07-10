@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => {
         console.error("ゲーム開始エラー:", err);
-        beginGameFlow(); // 失敗しても続行
+        startGame(); // 失敗しても続行
         });
     });
 
