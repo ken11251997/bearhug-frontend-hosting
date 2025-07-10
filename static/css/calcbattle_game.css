@@ -187,3 +187,39 @@ body {
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
 }
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #8b4513;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  background-color: #a0522d;
+}
+
+/* === 戻るボタン（左上固定）=== */
+.back-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background-color: #fffaf0;
+  color: #8b4513;
+  padding: 8px 12px;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  z-index: 1000;
+  font-size: 14px;
+}
+.back-button:hover {
+  background-color: #f0e6d6;
+}
