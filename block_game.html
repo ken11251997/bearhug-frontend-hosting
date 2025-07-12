@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>エンドレスブロック崩し</title>
+  <link rel="stylesheet" href="block_game.css" />
+</head>
+<body>
+  <!-- 🎬 オープニング画面 -->
+  <div id="opening-screen" class="screen">
+    <h1>エンドレスブロック崩し</h1>
+    <p class="desc">すべてのブロックを壊して次のステージへ！</p>
+    <button id="start-button" class="btn">ゲーム開始</button>
+  </div>
+
+  <!-- ⏱ カウントダウン表示 -->
+  <div id="countdown-text" class="screen hidden">
+    <p class="countdown">よーい...スタート！</p>
+  </div>
+
+  <!-- 🎮 ゲーム画面 -->
+  <div id="game-canvas" class="screen hidden">
+    <p>スコア: <span id="score">0</span></p>
+    <p>タイマー: <span id="timer">180</span> 秒</p>
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+  </div>
+
+  <script src="block_game.js"></script>
+</body>
+</html>

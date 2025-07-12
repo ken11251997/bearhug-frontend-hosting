@@ -101,15 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   function beginGameFlow() {
+    // 強制的に game-screen を表示
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.add("hidden");
+    document.getElementById("game-screen").classList.remove("hidden");
+
     questions = generateQuestions();
     currentQuestionIndex = 0;
     elapsed = 0;
     penaltyTime = 0;
     startTime = performance.now();
-    showScreen(gameScreen);
     startTimer();
     showQuestion();
-  }
+    }
 
   function startTimer() {
     timerInterval = setInterval(() => {
@@ -124,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showQuestion() {
+    console.log("✅ showQuestion() 呼び出し中:", questions[currentQuestionIndex]);
     const q = questions[currentQuestionIndex];
     questionDisplay.textContent = q.questionText;
     questionCountDisplay.textContent = `第${currentQuestionIndex + 1}問 / ${totalQuestions}`;
