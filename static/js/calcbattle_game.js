@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const data = await res.json();
         if (data.show_ad) {
-            onWatchAd("calcbattle");
+            onWatchAd("game");
         } else {
             beginGameFlow();
         }
@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => {
         console.error("通信エラー:", err);
         alert("通信エラー:")
-        beginGameFlow(); // 通信失敗時でもテスト用に進行
         });
     });
 
@@ -244,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .finally(() => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
+        alert("gameflow")
         beginGameFlow();
       });
     }
