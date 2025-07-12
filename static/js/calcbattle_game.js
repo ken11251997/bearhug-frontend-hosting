@@ -228,26 +228,32 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingOverlay.style.display = "flex";
 
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
+        window.ReactNativeWebView.postMessage(JSON.stringify({
         type: "SHOW_REWARD_AD",
         adType: type
-      }));
+        }));
     } else {
-      alert("📺 広告（仮）を見ています...");
-      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        alert("📺 広告（仮）を見ています...");
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, type })
-      }
-    )
-      .finally(() => {
+        })
+        .then(res => {
+        if (!res.ok) throw new Error("リミット解除失敗");
+        })
+        .catch(err => {
+        console.error("広告解除エラー:", err);
+        alert("通信エラー（広告）: " + err.message);
+        })
+        .finally(() => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
-        alert("gameflow")
+        alert("gameflow"); // ✅ 確実に表示される
         beginGameFlow();
-      });
+        });
     }
-  }
+    }
 
   // 📲 アプリ内通知から受け取り（広告完了）
 //   window.addEventListener("AD_WATCHED", (event) => {
