@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const timerEl = document.getElementById("timer");
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
+  
+  const endBtn = document.getElementById("end-btn");
+  endBtn.addEventListener("click", () => {
+    window.location.href = "minigame_list.html";
+  });
 
   // 🕹 ゲーム設定
   const paddleWidth = 75;
