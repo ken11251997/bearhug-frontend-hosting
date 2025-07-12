@@ -235,11 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
     } else {
       alert("📺 広告（仮）を見ています...");
-      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recoverd", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, type })
-      })
+      }
+    )
       .finally(() => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
@@ -249,17 +250,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 📲 アプリ内通知から受け取り（広告完了）
-  window.addEventListener("AD_WATCHED", (event) => {
-    const adType = event.detail?.type || "unknown";
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/ad_finished", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id, type: adType })
-    }).finally(() => {
-      const loadingOverlay = document.getElementById("loading-overlay");
-      loadingOverlay.classList.add("hidden");
-      loadingOverlay.style.display = "none";
-      beginGameFlow();
+//   window.addEventListener("AD_WATCHED", (event) => {
+//     const adType = event.detail?.type || "unknown";
+//     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ user_id, type: adType })
+//     }).finally(() => {
+//       const loadingOverlay = document.getElementById("loading-overlay");
+//       loadingOverlay.classList.add("hidden");
+//       loadingOverlay.style.display = "none";
+//       beginGameFlow();
+//     });
+//   });
+
+    window.addEventListener("AD_WATCHED", (event) => {
+            // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+            const adType = event.detail?.type || "unknown";
+            closeLoadingOverlay();
+            // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
     });
-  });
+
 });
