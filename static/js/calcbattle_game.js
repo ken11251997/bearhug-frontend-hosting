@@ -72,24 +72,32 @@ document.addEventListener("DOMContentLoaded", () => {
     target.classList.remove("hidden");
   }
 
+
     startBtn.addEventListener("click", () => {
-        startBtn.disabled = true; // 🔒 一時無効化（連打防止）
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
+    startBtn.disabled = true;
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id })
-        })
-        .then(res => res.json())
-        .then(data => {
+    })
+        .then(async res => {
+        if (res.status === 429) {
+            alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+            onWatchAd("game"); // ← game_name に合わせて変更
+            return;
+        }
+        const data = await res.json();
         if (data.show_ad) {
-            onWatchAd("game");
+            onWatchAd("calcbattle");
         } else {
             beginGameFlow();
         }
         })
         .catch(err => {
-        console.error("ゲーム開始エラー:", err);
-        beginGameFlow(); // 失敗しても続行
+        console.error("通信エラー:", err);
+        alert("通信エラー:")
+        beginGameFlow(); // 通信失敗時でもテスト用に進行
         });
     });
 
