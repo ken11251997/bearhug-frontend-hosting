@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       successSound.play(); // ✅ 成功音を再生
 
-      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
