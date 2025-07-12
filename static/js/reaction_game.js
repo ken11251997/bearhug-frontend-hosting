@@ -40,25 +40,34 @@ document.addEventListener("DOMContentLoaded", () => {
     to.classList.remove("hidden");
   }
 
-  startBtn.addEventListener("click", () => {
-    startBtn.disabled = true; // 🔒 一時無効化（連打防止）
+
+  document.getElementById("start-btn").addEventListener("click", () => {
+    document.getElementById("start-btn").disabled = true;
+
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.show_ad) {
-        onWatchAd("game");
-      } else {
-        beginGameFlow();
-      }
-    })
-    .catch(err => {
-      console.error("ゲーム開始エラー:", err);
-      beginGameFlow(); // 失敗しても続行
-    });
+      .then(async res => {
+        if (res.status === 429) {
+          alert("無料プレイ回数が上限に達しました。広告を見ると続行できます。");
+          onWatchAd("game"); // ✅ 正しく "game" を渡す
+          return;
+        }
+
+        const data = await res.json();
+        if (data.show_ad) {
+          onWatchAd("game");
+        } else {
+          beginGameFlow();
+        }
+      })
+      .catch(err => {
+        console.error("通信エラー:", err);
+        alert("通信エラーが発生しました。");
+        document.getElementById("start-btn").disabled = false;
+      });
   });
 
   function beginGameFlow() {
