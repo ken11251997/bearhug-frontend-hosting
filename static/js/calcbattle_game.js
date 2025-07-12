@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = document.createElement("button");
       btn.className = "choice-button";
       btn.textContent = choice;
-      btn.addEventListener("click", () => handleAnswer(choice));
+      btn.addEventListener("click", () => handleAnswer(Number(choice))); // ✅ 修正ここ
       choicesContainer.appendChild(btn);
     });
   }
