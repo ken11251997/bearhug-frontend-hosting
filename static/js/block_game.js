@@ -1,4 +1,4 @@
-// 🎮 エンドレスブロック崩し：ゲームロジック（初期構成）
+// 🎮 エンドレスブロック崩し：ゲームロジック（スコア＆タイムボーナス対応）
 document.addEventListener("DOMContentLoaded", () => {
   const openingScreen = document.getElementById("opening-screen");
   const countdownText = document.getElementById("countdown-text");
@@ -7,13 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const timerEl = document.getElementById("timer");
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
-  
-  const endBtn = document.getElementById("end-btn");
-  endBtn.addEventListener("click", () => {
-    window.location.href = "minigame_list.html";
-  });
+  const canvasRect = canvas.getBoundingClientRect();
 
-  // 🕹 ゲーム設定
+  const bonusEl = document.createElement("div");
+  bonusEl.style.position = "absolute";
+  bonusEl.style.top = "10px";
+  bonusEl.style.left = "50%";
+  bonusEl.style.transform = "translateX(-50%)";
+  bonusEl.style.fontSize = "1.2rem";
+  bonusEl.style.fontWeight = "bold";
+  bonusEl.style.color = "green";
+  bonusEl.style.textShadow = "1px 1px 0 white";
+  bonusEl.style.display = "none";
+  document.body.appendChild(bonusEl);
+
   const paddleWidth = 75;
   const paddleHeight = 10;
   let paddleX = (canvas.width - paddleWidth) / 2;
@@ -38,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let timerInterval = null;
   let bricks = [];
 
-  // 🎁 アイテムブロック：硬さ1の見た目でアイテム用
   let itemBricks = [];
 
   document.addEventListener("keydown", (e) => {
@@ -54,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("start-button").addEventListener("click", () => {
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
-
     setTimeout(() => {
       countdownText.classList.add("hidden");
       gameCanvasWrapper.classList.remove("hidden");
@@ -81,8 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     itemBricks = [];
 
     const hardnessMap = [];
-    let hardness1 = 0, hardness2 = 0, hardness3 = 0;
-
     const mode = (stage - 1) % 4 + 1;
     for (let i = 0; i < brickColumnCount * brickRowCount; i++) {
       if (mode === 1) hardnessMap.push(1);
@@ -92,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     hardnessMap.sort(() => Math.random() - 0.5);
 
-    // アイテムブロック 3つ
     const itemIndices = new Set();
     while (itemIndices.size < 3) {
       itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
@@ -113,6 +115,15 @@ document.addEventListener("DOMContentLoaded", () => {
         index++;
       }
     }
+  }
+
+  function createExplosion(x, y) {
+    const exp = document.createElement("div");
+    exp.className = "explosion";
+    exp.style.left = `${canvasRect.left + x - 5}px`;
+    exp.style.top = `${canvasRect.top + y - 5}px`;
+    document.body.appendChild(exp);
+    setTimeout(() => exp.remove(), 400);
   }
 
   function drawBricks() {
@@ -152,15 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function createExplosion(x, y) {
-    const exp = document.createElement("div");
-    exp.className = "explosion";
-    exp.style.left = `${canvasRect.left + x - 5}px`;
-    exp.style.top = `${canvasRect.top + y - 5}px`;
-    document.body.appendChild(exp);
-    setTimeout(() => exp.remove(), 400);
-    }
-
   function collisionDetection() {
     for (const ball of balls) {
       for (let c = 0; c < brickColumnCount; c++) {
@@ -175,12 +177,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ) {
               ball.dy = -ball.dy;
               b.hardness--;
-              if (b.hardness <= 0) b.status = 0;
-              createExplosion(b.x + brickWidth / 2, b.y + brickHeight / 2); // 💥 爆発エフェクト
-              score++;
+              score += 100; // 💯 1回当てるごとに100点
               scoreEl.textContent = score;
+
+              if (b.hardness <= 0) {
+                b.status = 0;
+                createExplosion(b.x + brickWidth / 2, b.y + brickHeight / 2);
+              }
+
               if (b.isItem) {
-                // 🎁 アイテムでボール追加
                 balls.push({ x: ball.x, y: ball.y, dx: -2, dy: -2 });
               }
             }
@@ -199,15 +204,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let i = balls.length - 1; i >= 0; i--) {
       const ball = balls[i];
-
-      // 壁との反射
       if (ball.x + ball.dx > canvas.width - ballRadius || ball.x + ball.dx < ballRadius) ball.dx = -ball.dx;
       if (ball.y + ball.dy < ballRadius) ball.dy = -ball.dy;
       else if (ball.y + ball.dy > canvas.height - ballRadius) {
         if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
           ball.dy = -ball.dy;
         } else {
-          balls.splice(i, 1); // ボールを消す
+          balls.splice(i, 1);
         }
       }
 
@@ -227,7 +230,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const allCleared = bricks.flat().every(b => b.status === 0);
     if (allCleared) {
+      const bonus = timer * 100; // ⏳ タイムボーナス
+      score += bonus;
+      scoreEl.textContent = score;
+      bonusEl.textContent = `タイムボーナス +${bonus}点！`;
+      bonusEl.style.display = "block";
+      setTimeout(() => {
+        bonusEl.style.display = "none";
+      }, 3000);
+
       stage++;
+      timer = 180;
+      timerEl.textContent = timer;
       createBricks();
     }
 

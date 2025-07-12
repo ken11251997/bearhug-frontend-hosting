@@ -1,250 +1,292 @@
-// 🎮 エンドレスブロック崩し：ゲームロジック（スコア＆タイムボーナス対応）
 document.addEventListener("DOMContentLoaded", () => {
-  const openingScreen = document.getElementById("opening-screen");
-  const countdownText = document.getElementById("countdown-text");
-  const gameCanvasWrapper = document.getElementById("game-canvas");
-  const scoreEl = document.getElementById("score");
-  const timerEl = document.getElementById("timer");
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
-  const canvasRect = canvas.getBoundingClientRect();
+  const startScreen = document.getElementById("start-screen");
+  const gameScreen = document.getElementById("game-screen");
+  const endScreen = document.getElementById("end-screen");
 
-  const bonusEl = document.createElement("div");
-  bonusEl.style.position = "absolute";
-  bonusEl.style.top = "10px";
-  bonusEl.style.left = "50%";
-  bonusEl.style.transform = "translateX(-50%)";
-  bonusEl.style.fontSize = "1.2rem";
-  bonusEl.style.fontWeight = "bold";
-  bonusEl.style.color = "green";
-  bonusEl.style.textShadow = "1px 1px 0 white";
-  bonusEl.style.display = "none";
-  document.body.appendChild(bonusEl);
+  const startBtn = document.getElementById("start-btn");
+  const retryBtn = document.getElementById("retry-btn");
+  const backBtn = document.getElementById("back-btn");
+  const rankingBtn = document.getElementById("ranking-btn");
+  const rankingAgainBtn = document.getElementById("end-ranking-btn");
+  const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
 
-  const paddleWidth = 75;
-  const paddleHeight = 10;
-  let paddleX = (canvas.width - paddleWidth) / 2;
+  const timerDisplay = document.getElementById("timer");
+  const questionDisplay = document.getElementById("question");
+  const choicesContainer = document.getElementById("choices");
+  const questionCountDisplay = document.getElementById("question-count");
+  const feedbackDisplay = document.getElementById("feedback");
+  const finalTimeDisplay = document.getElementById("final-time");
 
-  const ballRadius = 8;
-  let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 2, dy: -2 }];
+  const user_id = new URLSearchParams(window.location.search).get("user_id");
+  const mbti = new URLSearchParams(window.location.search).get("mbti");
 
-  let rightPressed = false;
-  let leftPressed = false;
-
-  const brickRowCount = 5;
-  const brickColumnCount = 10;
-  const brickWidth = 44;
-  const brickHeight = 15;
-  const brickPadding = 4;
-  const brickOffsetTop = 30;
-  const brickOffsetLeft = 10;
-
-  let score = 0;
-  let stage = 1;
-  let timer = 180;
+  let currentQuestionIndex = 0;
+  let startTime = 0;
+  let elapsed = 0;
+  let penaltyTime = 0;
   let timerInterval = null;
-  let bricks = [];
+  const totalQuestions = 5;
+  let questions = [];
 
-  let itemBricks = [];
+  function generateQuestions() {
+    const q = [];
+    for (let i = 0; i < totalQuestions; i++) {
+      const a = Math.floor(Math.random() * 20) + 1;
+      const b = Math.floor(Math.random() * 20) + 1;
+      const ops = ['+', '-', '×'];
+      const op = ops[Math.floor(Math.random() * ops.length)];
+      let answer, questionText;
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Right" || e.key === "ArrowRight") rightPressed = true;
-    else if (e.key === "Left" || e.key === "ArrowLeft") leftPressed = true;
-  });
-
-  document.addEventListener("keyup", (e) => {
-    if (e.key === "Right" || e.key === "ArrowRight") rightPressed = false;
-    else if (e.key === "Left" || e.key === "ArrowLeft") leftPressed = false;
-  });
-
-  document.getElementById("start-button").addEventListener("click", () => {
-    openingScreen.classList.add("hidden");
-    countdownText.classList.remove("hidden");
-    setTimeout(() => {
-      countdownText.classList.add("hidden");
-      gameCanvasWrapper.classList.remove("hidden");
-      initGame();
-    }, 1500);
-  });
-
-  function initGame() {
-    createBricks();
-    timerInterval = setInterval(() => {
-      timer--;
-      timerEl.textContent = timer;
-      if (timer <= 0) {
-        clearInterval(timerInterval);
-        alert("時間切れ！ゲームオーバー");
-        document.location.reload();
+      switch (op) {
+        case '+':
+          answer = a + b;
+          questionText = `${a} + ${b} = ?`;
+          break;
+        case '-':
+          answer = a - b;
+          questionText = `${a} - ${b} = ?`;
+          break;
+        case '×':
+          answer = a * b;
+          questionText = `${a} × ${b} = ?`;
+          break;
       }
-    }, 1000);
-    draw();
-  }
 
-  function createBricks() {
-    bricks = [];
-    itemBricks = [];
-
-    const hardnessMap = [];
-    const mode = (stage - 1) % 4 + 1;
-    for (let i = 0; i < brickColumnCount * brickRowCount; i++) {
-      if (mode === 1) hardnessMap.push(1);
-      else if (mode === 2) hardnessMap.push(i < 25 ? 1 : 2);
-      else if (mode === 3) hardnessMap.push(2);
-      else if (mode === 4) hardnessMap.push(i < 25 ? 2 : 3);
-    }
-    hardnessMap.sort(() => Math.random() - 0.5);
-
-    const itemIndices = new Set();
-    while (itemIndices.size < 3) {
-      itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
-    }
-
-    let index = 0;
-    for (let c = 0; c < brickColumnCount; c++) {
-      bricks[c] = [];
-      for (let r = 0; r < brickRowCount; r++) {
-        const hardness = hardnessMap[index];
-        const isItem = itemIndices.has(index);
-        bricks[c][r] = {
-          x: 0, y: 0,
-          status: 1,
-          hardness,
-          isItem
-        };
-        index++;
+      const choices = new Set();
+      choices.add(answer);
+      while (choices.size < 4) {
+        choices.add(answer + Math.floor(Math.random() * 10) - 5);
       }
+
+      q.push({
+        questionText,
+        answer,
+        choices: Array.from(choices).sort(() => Math.random() - 0.5),
+      });
     }
+    return q;
   }
 
-  function createExplosion(x, y) {
-    const exp = document.createElement("div");
-    exp.className = "explosion";
-    exp.style.left = `${canvasRect.left + x - 5}px`;
-    exp.style.top = `${canvasRect.top + y - 5}px`;
-    document.body.appendChild(exp);
-    setTimeout(() => exp.remove(), 400);
+  function showScreen(target) {
+    [startScreen, gameScreen, endScreen].forEach(screen => screen.classList.add("hidden"));
+    target.classList.remove("hidden");
   }
 
-  function drawBricks() {
-    for (let c = 0; c < brickColumnCount; c++) {
-      for (let r = 0; r < brickRowCount; r++) {
-        const b = bricks[c][r];
-        if (b.status > 0) {
-          const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-          const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-          b.x = brickX;
-          b.y = brickY;
-          ctx.beginPath();
-          ctx.rect(brickX, brickY, brickWidth, brickHeight);
-          ctx.fillStyle = b.isItem ? "gold" : ["#66ccff", "#3399ff", "#003366"][b.hardness - 1];
-          ctx.fill();
-          ctx.closePath();
+
+    startBtn.addEventListener("click", () => {
+    startBtn.disabled = true;
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id })
+    })
+        .then(async res => {
+        if (res.status === 429) {
+            alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+            onWatchAd("game"); // ← game_name に合わせて変更
+            return;
         }
-      }
-    }
-  }
-
-  function drawPaddle() {
-    ctx.beginPath();
-    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#fff";
-    ctx.fill();
-    ctx.closePath();
-  }
-
-  function drawBalls() {
-    for (const ball of balls) {
-      ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
-      ctx.closePath();
-    }
-  }
-
-  function collisionDetection() {
-    for (const ball of balls) {
-      for (let c = 0; c < brickColumnCount; c++) {
-        for (let r = 0; r < brickRowCount; r++) {
-          const b = bricks[c][r];
-          if (b.status > 0) {
-            if (
-              ball.x > b.x &&
-              ball.x < b.x + brickWidth &&
-              ball.y > b.y &&
-              ball.y < b.y + brickHeight
-            ) {
-              ball.dy = -ball.dy;
-              b.hardness--;
-              score += 100; // 💯 1回当てるごとに100点
-              scoreEl.textContent = score;
-
-              if (b.hardness <= 0) {
-                b.status = 0;
-                createExplosion(b.x + brickWidth / 2, b.y + brickHeight / 2);
-              }
-
-              if (b.isItem) {
-                balls.push({ x: ball.x, y: ball.y, dx: -2, dy: -2 });
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBricks();
-    drawBalls();
-    drawPaddle();
-    collisionDetection();
-
-    for (let i = balls.length - 1; i >= 0; i--) {
-      const ball = balls[i];
-      if (ball.x + ball.dx > canvas.width - ballRadius || ball.x + ball.dx < ballRadius) ball.dx = -ball.dx;
-      if (ball.y + ball.dy < ballRadius) ball.dy = -ball.dy;
-      else if (ball.y + ball.dy > canvas.height - ballRadius) {
-        if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
-          ball.dy = -ball.dy;
+        const data = await res.json();
+        if (data.show_ad) {
+            onWatchAd("game");
         } else {
-          balls.splice(i, 1);
+            beginGameFlow();
         }
-      }
+        })
+        .catch(err => {
+        console.error("通信エラー:", err);
+        alert("通信エラー:")
+        });
+    });
 
-      ball.x += ball.dx;
-      ball.y += ball.dy;
+  function beginGameFlow() {
+    // 強制的に game-screen を表示
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.add("hidden");
+    document.getElementById("game-screen").classList.remove("hidden");
+
+    questions = generateQuestions();
+    currentQuestionIndex = 0;
+    elapsed = 0;
+    penaltyTime = 0;
+    startTime = performance.now();
+    startTimer();
+    showQuestion();
     }
 
-    if (balls.length === 0) {
-      clearInterval(timerInterval);
-      alert("すべてのボールを落としました。ゲームオーバー");
-      document.location.reload();
-      return;
-    }
-
-    if (rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 5;
-    else if (leftPressed && paddleX > 0) paddleX -= 5;
-
-    const allCleared = bricks.flat().every(b => b.status === 0);
-    if (allCleared) {
-      const bonus = timer * 100; // ⏳ タイムボーナス
-      score += bonus;
-      scoreEl.textContent = score;
-      bonusEl.textContent = `タイムボーナス +${bonus}点！`;
-      bonusEl.style.display = "block";
-      setTimeout(() => {
-        bonusEl.style.display = "none";
-      }, 3000);
-
-      stage++;
-      timer = 180;
-      timerEl.textContent = timer;
-      createBricks();
-    }
-
-    requestAnimationFrame(draw);
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      const now = performance.now();
+      elapsed = (now - startTime) / 1000 + penaltyTime;
+      timerDisplay.textContent = `タイム: ${elapsed.toFixed(3)}秒`;
+    }, 50);
   }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
+  function showQuestion() {
+    console.log("✅ showQuestion() 呼び出し中:", questions[currentQuestionIndex]);
+    const q = questions[currentQuestionIndex];
+    questionDisplay.textContent = q.questionText;
+    questionCountDisplay.textContent = `第${currentQuestionIndex + 1}問 / ${totalQuestions}`;
+    choicesContainer.innerHTML = "";
+    feedbackDisplay.textContent = "";
+
+    q.choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.className = "choice-button";
+      btn.textContent = choice;
+      btn.addEventListener("click", () => handleAnswer(choice));
+      choicesContainer.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(choice) {
+    const q = questions[currentQuestionIndex];
+    if (choice === q.answer) {
+      showFeedback("⭕ 正解！", "correct");
+      currentQuestionIndex++;
+      if (currentQuestionIndex < totalQuestions) {
+        setTimeout(showQuestion, 600);
+      } else {
+        endGame();
+      }
+    } else {
+      showFeedback("❌ 不正解！+10秒", "wrong");
+      penaltyTime += 10;
+    }
+  }
+
+  function showFeedback(text, type) {
+    feedbackDisplay.textContent = text;
+    feedbackDisplay.className = "feedback " + type;
+    setTimeout(() => {
+      feedbackDisplay.textContent = "";
+      feedbackDisplay.className = "feedback";
+    }, 800);
+  }
+
+  function endGame() {
+    stopTimer();
+    showScreen(endScreen);
+    finalTimeDisplay.textContent = `あなたの記録：${elapsed.toFixed(3)}秒！`;
+    
+
+    // ✅ スコア送信処理
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id,
+        game_name: "calcbattle",
+        score: parseFloat(elapsed.toFixed(3)),
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("スコア送信成功:", data);
+        if (data.best !== undefined) {
+            startConfetti()
+          // 🎉 ここでエフェクトや音を鳴らす処理を入れてもOK
+        }
+      })
+      .catch(err => {
+        console.error("スコア送信エラー:", err);
+      });
+  }
+
+  function startConfetti() {
+    const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
+    }
+  }
+
+  // 🎯 ランキング表示処理（モーダル）
+  
+  rankingBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.getElementById("ranking-modal").classList.remove("hidden");
+      loadRanking("mbti_median");
+    });
+  });
+
+  // 🎮 イベント登録
+//   startBtn.addEventListener("click", startGame);
+  retryBtn.addEventListener("click", beginGameFlow);
+  backBtn.addEventListener("click", () => showScreen(startScreen));
+//   rankingBtn.addEventListener("click", showRanking);
+
+
+  function onWatchAd(type) {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
+
+    if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SHOW_REWARD_AD",
+        adType: type
+        }));
+    } else {
+        alert("📺 広告（仮）を見ています...");
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type })
+        })
+        .then(res => {
+        if (!res.ok) throw new Error("リミット解除失敗");
+        })
+        .catch(err => {
+        console.error("広告解除エラー:", err);
+        alert("通信エラー（広告）: " + err.message);
+        })
+        .finally(() => {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        alert("gameflow"); // ✅ 確実に表示される
+        beginGameFlow();
+        });
+    }
+    }
+
+  // 📲 アプリ内通知から受け取り（広告完了）
+//   window.addEventListener("AD_WATCHED", (event) => {
+//     const adType = event.detail?.type || "unknown";
+//     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ user_id, type: adType })
+//     }).finally(() => {
+//       const loadingOverlay = document.getElementById("loading-overlay");
+//       loadingOverlay.classList.add("hidden");
+//       loadingOverlay.style.display = "none";
+//       beginGameFlow();
+//     });
+//   });
+
+    window.addEventListener("AD_WATCHED", (event) => {
+            // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+            const adType = event.detail?.type || "unknown";
+            closeLoadingOverlay();
+            // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    });
+
 });
