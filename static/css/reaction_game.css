@@ -1,12 +1,10 @@
 /* === 共通レイアウト === */
-
 body {
   font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
-  /* background: url('../img/game_bg.jpg') no-repeat center center fixed;  */
   background: linear-gradient(to bottom, #fffaf0, #ffe4c4);
   background-size: cover;
   display: flex;
@@ -15,14 +13,11 @@ body {
   overflow: hidden;
 }
 
-
 .container {
   width: 100vw;
   height: 100vh;
   padding: 0;
   margin: 0;
-  border-radius: 0;
-  box-shadow: none;
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -30,8 +25,6 @@ body {
   justify-content: center;
 }
 
-
-/* === タイトル・テキスト === */
 h1 {
   color: #8b4513;
   font-size: 20px;
@@ -42,59 +35,101 @@ h1 {
   font-size: 16px;
   color: #444;
   margin-bottom: 12px;
+  text-align: center;
 }
 
-#reaction-text {
+#question-text {
   font-size: 18px;
+  margin-bottom: 8px;
   color: #8b4513;
+}
+
+#live-timer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #006400;
+  margin: 8px 0;
+}
+
+.penalty-text {
+  font-size: 16px;
+  color: red;
+  margin-bottom: 10px;
+  transition: opacity 0.5s;
+}
+
+.penalty-text.hidden {
+  opacity: 0;
+}
+
+#target-face img {
+  width: 100px;
+  height: auto;
   margin-bottom: 12px;
-  height: 24px;              /* ← 表示・非表示で高さが変わらないように */
-  text-align: center;
+}
+
+#options-grid {
+  display: grid;
+  grid-gap: 8px;
+  justify-content: center;
+  align-items: center;
+  max-width: 95vw;
+  margin-top: 8px;
+}
+
+/* グリッドのサイズはJSで可変調整 */
+.option {
+  position: relative;
+  cursor: pointer;
+}
+
+.option img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 2px solid transparent;
+}
+
+.option .marker {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+}
+
+.option.correct .marker {
+  background-color: red;
+  display: flex;
+}
+
+.option.wrong .marker {
+  background-color: blue;
+  display: flex;
+  border-radius: 0;
+  width: 20px;
+  height: 20px;
 }
 
 #result-score {
   font-size: 20px;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
-.small-text {
-  font-size: 14px;
-  color: #777;
-}
-
-/* === クマ画像 === */
-#bear-face {
-  width: 200px;
-  height: auto;
-  margin: 12px auto;
-  display: block;
-}
-#bear-face-first {
-  width: 220px;
-  height: auto;
-  margin: 20px auto;
-  display: block;
-}
-
-/* === タイマー === */
-#live-timer {
-  height: 24px;                 /* ← 固定高さで位置安定 */
-  visibility: hidden;          /* ← 非表示だがスペース確保 */
-  font-size: 18px;
-  color: #006400;
-  margin-top: 8px;
-  font-weight: bold;
-}
-#live-timer.visible {
-  visibility: visible;
-}
-
-/* === 各セクション === */
 .section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .hidden {

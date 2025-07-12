@@ -16,38 +16,34 @@
   <div class="container">
 
     <!-- タイトル -->
-    <h1>反応速度ゲーム</h1>
+    <h1>反応速度ゲーム</h1>>
 
     <!-- 🟠 スタート画面 -->
     <div id="instruction" class="section">
-      <p class="desc">クマが笑ったらすばやくタッチ！</p>
-      <img id="bear-face-first" src="static/img/expression_default.png" alt="最初のくまの顔" />
+      <p class="desc">出題された表情をすばやく見つけてタップしよう！</p>
       <button id="start-btn" class="btn">ゲーム開始</button>
       <button id="ranking-btn" class="btn">ランキング</button>
     </div>
 
-    <!-- 🟡 説明中 -->
-    <div id="explanation" class="section hidden">
-      <p class="desc">🧸 クマの表情をよく見てね...</p>
-    </div>
-
     <!-- 🟢 ゲーム中 -->
-    <div id="game-area" class="section hidden">
-      <p id="reaction-text">よーい...スタート！</p>
-      <p id="live-timer" class="hidden">0.000 秒</p>
+    <div id="quiz-area" class="section hidden">
+      <p id="question-text">この表情を探してね：</p>
+      <div id="target-face"></div>
+      <p id="live-timer">0.000 秒</p>
+      <p id="penalty-text" class="penalty-text hidden">+5秒</p>
+      <div id="options-grid"></div>
     </div>
-
-    <img id="bear-face" class="hidden" src="static/img/expression_normal.png" alt="くまの顔" />
 
     <!-- 🔵 結果表示 -->
     <div id="result-area" class="section hidden">
-      <p id="result-score">スコア：--</p>
+      <p id="result-score">タイム：--</p>
       <p id="best-score" class="small-text hidden">自己ベスト：--</p>
+      <button id="ranking-again-btn" class="btn">ランキング</button>
       <button id="play-again-btn" class="btn">もう一度</button>
       <button id="end-btn" class="btn">終了</button>
-      <button id="ranking-again-btn" class="btn">ランキング</button>
     </div>
   </div>
+
 
   <!-- 📊 ランキングモーダル -->
   <div id="ranking-modal" class="modal hidden">

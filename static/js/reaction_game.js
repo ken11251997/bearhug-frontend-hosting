@@ -1,17 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const bear = document.getElementById("bear-face");
-  const startBtn = document.getElementById("start-btn");
-  const playAgainBtn = document.getElementById("play-again-btn");
-  const endBtn = document.getElementById("end-btn");
-  const reactionText = document.getElementById("reaction-text");
-  const resultScore = document.getElementById("result-score");
-  const liveTimer = document.getElementById("live-timer");
-  const bestScoreEl = document.getElementById("best-score");
 
-  const instruction = document.getElementById("instruction");
-  const explanation = document.getElementById("explanation");
-  const gameArea = document.getElementById("game-area");
-  const resultArea = document.getElementById("result-area");
   const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
@@ -20,147 +8,125 @@ document.addEventListener("DOMContentLoaded", () => {
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
 
-  let startTime = 0;
-  let isClickable = false;
-  let timerInterval = null;
-  let currentExpression = "";
+ // === 表情一覧（後で画像追加予定） ===
+// const expressions = ["joy", "sad", "angry", "surprised", "bored", ...];
 
-  // 🧸 クマの表情セット
-  const bearExpressions = {
-    joy:    { label: "joy",    image: "static/img/expression_default.png" },
-    anger:  { label: "anger",  image: "static/img/expression_angry.png" },
-    sadness:{ label: "sadness",image: "static/img/expression_cry.png" },
-    normal:    { label: "normal",    image: "static/img/expression_normal.png" },
+const NUM_QUESTIONS = 5;
+const CHOICE_COUNTS = [4, 6, 12, 24, 81];
 
-  };
-  const expressionKeys = Object.keys(bearExpressions);
+let currentQuestion = 0;
+let startTime;
+let totalElapsed = 0;
+let penaltyTime = 0;
+let correctAnswer = "";
 
-  function transition(from, to) {
-    from.classList.add("hidden");
-    to.classList.remove("hidden");
-  }
+window.onload = () => {
+  document.getElementById("start-btn").onclick = startGame;
+  document.getElementById("play-again-btn").onclick = () => location.reload();
+  document.getElementById("end-btn").onclick = () => location.href = "minigame_list.html";
+};
 
+function startGame() {
+  document.getElementById("instruction").classList.add("hidden");
+  document.getElementById("quiz-area").classList.remove("hidden");
+  startTime = performance.now();
+  showNextQuestion();
+}
 
-  document.getElementById("start-btn").addEventListener("click", () => {
-    document.getElementById("start-btn").disabled = true;
+function showNextQuestion() {
+  if (currentQuestion >= NUM_QUESTIONS) return endGame();
 
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id })
-    })
-      .then(async res => {
-        if (res.status === 429) {
-          alert("無料プレイ回数が上限に達しました。広告を見ると続行できます。");
-          onWatchAd("game"); // ✅ 正しく "game" を渡す
-          return;
-        }
+  const count = CHOICE_COUNTS[currentQuestion];
 
-        const data = await res.json();
-        if (data.show_ad) {
-          onWatchAd("game");
-        } else {
-          beginGameFlow();
-        }
-      })
-      .catch(err => {
-        console.error("通信エラー:", err);
-        alert("通信エラーが発生しました。");
-        document.getElementById("start-btn").disabled = false;
-      });
+  // 仮の表情リスト（本番では画像名に合わせて更新）
+  const allExpressions = Array.from({length: count}, (_, i) => `face_${i}`);
+
+  correctAnswer = allExpressions[Math.floor(Math.random() * count)];
+  document.getElementById("question-text").textContent = `この表情を探してね：`;
+
+  const target = document.getElementById("target-face");
+  target.innerHTML = `<img src="static/img/${correctAnswer}.png" alt="target"/>`;
+
+  const grid = document.getElementById("options-grid");
+  grid.innerHTML = "";
+  grid.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(count))}, auto)`;
+
+  shuffle(allExpressions).forEach(expr => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "option";
+
+    const img = document.createElement("img");
+    img.src = `static/img/${expr}.png`;
+    img.alt = expr;
+    wrapper.appendChild(img);
+
+    const marker = document.createElement("div");
+    marker.className = "marker";
+    wrapper.appendChild(marker);
+
+    wrapper.onclick = () => handleChoice(wrapper, expr);
+    grid.appendChild(wrapper);
   });
 
-  function beginGameFlow() {
-    document.getElementById("bear-face-first").classList.add("hidden");
+  updateTimer();
+}
 
-    const bear = document.getElementById("bear-face");
-    bear.style.display = "block";                  // 🆕 強制的に表示に切り替え
-    bear.classList.remove("hidden");               // 🆕 hidden クラスを除去
-    bear.src = bearExpressions.normal.image;
+function handleChoice(wrapper, selected) {
+  const now = performance.now();
+  const timeTaken = (now - startTime) / 1000;
+  totalElapsed += timeTaken;
 
-    const title = document.querySelector("h1");
-    if (title) title.style.display = "none";
+  const marker = wrapper.querySelector(".marker");
 
-    transition(instruction, explanation);
-    setTimeout(() => {
-      transition(explanation, gameArea);
-
-      reactionText.textContent = "よーい...スタート！";
-      reactionText.style.display = "block"; // 念のため強制表示
-
-      // 🆕 よーいスタートを1秒後に消す
-      setTimeout(() => {
-        reactionText.style.display = "none";
-      }, 1000);
-
-      setTimeout(showRandomFace, 2000);
-    }, 2000);
+  if (selected === correctAnswer) {
+    wrapper.classList.add("correct");
+    marker.textContent = "⭕";
+  } else {
+    wrapper.classList.add("wrong");
+    marker.textContent = "×";
+    penaltyTime += 5;
+    showPenalty();
   }
 
+  disableChoices();
+  setTimeout(() => {
+    currentQuestion++;
+    startTime = performance.now();
+    showNextQuestion();
+  }, 800);
+}
 
-  function showRandomFace() {
-    const randomKey = expressionKeys[Math.floor(Math.random() * expressionKeys.length)];
-    const expression = bearExpressions[randomKey];
-    bear.src = expression.image;
-    currentExpression = expression.label;
+function disableChoices() {
+  document.querySelectorAll(".option").forEach(el => el.onclick = null);
+}
 
-    // ✅ 表情が joy なら反応計測
-    if (currentExpression === "joy") {
-      startTime = performance.now();
-      isClickable = true;
-      liveTimer.textContent = "0.000 秒";
-      liveTimer.classList.remove("hidden");
-      liveTimer.classList.add("visible");
+function showPenalty() {
+  const text = document.getElementById("penalty-text");
+  text.classList.remove("hidden");
+  setTimeout(() => text.classList.add("hidden"), 1000);
+}
 
-      timerInterval = setInterval(() => {
-        const elapsed = (performance.now() - startTime) / 1000;
-        liveTimer.textContent = elapsed.toFixed(3) + " 秒";
-      }, 30);
+function updateTimer() {
+  const timer = document.getElementById("live-timer");
+  timer.textContent = `${(totalElapsed + penaltyTime).toFixed(3)} 秒`;
+  if (currentQuestion < NUM_QUESTIONS) {
+    requestAnimationFrame(updateTimer);
+  }
+}
 
-      setTimeout(() => {
-        if (isClickable) {
-          isClickable = false;
-          clearInterval(timerInterval);
-          liveTimer.classList.remove("visible");
-          liveTimer.classList.add("hidden");
-          reactionText.textContent = "おそい！😵";
-          setTimeout(() => showResult(null), 1500);
-        }
-      }, 5000);
-    } else {
-      // ✅ joy以外の時もスタートタイムを記録しておく（タップ検出のため）
-      startTime = performance.now();
-      isClickable = true;
+function endGame() {
+  const finalTime = totalElapsed + penaltyTime;
+  showResult(finalTime);
+}
 
-      // ⏳ 表情変更までの時間
-      setTimeout(() => {
-        if (isClickable) {
-          isClickable = false;
-          showRandomFace(); // 次の表情へ
-        }
-      }, 1500 + Math.random() * 1500);
-    }
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
   }
 
-
-
-  bear.addEventListener("click", () => {
-    // スタートしてなければ無視
-    if (!startTime) return;
-
-    clearInterval(timerInterval);
-    liveTimer.classList.add("hidden");
-
-    if (currentExpression === "joy" && isClickable) {
-      isClickable = false;
-      const elapsed = (performance.now() - startTime) / 1000;
-      showResult(elapsed);
-    } else {
-      isClickable = false;  // joy以外でも一度で終わるように
-      reactionText.textContent = "ミス！😣";
-      setTimeout(() => showResult(null), 1000);
-    }
-  });
 
 
   function startConfetti() {
@@ -203,16 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
           bestScoreEl.textContent = `自己ベスト：${parseFloat(data.best).toFixed(3)} 秒`;
         }
       });
-    } else {
-      resultScore.textContent = "スコア：無効（遅すぎた/ミス）";
-      bestScoreEl.classList.add("hidden");
-      failSound.play(); // ✅ 失敗音を再生
     }
   }
-
-  playAgainBtn.addEventListener("click", () => {
-    location.reload();
-  });
 
   endBtn.addEventListener("click", () => {
     window.location.href = "minigame_list.html";
