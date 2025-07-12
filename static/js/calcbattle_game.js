@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
     } else {
       alert("📺 広告（仮）を見ています...");
-      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recoverd", {
+      fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, type })
