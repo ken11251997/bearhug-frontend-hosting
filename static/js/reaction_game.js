@@ -39,7 +39,7 @@ function showNextQuestion() {
   const count = CHOICE_COUNTS[currentQuestion];
 
   // 仮の表情リスト（本番では画像名に合わせて更新）
-  const allExpressions = Array.from({length: count}, (_, i) => `expression_${i}`);
+  const allExpressions = shuffle([...expressions]).slice(0, count);
 
   correctAnswer = allExpressions[Math.floor(Math.random() * count)];
   document.getElementById("question-text").textContent = `この表情を探してね：`;
