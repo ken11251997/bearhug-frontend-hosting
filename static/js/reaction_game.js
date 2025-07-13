@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const failSound = new Audio("static/sound/fail.mp3");
 
  // === 表情一覧（後で画像追加予定） ===
-const expressions = ["joy", "smile","yawn", "angry", "cry", "doya", "happy","normal","shy","sleepy","default"];
+const expressions = ["expression_joy", "expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
 
 const NUM_QUESTIONS = 5;
 const CHOICE_COUNTS = [4, 6, 12, 24, 81];
