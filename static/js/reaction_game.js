@@ -29,6 +29,7 @@ window.onload = () => {
 function startGame() {
   document.getElementById("instruction").classList.add("hidden");
   document.getElementById("quiz-area").classList.remove("hidden");
+  document.getElementById("live-timer").classList.remove("hidden"); // ⏱ タイマー表示
   startTime = performance.now();
   showNextQuestion();
 }
@@ -42,6 +43,7 @@ function showNextQuestion() {
   const allExpressions = shuffle([...expressions]).slice(0, count);
 
   correctAnswer = allExpressions[Math.floor(Math.random() * count)];
+  
   document.getElementById("question-text").textContent = `この表情を探してね：`;
 
   const target = document.getElementById("target-face");
