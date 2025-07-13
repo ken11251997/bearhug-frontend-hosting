@@ -72,29 +72,30 @@ function showNextQuestion() {
 }
 
 function handleChoice(wrapper, selected) {
-  const now = performance.now();
-  const timeTaken = (now - startTime) / 1000;
-  totalElapsed += timeTaken;
+    const now = performance.now();
+    const timeTaken = (now - startTime) / 1000;
+    totalElapsed += timeTaken;
 
-  const marker = wrapper.querySelector(".marker");
+    const marker = wrapper.querySelector(".marker");
 
-  if (selected === correctAnswer) {
-    wrapper.classList.add("correct");
-    marker.textContent = "⭕";
-  } else {
-    wrapper.classList.add("wrong");
-    marker.textContent = "×";
-    penaltyTime += 5;
-    showPenalty();
+    if (selected === correctAnswer) {
+      wrapper.classList.add("correct");
+      marker.textContent = "⭕";
+      disableChoices();
+      setTimeout(() => {
+        currentQuestion++;
+        startTime = performance.now();
+        showNextQuestion();
+      }, 800);
+    } else {
+      wrapper.classList.add("wrong");
+      marker.textContent = "×";
+      penaltyTime += 5;
+      showPenalty();
+      wrapper.onclick = null; // ❌ ミスタップされた選択肢は無効化
+    }
   }
 
-  disableChoices();
-  setTimeout(() => {
-    currentQuestion++;
-    startTime = performance.now();
-    showNextQuestion();
-  }, 800);
-}
 
 function disableChoices() {
   document.querySelectorAll(".option").forEach(el => el.onclick = null);

@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
       penaltyTime += 10;
       alert("不正解！10秒加算！");
   }
+}
 
   function showFeedback(text, type) {
     feedbackDisplay.textContent = text;
