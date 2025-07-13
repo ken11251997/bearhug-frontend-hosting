@@ -145,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = document.createElement("button");
       btn.className = "choice-button";
       btn.textContent = choice;
+      console.log("✅ ボタン追加:", btn); // ← 追加
       btn.addEventListener("click", () => handleAnswer(Number(choice)));
       choicesContainer.appendChild(btn);
     });

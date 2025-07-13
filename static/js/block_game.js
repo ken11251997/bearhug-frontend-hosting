@@ -9,6 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d");
   const canvasRect = canvas.getBoundingClientRect();
 
+  const paddleWidth = canvas.width * 0.25;
+  const paddleHeight = 10;
+  let paddleX = (canvas.width - paddleWidth) / 2;
+
+  canvas.addEventListener("touchstart", handleTouch);
+  canvas.addEventListener("touchmove", handleTouch);
+
+  function handleTouch(e) {
+    const touchX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+    paddleX = touchX - paddleWidth / 2;
+    if (paddleX < 0) paddleX = 0;
+    if (paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+  }
+
   const bonusEl = document.createElement("div");
   bonusEl.style.position = "absolute";
   bonusEl.style.top = "10px";
@@ -21,9 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
   bonusEl.style.display = "none";
   document.body.appendChild(bonusEl);
 
-  const paddleWidth = 75;
-  const paddleHeight = 10;
-  let paddleX = (canvas.width - paddleWidth) / 2;
 
   const ballRadius = 8;
   let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 2, dy: -2 }];
@@ -31,13 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let rightPressed = false;
   let leftPressed = false;
 
-  const brickRowCount = 5;
-  const brickColumnCount = 10;
-  const brickWidth = 44;
-  const brickHeight = 15;
+  const brickColumnCount = 6;
   const brickPadding = 4;
   const brickOffsetTop = 30;
   const brickOffsetLeft = 10;
+
+  const brickWidth = (canvas.width - brickOffsetLeft * 2 - brickPadding * (brickColumnCount - 1)) / brickColumnCount;
+  const brickHeight = 15;
 
   let score = 0;
   let stage = 1;
