@@ -101,19 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   function beginGameFlow() {
-    // 強制的に game-screen を表示
+    console.log("▶️ beginGameFlow 実行");
     document.getElementById("start-screen").classList.add("hidden");
     document.getElementById("end-screen").classList.add("hidden");
     document.getElementById("game-screen").classList.remove("hidden");
 
     questions = generateQuestions();
+    console.log("🎯 生成された問題：", questions);
     currentQuestionIndex = 0;
-    elapsed = 0;
     penaltyTime = 0;
     startTime = performance.now();
     startTimer();
     showQuestion();
-    }
+}
 
   function startTimer() {
     timerInterval = setInterval(() => {
@@ -128,36 +128,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showQuestion() {
-    console.log("✅ showQuestion() 呼び出し中:", questions[currentQuestionIndex]);
-    const q = questions[currentQuestionIndex];
-    questionDisplay.textContent = q.questionText;
-    questionCountDisplay.textContent = `第${currentQuestionIndex + 1}問 / ${totalQuestions}`;
-    choicesContainer.innerHTML = "";
-    feedbackDisplay.textContent = "";
+    console.log("📢 showQuestion() 開始");
 
+    if (questions.length === 0) {
+      console.error("❌ 問題が1つも生成されていません！");
+      return;
+    }
+
+    const q = questions[currentQuestionIndex];
+    console.log("▶️ 表示する問題:", q);
+    document.getElementById("question").textContent = q.questionText;
+
+    const choicesContainer = document.getElementById("choices");
+    choicesContainer.innerHTML = "";
     q.choices.forEach(choice => {
       const btn = document.createElement("button");
       btn.className = "choice-button";
       btn.textContent = choice;
-      btn.addEventListener("click", () => handleAnswer(Number(choice))); // ✅ 修正ここ
+      btn.addEventListener("click", () => handleAnswer(Number(choice)));
       choicesContainer.appendChild(btn);
     });
   }
 
   function handleAnswer(choice) {
     const q = questions[currentQuestionIndex];
+    console.log("🧠 ユーザー回答:", choice, "正解:", q.answer);
     if (choice === q.answer) {
-      showFeedback("⭕ 正解！", "correct");
+      console.log("✅ 正解");
       currentQuestionIndex++;
-      if (currentQuestionIndex < totalQuestions) {
-        setTimeout(showQuestion, 600);
-      } else {
+      if (currentQuestionIndex >= questions.length) {
         endGame();
+      } else {
+        showQuestion();
       }
     } else {
-      showFeedback("❌ 不正解！+10秒", "wrong");
+      console.warn("❌ 不正解！10秒加算！");
       penaltyTime += 10;
-    }
+      alert("不正解！10秒加算！");
   }
 
   function showFeedback(text, type) {
