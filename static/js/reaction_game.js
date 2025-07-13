@@ -42,7 +42,9 @@ function showNextQuestion() {
   // 仮の表情リスト（本番では画像名に合わせて更新）
   const allExpressions = shuffle([...expressions]).slice(0, count);
 
-  correctAnswer = allExpressions[Math.floor(Math.random() * count)];
+
+  correctAnswer = allExpressions.length > 0 ? allExpressions[Math.floor(Math.random() * allExpressions.length)] : expressions[0];
+
   
   document.getElementById("question-text").textContent = `この表情を探してね：`;
 
@@ -111,7 +113,10 @@ function showPenalty() {
 
 function updateTimer() {
   const timer = document.getElementById("live-timer");
-  timer.textContent = `${(totalElapsed + penaltyTime).toFixed(3)} 秒`;
+  const now = performance.now();
+  const currentElapsed = (now - startTime) / 1000;
+  timer.textContent = `${(totalElapsed + penaltyTime + currentElapsed).toFixed(3)} 秒`;
+
   if (currentQuestion < NUM_QUESTIONS) {
     requestAnimationFrame(updateTimer);
   }
