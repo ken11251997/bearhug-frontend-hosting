@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const retryBtn = document.getElementById("retry-btn");
   const backBtn = document.getElementById("back-btn");
   const rankingBtn = document.getElementById("ranking-btn");
-  const rankingAgainBtn = document.getElementById("end-ranking-btn");
+  const rankingAgainBtn = document.getElementById("ranking-again-btn"); // ✅ HTMLと一致させる
   const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
 
   const timerDisplay = document.getElementById("timer");
