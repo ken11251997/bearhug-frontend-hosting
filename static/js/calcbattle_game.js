@@ -67,9 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return q;
   }
 
+
   function showScreen(target) {
-    [startScreen, gameScreen, endScreen].forEach(screen => screen.classList.add("hidden"));
+    [startScreen, gameScreen, endScreen].forEach(screen => {
+      screen.classList.add("hidden");
+      screen.classList.remove("active"); // ← 必須
+    });
     target.classList.remove("hidden");
+    target.classList.add("active");      // ← 必須
+    console.log("🎬 表示画面:", target.id);
   }
 
 

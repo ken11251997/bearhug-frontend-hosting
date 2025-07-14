@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
 
+  document.getElementById("quiz-area").classList.add("hidden");
+
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
 
@@ -12,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
 const expressions = ["expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
 
 const NUM_QUESTIONS = 5;
-const CHOICE_COUNTS = [4, 6, 12, 24, 81];
+const CHOICE_COUNTS = [4, 6, 12, 36, 81];
+const columns = Math.min(Math.ceil(Math.sqrt(count)), 9);
+grid.style.gridTemplateColumns = `repeat(${columns}, auto)`;
 
 let currentQuestion = 0;
 let startTime;
@@ -78,7 +82,12 @@ function showNextQuestion() {
 function handleChoice(wrapper, selected) {
     const now = performance.now();
     const timeTaken = (now - startTime) / 1000;
+    if (selected !== correctAnswer) {
+    penaltyTime += 5;
+    showPenalty();
+  } else {
     totalElapsed += timeTaken;
+  }
 
     const marker = wrapper.querySelector(".marker");
 

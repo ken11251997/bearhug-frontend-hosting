@@ -96,6 +96,10 @@ canvas {
   z-index: 1000;
 }
 
+#game-canvas {
+  padding-bottom: 40px;
+}
+
 @keyframes explode {
   0% {
     transform: scale(1);
