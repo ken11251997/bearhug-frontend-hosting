@@ -34,15 +34,20 @@ document.addEventListener("DOMContentLoaded", () => {
   bonusEl.style.textShadow = "1px 1px 0 white";
   bonusEl.style.display = "none";
   document.body.appendChild(bonusEl);
+  
+  canvas.width = Math.min(window.innerWidth * 0.9, 420);
+  canvas.height = canvas.width * 1.6;
 
 
   const ballRadius = 8;
   let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 2, dy: -2 }];
 
+
   let rightPressed = false;
   let leftPressed = false;
 
   const brickColumnCount = 6;
+  const brickRowCount = 4; // ← ★これを追加！
   const brickPadding = 4;
   const brickOffsetTop = 30;
   const brickOffsetLeft = 10;
