@@ -89,7 +89,11 @@ function handleChoice(wrapper, selected) {
       setTimeout(() => {
         currentQuestion++;
         startTime = performance.now();
-        showNextQuestion();
+        if (currentQuestion >= NUM_QUESTIONS) {
+          endGame();
+        } else {
+          showNextQuestion();
+        }
       }, 800);
     } else {
       wrapper.classList.add("wrong");

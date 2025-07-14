@@ -73,8 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-    startBtn.addEventListener("click", () => {
+  startBtn.addEventListener("click", () => {
     startBtn.disabled = true;
+
+    if (!user_id) {
+      console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
+      beginGameFlow();  // ← ローカルモードでも開始
+      return;
+    }
 
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
         method: "POST",
