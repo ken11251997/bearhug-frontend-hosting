@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bonusEl.style.textShadow = "1px 1px 0 white";
   bonusEl.style.display = "none";
   document.body.appendChild(bonusEl);
-  
+
   canvas.width = Math.min(window.innerWidth * 0.9, 420);
   canvas.height = canvas.width * 1.6;
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const brickRowCount = 4; // ← ★これを追加！
   const brickPadding = 4;
   const brickOffsetTop = 30;
-  const brickOffsetLeft = 10;
+  const brickOffsetLeft = canvas.width * 0.08; 
 
   const brickWidth = (canvas.width - brickOffsetLeft * 2 - brickPadding * (brickColumnCount - 1)) / brickColumnCount;
   const brickHeight = 15;
