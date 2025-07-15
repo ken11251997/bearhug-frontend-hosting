@@ -165,7 +165,7 @@ function shuffle(array) {
   }
 
   function showResult(score) {
-    gameArea.classList.add("hidden");
+    document.getElementById("quiz-area").classList.add("hidden");
     resultArea.classList.remove("hidden");
 
     if (score) {
