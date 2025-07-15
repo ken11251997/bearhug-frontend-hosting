@@ -112,20 +112,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+  // function beginGameFlow() {
+  //   console.log("▶️ beginGameFlow 実行");
+  //   document.getElementById("start-screen").classList.add("hidden");
+  //   document.getElementById("end-screen").classList.add("hidden");
+  //   document.getElementById("game-screen").classList.remove("hidden");
+
+  //   questions = generateQuestions();
+  //   console.log("🎯 生成された問題：", questions);
+  //   currentQuestionIndex = 0;
+  //   penaltyTime = 0;
+  //   startTime = performance.now();
+  //   startTimer();
+  //   showQuestion();
+  // }
+
   function beginGameFlow() {
     console.log("▶️ beginGameFlow 実行");
-    document.getElementById("start-screen").classList.add("hidden");
-    document.getElementById("end-screen").classList.add("hidden");
-    document.getElementById("game-screen").classList.remove("hidden");
-
+    showScreen(gameScreen); // ← 修正！画面切り替えはこの関数で統一
     questions = generateQuestions();
     console.log("🎯 生成された問題：", questions);
     currentQuestionIndex = 0;
     penaltyTime = 0;
     startTime = performance.now();
     startTimer();
-    showQuestion();
-}
+    showQuestion();  // ← ここで表示
+  }
 
   function startTimer() {
     timerInterval = setInterval(() => {
