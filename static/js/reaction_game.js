@@ -15,8 +15,7 @@ const expressions = ["expression_smile","expression_yawn", "expression_angry", "
 
 const NUM_QUESTIONS = 5;
 const CHOICE_COUNTS = [4, 6, 12, 36, 81];
-const columns = Math.min(Math.ceil(Math.sqrt(count)), 9);
-grid.style.gridTemplateColumns = `repeat(${columns}, auto)`;
+
 
 let currentQuestion = 0;
 let startTime;
@@ -39,6 +38,8 @@ function startGame() {
 }
 
 function showNextQuestion() {
+  const columns = Math.min(Math.ceil(Math.sqrt(count)), 9);
+  grid.style.gridTemplateColumns = `repeat(${columns}, auto)`; // ← gridも未定義
   if (currentQuestion >= NUM_QUESTIONS) return endGame();
 
   const count = CHOICE_COUNTS[currentQuestion];
