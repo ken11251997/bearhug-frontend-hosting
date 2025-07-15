@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
+  
 
  // === 表情一覧（後で画像追加予定） ===
 const expressions = ["expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
@@ -29,7 +30,17 @@ window.onload = () => {
   document.getElementById("end-btn").onclick = () => location.href = "minigame_list.html";
 };
 
+
+function preloadImages() {
+  expressions.forEach(expr => {
+    const img = new Image();
+    img.src = `static/img/${expr}.png`;
+    imageCache[expr] = img;
+  });
+}
+
 function startGame() {
+  preloadImages(); // 🔧 最初に画像をキャッシュ
   document.getElementById("instruction").classList.add("hidden");
   document.getElementById("quiz-area").classList.remove("hidden");
   document.getElementById("live-timer").classList.remove("hidden"); // ⏱ タイマー表示
@@ -55,6 +66,7 @@ function showNextQuestion() {
   document.getElementById("question-text").textContent = `この表情を探してね：`;
 
   const target = document.getElementById("target-face");
+  const targetImg = imageCache[correctAnswer].cloneNode();
   target.innerHTML = `<img src="static/img/${correctAnswer}.png" alt="target"/>`;
 
   grid.innerHTML = "";
@@ -64,7 +76,7 @@ function showNextQuestion() {
     const wrapper = document.createElement("div");
     wrapper.className = "option";
 
-    const img = document.createElement("img");
+    const img = imageCache[expr].cloneNode(); // 🔧 キャッシュから複製
     img.src = `static/img/${expr}.png`;
     img.alt = expr;
     wrapper.appendChild(img);
