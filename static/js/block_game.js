@@ -35,12 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
   bonusEl.style.display = "none";
   document.body.appendChild(bonusEl);
 
+
   canvas.width = Math.min(window.innerWidth * 0.9, 420);
-  canvas.height = canvas.width * 1.6;
+  canvas.height = canvas.width * 1.3;  // ★縦を縮小（1.6 → 1.3）
+
 
 
   const ballRadius = 8;
-  let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 2, dy: -2 }];
+  let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 3, dy: -3 }]; // ★速度アップ
 
 
   let rightPressed = false;
@@ -133,11 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   function createExplosion(x, y) {
+    const rect = canvas.getBoundingClientRect();  // ★リアルタイムで取得
     const exp = document.createElement("div");
     exp.className = "explosion";
-    exp.style.left = `${canvasRect.left + x - 5}px`;
-    exp.style.top = `${canvasRect.top + y - 5}px`;
+    exp.style.left = `${rect.left + x - 5}px`;
+    exp.style.top = `${rect.top + y - 5}px`;
     document.body.appendChild(exp);
     setTimeout(() => exp.remove(), 400);
   }
