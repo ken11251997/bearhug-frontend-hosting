@@ -38,11 +38,12 @@ function startGame() {
 }
 
 function showNextQuestion() {
+  const count = CHOICE_COUNTS[currentQuestion]; // 🔄 先に count を定義
   const columns = Math.min(Math.ceil(Math.sqrt(count)), 9);
-  grid.style.gridTemplateColumns = `repeat(${columns}, auto)`; // ← gridも未定義
+  const grid = document.getElementById("options-grid"); // 🔄 gridも定義が後だったので前に移動
+  grid.style.gridTemplateColumns = `repeat(${columns}, auto)`;
   if (currentQuestion >= NUM_QUESTIONS) return endGame();
 
-  const count = CHOICE_COUNTS[currentQuestion];
 
   // 仮の表情リスト（本番では画像名に合わせて更新）
   const allExpressions = shuffle([...expressions]).slice(0, count);
@@ -56,7 +57,6 @@ function showNextQuestion() {
   const target = document.getElementById("target-face");
   target.innerHTML = `<img src="static/img/${correctAnswer}.png" alt="target"/>`;
 
-  const grid = document.getElementById("options-grid");
   grid.innerHTML = "";
   grid.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(count))}, auto)`;
 
@@ -194,9 +194,9 @@ function shuffle(array) {
     }
   }
 
-  endBtn.addEventListener("click", () => {
-    window.location.href = "minigame_list.html";
-  });
+  // endBtn.addEventListener("click", () => {
+  //   window.location.href = "minigame_list.html";
+  // });
 
   rankingBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
