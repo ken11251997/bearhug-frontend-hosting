@@ -30,7 +30,7 @@ window.onload = () => {
   document.getElementById("end-btn").onclick = () => location.href = "minigame_list.html";
 };
 
-
+const imageCache = {};
 function preloadImages() {
   expressions.forEach(expr => {
     const img = new Image();
