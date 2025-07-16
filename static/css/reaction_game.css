@@ -259,3 +259,34 @@ h1 {
   text-shadow: 2px 2px 0 #fff;
   transition: transform 0.3s;
 }
+
+
+/* 🎨 計算ゲームと同じボタンスタイルを適用 */
+.main-button, .sub-button {
+  font-size: 1.2rem;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 90%;
+  max-width: 320px;
+  margin-top: 12px;
+}
+
+.main-button {
+  background: #ffccdd;
+  color: #800040;
+  box-shadow: 0 4px 0 #e49fb2;
+}
+
+.sub-button {
+  background: #bdefff;
+  color: #004488;
+  box-shadow: 0 4px 0 #9bd6ec;
+}
+
+.main-button:hover,
+.sub-button:hover {
+  transform: scale(1.05);
+}
