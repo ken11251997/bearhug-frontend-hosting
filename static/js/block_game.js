@@ -82,7 +82,54 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (e.key === "Left" || e.key === "ArrowLeft") leftPressed = false;
   });
 
-  document.getElementById("start-button").addEventListener("click", () => {
+  // document.getElementById("start-button").addEventListener("click", () => {
+  //   openingScreen.classList.add("hidden");
+  //   countdownText.classList.remove("hidden");
+  //   setTimeout(() => {
+  //     countdownText.classList.add("hidden");
+  //     gameCanvasWrapper.classList.remove("hidden");
+  //     initGame();
+  //   }, 1500);
+  // });
+
+
+  const startBtn = document.getElementById("start-button"); // ✅ 追加
+
+  startBtn.addEventListener("click", () => {
+    startBtn.disabled = true;
+
+    if (!user_id) {
+      console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
+      beginGameFlow();  // ← ローカルモードでも開始
+      return;
+    }
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id })
+    })
+    .then(async res => {
+      if (res.status === 429) {
+        alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+        onWatchAd("game");
+        return;
+      }
+      const data = await res.json();
+      if (data.show_ad) {
+        onWatchAd("game");
+      } else {
+        beginGameFlow();
+      }
+    })
+    .catch(err => {
+      console.error("通信エラー:", err);
+      alert("通信エラー:");
+      startBtn.disabled = false; // 復旧
+    });
+  });
+
+  function beginGameFlow() {
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
     setTimeout(() => {
@@ -90,7 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
       gameCanvasWrapper.classList.remove("hidden");
       initGame();
     }, 1500);
-  });
+  }
+
+
 
   function initGame() {
     createBricks();
@@ -100,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timer <= 0) {
         clearInterval(timerInterval);
         alert("時間切れ！ゲームオーバー");
-        document.location.reload();
+        showResult(score);
       }
     }, 1000);
     draw();
@@ -299,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (balls.length === 0) {
       clearInterval(timerInterval);
       alert("すべてのボールを落としました。ゲームオーバー");
-      document.location.reload();
+      showResult(score);
       return;
     }
 
@@ -355,4 +404,53 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  function onWatchAd(type) {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    loadingOverlay.classList.remove("hidden");
+    loadingOverlay.style.display = "flex";
+
+    if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SHOW_REWARD_AD",
+        adType: type
+        }));
+    } else {
+        alert("📺 広告（仮）を見ています...");
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type })
+        })
+        .then(res => {
+        if (!res.ok) throw new Error("リミット解除失敗");
+        })
+        .catch(err => {
+        console.error("広告解除エラー:", err);
+        alert("通信エラー（広告）: " + err.message);
+        })
+        .finally(() => {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        alert("gameflow"); // ✅ 確実に表示される
+        beginGameFlow();
+        });
+    }
+    }
+
+  window.addEventListener("AD_WATCHED", (event) => {
+            // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+            const adType = event.detail?.type || "unknown";
+            closeLoadingOverlay();
+            // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    });
+
+
 });
