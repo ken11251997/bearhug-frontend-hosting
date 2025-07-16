@@ -97,7 +97,8 @@ canvas {
 }
 
 #gameCanvas {
-  margin-bottom: 60px; /* ← 下にしっかり余白を確保 */
+  margin-bottom: 30px; /* ← 下にしっかり余白を確保 */
+  margin-top: 40px;
 }
 
 @keyframes explode {
@@ -109,6 +110,15 @@ canvas {
     transform: scale(3);
     opacity: 0;
   }
+}
+
+.falling-item {
+  animation: fall 1s linear;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(300px); opacity: 0.9; }
 }
 
 /* ブロックカラー参考（game.jsと連動）
@@ -135,4 +145,35 @@ canvas {
 }
 .back-button:hover {
   background-color: #f0e6d6;
+}
+
+.bonus-message {
+  position: absolute;
+  top: 50px; /* スコアにかぶらないよう調整 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: green;
+  text-shadow: 1px 1px 0 white;
+  z-index: 999;
+  display: none;
+}
+
+.fullscreen-explosion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 100, 0, 0.4);
+  animation: screenFlash 0.4s ease-out;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+@keyframes screenFlash {
+  0%   { opacity: 0.8; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 0; }
 }

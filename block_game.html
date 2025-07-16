@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>エンドレスブロック崩し</title>
   <link rel="stylesheet" href="static/css/block_game.css" />
+  <link rel="stylesheet" href="static/css/ranking_modal.css" />
 </head>
 <body>
     <a id="back-button" href="minigame_list.html" class="back-button">← 戻る</a>
@@ -13,6 +14,7 @@
     <h1>エンドレスブロック崩し</h1>
     <p class="desc">すべてのブロックを壊して次のステージへ！</p>
     <button id="start-button" class="btn">ゲーム開始</button>
+    <button id="ranking-btn" class="btn">ランキング</button>
   </div>
 
   <!-- ⏱ カウントダウン表示 -->
@@ -21,12 +23,38 @@
   </div>
 
   <!-- 🎮 ゲーム画面 -->
-  <div id="game-canvas" class="screen hidden">
-    <p>スコア: <span id="score">0</span></p>
-    <p>タイマー: <span id="timer">180</span> 秒</p>
-    <canvas id="gameCanvas"></canvas>
+  <div id="result-screen" class="screen hidden">
+  <h2>ゲーム終了！</h2>
+  <p id="final-score" class="result-score">スコア：-- 点</p>
+  <p id="best-score" class="small-text hidden">自己ベスト：--</p>
+  <button onclick="location.reload()" class="btn">もう一度</button>
+  <button onclick="document.getElementById('ranking-modal').classList.remove('hidden'); loadRanking('mbti_median')" class="btn">ランキング</button>
+</div>
+
+  <!-- 📊 ランキングモーダル -->
+  <div id="ranking-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="tab-container">
+        <button class="ranking-tab active" data-type="mbti_median">MBTI中央値</button>
+        <button class="ranking-tab" data-type="mbti_max">MBTI最高</button>
+        <button class="ranking-tab" data-type="personal">個人</button>
+        <button class="ranking-tab" data-type="all">ALL</button>
+      </div>
+      <div id="ranking-list" class="ranking-list"></div>
+      <button id="close-ranking" class="btn">閉じる</button>
+    </div>
+  </div>
+
+  <!-- ⏳ ローディング画面 -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <img src="static/img/bear_3.png" class="bear-loader" />
+      <p class="loading-text">ロード中...</p>
+    </div>
   </div>
 
   <script src="static/js/block_game.js"></script>
+  <script src="static/js/ranking_modal.js"></script>
 </body>
 </html>
