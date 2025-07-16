@@ -177,3 +177,36 @@ canvas {
   50%  { opacity: 0.4; }
   100% { opacity: 0; }
 }
+
+
+/* 🧱 タイトルアニメーション：ブロック崩し風に跳ねて光る */
+#game-title {
+  animation: bounce-glow 2.5s ease-in-out infinite;
+  font-size: 2rem;
+  margin-bottom: 0.5em;
+  color: #d2691e;
+  text-shadow: 1px 1px 0 #fff;
+}
+
+@keyframes bounce-glow {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 8px #ffcc00;
+  }
+  20% {
+    transform: translateY(-5px) scale(1.05);
+    text-shadow: 0 0 15px #ffa500;
+  }
+  40% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 8px #ffcc00;
+  }
+  60% {
+    transform: translateY(-3px) scale(1.02);
+    text-shadow: 0 0 10px #ff9900;
+  }
+  80% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 6px #ffcc00;
+  }
+}
