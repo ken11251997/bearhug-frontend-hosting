@@ -283,7 +283,7 @@ function shuffle(array) {
       .finally(() => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
-        beginGameFlow();
+        startGame();
       });
     }
   }
