@@ -25,7 +25,7 @@ let penaltyTime = 0;
 let correctAnswer = "";
 
 window.onload = () => {
-  document.getElementById("start-btn").onclick = startGame;
+  // document.getElementById("start-btn").onclick = startGame;
   document.getElementById("play-again-btn").onclick = () => location.reload();
   document.getElementById("end-btn").onclick = () => location.href = "minigame_list.html";
 };
@@ -38,6 +38,42 @@ function preloadImages() {
     imageCache[expr] = img;
   });
 }
+
+const startBtn = document.getElementById("start-btn");
+startBtn.addEventListener("click", () => {
+    startBtn.disabled = true;
+
+    if (!user_id) {
+      console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
+      startGame();  // ← ローカルモードでも開始
+      return;
+    }
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/play_start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id })
+    })
+        .then(async res => {
+        if (res.status === 429) {
+            alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+            onWatchAd("game"); // ← game_name に合わせて変更
+            return;
+        }
+        const data = await res.json();
+        if (data.show_ad) {
+            onWatchAd("game");
+        } else {
+            startGame();
+        }
+        })
+        .catch(err => {
+        console.error("通信エラー:", err);
+        alert("通信エラー:")
+        });
+    });
+
+
 
 function startGame() {
   preloadImages(); // 🔧 最初に画像をキャッシュ
