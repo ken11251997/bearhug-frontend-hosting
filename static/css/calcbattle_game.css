@@ -224,3 +224,13 @@ body {
 .back-button:hover {
   background-color: #f0e6d6;
 }
+
+
+body {
+  background: url("static/img/bg_bear.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+#app {
+  background: transparent !important;
+}

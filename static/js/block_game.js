@@ -65,13 +65,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const brickWidth = (canvas.width - brickOffsetLeft * 2 - brickPadding * (brickColumnCount - 1)) / brickColumnCount;
   const brickHeight = 15;
 
+  const blockImages = {
+  1: new Image(),
+  2: new Image(),
+  3: new Image(),
+  item: new Image()
+  };
+  blockImages[1].src = "img/block1.png";
+  blockImages[2].src = "img/block2.png";
+  blockImages[3].src = "img/block3.png";
+
+
+  const types = ["ball", "blast"];
+  const itemType = types[Math.floor(Math.random() * types.length)];
+  bricks[c][r] = {
+    x: 0, y: 0,
+    status: 1,
+    hardness,
+    isItem: true,
+    itemType // ← 種別を保持
+  };
+  const itemImages = {
+    ball: new Image(),
+    blast: new Image()
+  };
+  itemImages.ball.src = "img/item_ball.png";
+  itemImages.blast.src = "img/item_blast.png";
+    
+  if (b.isItem) {
+    ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
+  } else {
+    ctx.drawImage(blockImages[b.hardness], brickX, brickY, brickWidth, brickHeight);
+  }
+
+  if (b.isItem) {
+    if (b.itemType === "ball") {
+      balls.push({ x: ball.x, y: ball.y, dx: -2, dy: -2 });
+    } else if (b.itemType === "blast") {
+      for (const row of bricks) {
+        for (const block of row) {
+          if (block.status > 0) block.hardness--;
+          if (block.hardness <= 0) block.status = 0;
+        }
+      }
+    }
+  }
+
+  const image = b.isItem ? blockImages.item : blockImages[b.hardness];
+  ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
+
   let score = 0;
   let stage = 1;
   let timer = 180;
   let timerInterval = null;
   let bricks = [];
 
-  let itemBricks = [];
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Right" || e.key === "ArrowRight") rightPressed = true;
