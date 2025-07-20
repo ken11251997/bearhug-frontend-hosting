@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
   const canvasRect = canvas.getBoundingClientRect();
+  const user_id = new URLSearchParams(window.location.search).get("user_id");
 
   const paddleWidth = canvas.width * 0.25;
   const paddleHeight = 10;
