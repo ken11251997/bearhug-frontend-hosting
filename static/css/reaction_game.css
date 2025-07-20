@@ -136,6 +136,17 @@ h1 {
   display: none !important;
 }
 
+
+#options-grid {
+  display: grid;
+  grid-gap: 8px;
+  justify-content: center;
+  align-items: center;
+  max-width: 95vw;
+  margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* ✅ 自動折り返し */
+}
+
 /* === ボタン共通 === */
 .btn {
   width: 100%;

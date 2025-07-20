@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const expressions = ["expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
 
 const NUM_QUESTIONS = 5;
-const CHOICE_COUNTS = [4, 6, 12, 36, 81];
+const CHOICE_COUNTS = [4, 6, 12, 36, 48];
 
 
 let currentQuestion = 0;
@@ -57,7 +57,11 @@ function showNextQuestion() {
 
 
   // 仮の表情リスト（本番では画像名に合わせて更新）
-  const allExpressions = shuffle([...expressions]).slice(0, count);
+  let allExpressions = [];
+  while (allExpressions.length < count) {
+    allExpressions.push(...shuffle([...expressions]));
+  }
+  allExpressions = allExpressions.slice(0, count);
 
 
   correctAnswer = allExpressions.length > 0 ? allExpressions[Math.floor(Math.random() * allExpressions.length)] : expressions[0];
@@ -177,6 +181,8 @@ function shuffle(array) {
   }
 
   function showResult(score) {
+    const resultScore = document.getElementById("result-score"); // ✅ 追加
+    const bestScoreEl = document.getElementById("best-score");   // ✅ 追加
     document.getElementById("quiz-area").classList.add("hidden");
     resultArea.classList.remove("hidden");
 
