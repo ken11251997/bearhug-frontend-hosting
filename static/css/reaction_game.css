@@ -147,6 +147,32 @@ h1 {
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* ✅ 自動折り返し */
 }
 
+.timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 1.5em; /* ✅ 高さを固定してずれを防ぐ */
+  position: relative;
+}
+
+/* #live-timer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #006400;
+} */
+
+.penalty-text {
+  font-size: 16px;
+  color: red;
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.penalty-text.hidden {
+  opacity: 0;
+}
+
 /* === ボタン共通 === */
 .btn {
   width: 100%;
