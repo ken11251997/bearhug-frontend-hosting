@@ -33,6 +33,13 @@ html, body {
     align-items: center;
     width: 100%;
     margin-bottom: 10px;
+
+    /* ✅ 追加部分 */
+    background-color: #ffffff;
+    padding: 10px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #ddd;
+    z-index: 10;
 }
 
 .chat-info {
