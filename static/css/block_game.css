@@ -8,7 +8,7 @@ body {
   overflow: hidden;
   color: #8b4513;
   text-align: center;
-  background: url("static/img/block.png") no-repeat center center fixed;
+  background: url("../img/block.png") no-repeat center center fixed;
   background-size: cover;
 }
 
