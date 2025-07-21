@@ -73,9 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
   3: new Image(),
   item: new Image()
   };
-  blockImages[1].src = "img/block1.png";
-  blockImages[2].src = "img/block2.png";
-  blockImages[3].src = "img/block3.png";
+  blockImages[1].src = "img/block_1.png";
+  blockImages[2].src = "img/block_2.png";
+  blockImages[3].src = "img/block_3.png";
+  blockImages[4].src = "img/block_4.png";
+  blockImages[5].src = "img/block_5.png";
 
 
   
@@ -92,22 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
   //   ctx.drawImage(blockImages[b.hardness], brickX, brickY, brickWidth, brickHeight);
   // }
 
-
-  if (b.isItem) {
-    if (b.itemType === "ball") {
-      balls.push({ x: ball.x, y: ball.y, dx: -2, dy: -2 });
-    } else if (b.itemType === "blast") {
-      for (const row of bricks) {
-        for (const block of row) {
-          if (block.status > 0) block.hardness--;
-          if (block.hardness <= 0) block.status = 0;
-        }
-      }
-    }
-  }
-
-  const image = b.isItem ? blockImages.item : blockImages[b.hardness];
-  ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
 
   let score = 0;
   let stage = 1;
