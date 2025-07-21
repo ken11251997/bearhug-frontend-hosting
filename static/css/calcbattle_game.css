@@ -9,6 +9,8 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  background: url("../img/calc.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
 #app {
@@ -226,10 +228,6 @@ body {
 }
 
 
-body {
-  background: url("/static/img/calc.png") no-repeat center center fixed;
-  background-size: cover;
-}
 
 #app {
   background: transparent !important;
