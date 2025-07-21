@@ -76,15 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   blockImages[3].src = "img/block3.png";
 
 
-  const types = ["ball", "blast"];
-  const itemType = types[Math.floor(Math.random() * types.length)];
-  bricks[c][r] = {
-    x: 0, y: 0,
-    status: 1,
-    hardness,
-    isItem: true,
-    itemType // ← 種別を保持
-  };
+  
   const itemImages = {
     ball: new Image(),
     blast: new Image()
@@ -229,11 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let r = 0; r < brickRowCount; r++) {
         const hardness = hardnessMap[index];
         const isItem = itemIndices.has(index);
+        const types = ["ball", "blast"];
+        const itemType = types[Math.floor(Math.random() * types.length)];
         bricks[c][r] = {
           x: 0, y: 0,
           status: 1,
           hardness,
-          isItem
+          isItem: true,
+          itemType // ← 種別を保持
         };
         index++;
       }
