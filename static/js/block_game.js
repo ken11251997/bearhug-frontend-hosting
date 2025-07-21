@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
   5: new Image(),
   item: new Image()
   };
-  blockImages[1].src = "img/block_1.png";
-  blockImages[2].src = "img/block_2.png";
-  blockImages[3].src = "img/block_3.png";
-  blockImages[4].src = "img/block_4.png";
-  blockImages[5].src = "img/block_5.png";
+  blockImages[1].src = "static/img/block_1.png";
+  blockImages[2].src = "static/img/block_2.png";
+  blockImages[3].src = "static/img/block_3.png";
+  blockImages[4].src = "static/img/block_4.png";
+  blockImages[5].src = "static/img/block_5.png";
   
 
 
@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ball: new Image(),
     blast: new Image()
   };
-  itemImages.ball.src = "img/item_ball.png";
-  itemImages.blast.src = "img/item_blast.png";
+  itemImages.ball.src = "static/img/item_ball.png";
+  itemImages.blast.src = "static/img/item_blast.png";
     
   // if (b.isItem) {
   //   ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
@@ -162,14 +162,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+
   function beginGameFlow() {
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
-    setTimeout(() => {
-      countdownText.classList.add("hidden");
-      gameCanvasWrapper.classList.remove("hidden");
-      initGame();
-    }, 1500);
+
+    loadImages(() => {
+      setTimeout(() => {
+        countdownText.classList.add("hidden");
+        gameCanvasWrapper.classList.remove("hidden");
+        initGame(); // ✅ 全画像読み込み後にゲーム開始
+      }, 1500);
+    });
+  }
+
+
+  function loadImages(callback) {
+    let loaded = 0;
+    const total = 5 + 2; // blockImages[1〜5] + itemImages[ball, blast]
+
+    function check() {
+      loaded++;
+      if (loaded === total) callback(); // すべて読み込み完了
+    }
+
+    const blocks = [1, 2, 3, 4, 5];
+    blocks.forEach(i => {
+      blockImages[i].onload = check;
+    });
+    ["ball", "blast"].forEach(k => {
+      itemImages[k].onload = check;
+    });
   }
 
 
