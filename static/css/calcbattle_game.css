@@ -227,7 +227,7 @@ body {
 
 
 body {
-  background: url("../img/calc.png") no-repeat center center fixed;
+  background: url("/static/img/calc.png") no-repeat center center fixed;
   background-size: cover;
 }
 

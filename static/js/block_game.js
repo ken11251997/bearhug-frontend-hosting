@@ -180,17 +180,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadImages(callback) {
     let loaded = 0;
-    const total = 5 + 2; // blockImages[1〜5] + itemImages[ball, blast]
+    const total = 5 + 2; // block[1〜5] + item[ball, blast]
 
     function check() {
       loaded++;
-      if (loaded === total) callback(); // すべて読み込み完了
+      if (loaded === total) callback();
     }
 
-    const blocks = [1, 2, 3, 4, 5];
-    blocks.forEach(i => {
+    for (let i = 1; i <= 5; i++) {
       blockImages[i].onload = check;
-    });
+    }
+
     ["ball", "blast"].forEach(k => {
       itemImages[k].onload = check;
     });
@@ -276,7 +276,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ? itemImages[b.itemType]
             : blockImages[b.hardness];
 
-          ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
+          // ✅ 安全に描画
+          if (image && image.complete && image.naturalHeight !== 0) {
+            ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
+          } else {
+            // 読み込み失敗時の予備描画
+            ctx.fillStyle = "gray";
+            ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+          }
         }
       }
     }
