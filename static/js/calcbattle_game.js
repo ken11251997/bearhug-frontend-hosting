@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  const loadingOverlay = document.getElementById("loading-overlay");
+  if (loadingOverlay) {
+    loadingOverlay.classList.add("hidden");
+    loadingOverlay.style.display = "none";
+  }
+
   const startScreen = document.getElementById("start-screen");
   const gameScreen = document.getElementById("game-screen");
   const endScreen = document.getElementById("end-screen");
