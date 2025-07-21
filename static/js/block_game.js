@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvasRect = canvas.getBoundingClientRect();
   const user_id = new URLSearchParams(window.location.search).get("user_id");
 
+  
+
   const paddleWidth = canvas.width * 0.25;
   const paddleHeight = 10;
   let paddleX = (canvas.width - paddleWidth) / 2;
@@ -84,11 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
   itemImages.ball.src = "img/item_ball.png";
   itemImages.blast.src = "img/item_blast.png";
     
-  if (b.isItem) {
-    ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
-  } else {
-    ctx.drawImage(blockImages[b.hardness], brickX, brickY, brickWidth, brickHeight);
-  }
+  // if (b.isItem) {
+  //   ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
+  // } else {
+  //   ctx.drawImage(blockImages[b.hardness], brickX, brickY, brickWidth, brickHeight);
+  // }
+
 
   if (b.isItem) {
     if (b.itemType === "ball") {
@@ -227,8 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
           x: 0, y: 0,
           status: 1,
           hardness,
-          isItem: true,
-          itemType // ← 種別を保持
+          // isItem: true,
+          itemType: itemIndices.has(index) ? types[Math.floor(Math.random() * types.length)] : null
         };
         index++;
       }
@@ -255,11 +258,12 @@ document.addEventListener("DOMContentLoaded", () => {
           const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
           b.x = brickX;
           b.y = brickY;
-          ctx.beginPath();
-          ctx.rect(brickX, brickY, brickWidth, brickHeight);
-          ctx.fillStyle = b.isItem ? "gold" : ["#66ccff", "#3399ff", "#003366"][b.hardness - 1];
-          ctx.fill();
-          ctx.closePath();
+
+          const image = b.itemType
+            ? itemImages[b.itemType]
+            : blockImages[b.hardness];
+
+          ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
         }
       }
     }
@@ -338,11 +342,12 @@ document.addEventListener("DOMContentLoaded", () => {
       item.y += item.dy;
 
       // 描画（アイテムの色はタイプで変化）
-      ctx.beginPath();
-      ctx.arc(item.x, item.y, 8, 0, Math.PI * 2);
-      ctx.fillStyle = item.type === "ball" ? "gold" : "red";
-      ctx.fill();
-      ctx.closePath();
+      // ctx.beginPath();
+      // ctx.arc(item.x, item.y, 8, 0, Math.PI * 2);
+      // ctx.fillStyle = item.type === "ball" ? "gold" : "red";
+      // ctx.fill();
+      // ctx.closePath();
+      ctx.drawImage(itemImages[item.type], item.x - 8, item.y - 8, 16, 16);
 
       // パドルと当たったか判定
       if (

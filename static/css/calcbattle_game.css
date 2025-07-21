@@ -227,10 +227,13 @@ body {
 
 
 body {
-  background: url("static/img/bg_bear.png") no-repeat center center fixed;
+  background: url("static/img/calc.png") no-repeat center center fixed;
   background-size: cover;
 }
 
 #app {
   background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
