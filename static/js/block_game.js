@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
   1: new Image(),
   2: new Image(),
   3: new Image(),
+  4: new Image(),
+  5: new Image(),
   item: new Image()
   };
   blockImages[1].src = "img/block_1.png";
@@ -78,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   blockImages[3].src = "img/block_3.png";
   blockImages[4].src = "img/block_4.png";
   blockImages[5].src = "img/block_5.png";
+  
 
 
   
