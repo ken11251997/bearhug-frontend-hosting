@@ -96,12 +96,14 @@ h1 {
 .user-mbti-container {
   display: flex;
   align-items: center;
+  flex-direction: column; /* ← 横並びから縦並びへ */
   gap: 10px;
 }
 
 .user-mbti {
   font-size: 16px;
   font-weight: bold;
+  font-family: 'Poppins', sans-serif; /* ← 統一 */
 }
 
 /* MBTIごとの色 */
