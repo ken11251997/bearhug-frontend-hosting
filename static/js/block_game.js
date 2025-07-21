@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadImages(() => {
       setTimeout(() => {
+        console.log("✅ 画像読み込み完了。initGame呼び出し");
         countdownText.classList.add("hidden");
         gameCanvasWrapper.classList.remove("hidden");
         initGame(); // ✅ 全画像読み込み後にゲーム開始
@@ -184,15 +185,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function check() {
       loaded++;
+      console.log(`✅ 読み込み ${loaded} / ${total}`);
       if (loaded === total) callback();
     }
 
     for (let i = 1; i <= 5; i++) {
       blockImages[i].onload = check;
+      blockImages[i].onerror = () => console.warn(`❌ block_${i}.png 読み込み失敗`);
     }
 
     ["ball", "blast"].forEach(k => {
       itemImages[k].onload = check;
+      itemImages[k].onerror = () => console.warn(`❌ item_${k}.png 読み込み失敗`);
     });
   }
 
