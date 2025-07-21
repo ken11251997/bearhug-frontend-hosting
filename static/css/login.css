@@ -93,11 +93,20 @@ h1 {
   margin: 4px 0; 
 }
 
+
 .user-mbti-container {
   display: flex;
+  flex-direction: row;         /* ← 横並び */
   align-items: center;
-  flex-direction: column; /* ← 横並びから縦並びへ */
-  gap: 10px;
+  gap: 12px;                   /* 間隔 */
+  margin-top: 4px;
+}
+
+.mbti-block {
+  display: flex;
+  flex-direction: column;      /* ← 縦に並べる */
+  align-items: flex-start;     /* 左寄せ */
+  font-family: 'Poppins', sans-serif;
 }
 
 .user-mbti {
