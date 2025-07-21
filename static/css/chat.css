@@ -1,36 +1,30 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #d2b48c, #f5deb3);
-    background-color: #d2b48c; /* 画像未設定時の背景色 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background-color: #d2b48c;
     margin: 0;
-    overflow: hidden;
-    flex-direction: column;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* ← 重要 */
 }
 
 
 html, body {
-  overscroll-behavior: none;      /* ✅ オーバースクロール無効化（Chrome, Android） */
-  -webkit-overflow-scrolling: auto; /* ✅ iOSのバウンス抑止 */
-  touch-action: manipulation;     /* ✅ タッチ操作を制限（ズーム/二本指など） */
-  height: 100%;
-  overflow: hidden;               /* ✅ 画面本体はスクロール禁止 */
-  height: 100%;
+    overscroll-behavior: none;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    padding: 0; /* 上部余白を詰める */
+    margin: 0;
+    width: 100vw; /* 画面幅に広げる */
     background: #fffaf0;
-    padding: 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    margin-top: 0; /* 追加：余白を詰める */
-    padding-top: 0.5rem; /* 任意で調整可能 */
 }
 
 .chat-header {
@@ -59,21 +53,11 @@ html, body {
 }
 
 #chat-container {
-    width: 100%;
-    background: white;
+    flex-grow: 1;
+    overflow-y: auto;
     padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-
-    /* 🔽 変更 */
-    flex: 1;
-    max-height: 60vh;
-    min-height: 300px;
-    height: auto;
-
-    overflow-y: auto;
 }
 
 #chat-container, #chat-box {
@@ -99,6 +83,7 @@ html, body {
     background-attachment: fixed; /* 背景を固定 */
     
 }
+
 
 
 
