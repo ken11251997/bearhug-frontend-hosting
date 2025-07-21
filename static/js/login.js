@@ -24,6 +24,33 @@ document.addEventListener("DOMContentLoaded",function(){
         "ISTP": "mbti-yellow", "ISFP": "mbti-yellow", "ESTP": "mbti-yellow", "ESFP": "mbti-yellow",
         "ISTJ": "mbti-blue", "ISFJ": "mbti-yellow", "ESTJ": "mbti-blue", "ESFJ": "mbti-blue"
     };
+
+
+    const mbtiJapaneseNames = {
+        "INTJ": "建築家",
+        "INFJ": "提唱者",
+        "ENTJ": "指揮官",
+        "ENFJ": "主人公",
+        "INTP": "論理学者",
+        "INFP": "仲介者",
+        "ENTP": "討論者",
+        "ENFP": "運動家",
+        "ISTP": "巨匠",
+        "ISFP": "冒険家",
+        "ESTP": "起業家",
+        "ESFP": "エンターテイナー",
+        "ISTJ": "管理者",
+        "ISFJ": "擁護者",
+        "ESTJ": "幹部",
+        "ESFJ": "領事官"
+    };
+
+    // MBTIの日本語名を表示（追加）
+    const mbtiDescElement = document.getElementById("user-mbti-desc");
+    if (mbtiDescElement && mbtiJapaneseNames[mbti]) {
+        mbtiDescElement.innerText = mbtiJapaneseNames[mbti];
+    }
+
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");

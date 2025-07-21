@@ -29,6 +29,8 @@ html, body {
     max-width: 500px;
     width: 90%;
     text-align: center;
+    margin-top: 0; /* 追加：余白を詰める */
+    padding-top: 0.5rem; /* 任意で調整可能 */
 }
 
 .chat-header {
@@ -64,7 +66,13 @@ html, body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    height: 400px;
+
+    /* 🔽 変更 */
+    flex: 1;
+    max-height: 60vh;
+    min-height: 300px;
+    height: auto;
+
     overflow-y: auto;
 }
 
