@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
+  const decisionSound = new Audio("static/sound/decision.mp3");
   
 
  // === 表情一覧（後で画像追加予定） ===
@@ -42,6 +43,7 @@ function preloadImages() {
 const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
     startBtn.disabled = true;
+    decisionSound.play();
 
     if (!user_id) {
       console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
@@ -147,6 +149,7 @@ function handleChoice(wrapper, selected) {
     if (selected === correctAnswer) {
       wrapper.classList.add("correct");
       marker.textContent = "⭕";
+      successSound.play(); // ✅ 成功音を再生
       disableChoices();
       setTimeout(() => {
         currentQuestion++;
@@ -160,6 +163,7 @@ function handleChoice(wrapper, selected) {
     } else {
       wrapper.classList.add("wrong");
       marker.textContent = "×";
+      failSound.play();
       penaltyTime += 5;
       showPenalty();
       wrapper.onclick = null; // ❌ ミスタップされた選択肢は無効化
@@ -226,7 +230,6 @@ function shuffle(array) {
       const formatted = score.toFixed(3);
       resultScore.textContent = `スコア：${formatted} 秒！`;
 
-      successSound.play(); // ✅ 成功音を再生
 
       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/game/score", {
         method: "POST",
@@ -254,6 +257,7 @@ function shuffle(array) {
 
   rankingBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
+      decisionSound.play();
       document.getElementById("ranking-modal").classList.remove("hidden");
       loadRanking("mbti_median");
     });
