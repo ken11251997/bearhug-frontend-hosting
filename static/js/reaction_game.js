@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const expressions = ["expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
 
 const NUM_QUESTIONS = 5;
-const CHOICE_COUNTS = [4, 6, 12, 36, 54];
+const CHOICE_COUNTS = [4, 6, 12, 36, 48];
 
 
 let currentQuestion = 0;
