@@ -75,11 +75,16 @@ document.addEventListener("DOMContentLoaded", () => {
   5: new Image(),
   item: new Image()
   };
-  blockImages[1].src = "static/img/block_1.png";
-  blockImages[2].src = "static/img/block_2.png";
-  blockImages[3].src = "static/img/block_3.png";
-  blockImages[4].src = "static/img/block_4.png";
-  blockImages[5].src = "static/img/block_5.png";
+  const basePath = "/bearhug-frontend-hosting";
+
+  blockImages[1].src = `${basePath}/static/img/block_1.png`;
+  blockImages[2].src = `${basePath}/static/img/block_2.png`;
+  blockImages[3].src = `${basePath}/static/img/block_3.png`;
+  blockImages[4].src = `${basePath}/static/img/block_4.png`;
+  blockImages[5].src = `${basePath}/static/img/block_5.png`;
+
+  itemImages.ball.src = `${basePath}/static/img/item_ball.png`;
+  itemImages.blast.src = `${basePath}/static/img/item_blast.png`;
   
 
 
