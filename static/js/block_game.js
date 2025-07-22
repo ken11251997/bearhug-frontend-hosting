@@ -167,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function beginGameFlow() {
+    console.log("🚀 beginGameFlow 開始"); // ← 追加
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
 
