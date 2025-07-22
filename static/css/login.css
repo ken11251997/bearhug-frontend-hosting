@@ -495,5 +495,5 @@ h1 {
     font-size: 20px;
     color: #666;
     margin-top: 2px;
-    font-family: 'Yomogi', cursive;
+    font-weight: 500; /* 少し太めで見やすく */
 }
