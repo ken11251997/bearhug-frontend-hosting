@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const expressions = ["expression_smile","expression_yawn", "expression_angry", "expression_cry", "expression_doya", "expression_happy","expression_normal","expression_shy","expression_sleepy","expression_default"];
 
 const NUM_QUESTIONS = 5;
-const CHOICE_COUNTS = [2, 8, 12, 30, 40];
+const CHOICE_COUNTS = [2, 9, 12, 24, 30];
 
 
 let currentQuestion = 0;
@@ -223,7 +223,9 @@ function shuffle(array) {
   function showResult(score) {
     const resultScore = document.getElementById("result-score"); // ✅ 追加
     const bestScoreEl = document.getElementById("best-score");   // ✅ 追加
+    console.log("🎉 ゲーム終了！スコア:", score);
     document.getElementById("quiz-area").classList.add("hidden");
+    const resultArea = document.getElementById("result-area"); // ← 🔧 追加
     resultArea.classList.remove("hidden");
 
     if (score) {
