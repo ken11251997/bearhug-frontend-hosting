@@ -67,6 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const brickWidth = (canvas.width - brickOffsetLeft * 2 - brickPadding * (brickColumnCount - 1)) / brickColumnCount;
   const brickHeight = 15;
 
+  const basePath = "/bearhug-frontend-hosting";
+
   const blockImages = {
   1: new Image(),
   2: new Image(),
@@ -75,26 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
   5: new Image(),
   item: new Image()
   };
-  const basePath = "/bearhug-frontend-hosting";
 
   blockImages[1].src = `${basePath}/static/img/block_1.png`;
   blockImages[2].src = `${basePath}/static/img/block_2.png`;
   blockImages[3].src = `${basePath}/static/img/block_3.png`;
   blockImages[4].src = `${basePath}/static/img/block_4.png`;
   blockImages[5].src = `${basePath}/static/img/block_5.png`;
-
-  itemImages.ball.src = `${basePath}/static/img/item_ball.png`;
-  itemImages.blast.src = `${basePath}/static/img/item_blast.png`;
-  
-
-
   
   const itemImages = {
     ball: new Image(),
     blast: new Image()
   };
-  itemImages.ball.src = "static/img/item_ball.png";
-  itemImages.blast.src = "static/img/item_blast.png";
+  itemImages.ball.src = `${basePath}/static/img/item_ball.png`;
+  itemImages.blast.src = `${basePath}/static/img/item_blast.png`;
     
   // if (b.isItem) {
   //   ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
