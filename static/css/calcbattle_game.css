@@ -236,3 +236,31 @@ body {
   box-shadow: none !important;
   padding: 0 !important;
 }
+
+#loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  display: none;  /* ← 初期は非表示 */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  box-sizing: border-box;
+}
+
+/* クマ画像の一瞬表示対策 */
+.bear-loader {
+  width: 80px;
+  height: auto;
+  animation: fade-in 0.4s ease;
+}
