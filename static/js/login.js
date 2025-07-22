@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded",function(){
     
     if (mbti in mbtiColorClasses) {
         mbtiElement.classList.add(mbtiColorClasses[mbti]);
+        mbtiDescElement.classList.add(mbtiColorClasses[mbti]); // ✅ 日本語名にも同じ色クラス追加
     }
 
     // const planDisplay = document.getElementById("subscribe-type");
