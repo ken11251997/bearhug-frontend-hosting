@@ -170,15 +170,18 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("🚀 beginGameFlow 開始"); // ← 追加
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
+    console.log("📺 countdownText 表示中");
 
     loadImages(() => {
       setTimeout(() => {
         console.log("✅ 画像読み込み完了。initGame呼び出し");
         countdownText.classList.add("hidden");
         gameCanvasWrapper.classList.remove("hidden");
+        console.log("🕹️ gameCanvasWrapper 表示");
         initGame(); // ✅ 全画像読み込み後にゲーム開始
       }, 1500);
     });
+  }
   }
 
 
