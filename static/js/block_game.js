@@ -130,6 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startBtn.addEventListener("click", () => {
     startBtn.disabled = true;
+    console.log("▶ start-button clicked");  // ✅ 追加
+    console.log("🧪 user_id:", user_id);     // ✅ 追加
 
     if (!user_id) {
       console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
