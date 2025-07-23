@@ -493,7 +493,7 @@ h1 {
 
 .user-mbti-desc {
     font-size: 16px;
-    color: #666;
+    color: inherit; /* ← ★ 色指定を解除してクラスに任せる */
     margin-top: 2px;
     font-family: 'Poppins', sans-serif;
 }
