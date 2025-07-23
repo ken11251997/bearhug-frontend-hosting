@@ -194,14 +194,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (loaded === total) callback();
     }
 
+    console.log("🧪 画像読み込み開始");
+
     for (let i = 1; i <= 5; i++) {
+      console.log(`🖼️ 読み込み開始: ${blockImages[i].src}`);
       blockImages[i].onload = check;
-      blockImages[i].onerror = () => console.warn(`❌ block_${i}.png 読み込み失敗`);
+      blockImages[i].onerror = () => console.warn(`❌ block_${i}.png 読み込み失敗: ${blockImages[i].src}`);
     }
 
     ["ball", "blast"].forEach(k => {
+      console.log(`🖼️ 読み込み開始: ${itemImages[k].src}`);
       itemImages[k].onload = check;
-      itemImages[k].onerror = () => console.warn(`❌ item_${k}.png 読み込み失敗`);
+      itemImages[k].onerror = () => console.warn(`❌ item_${k}.png 読み込み失敗: ${itemImages[k].src}`);
     });
   }
 
