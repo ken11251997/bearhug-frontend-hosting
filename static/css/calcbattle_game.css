@@ -266,3 +266,27 @@ body {
   height: auto;
   animation: fade-in 0.4s ease;
 }
+
+/* ✅ 正解・不正解マーカー表示 */
+.marker {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #222;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  pointer-events: none;
+  animation: fade-marker 0.5s ease;
+}
+
+.marker.hidden {
+  display: none;
+}
+
+@keyframes fade-marker {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}

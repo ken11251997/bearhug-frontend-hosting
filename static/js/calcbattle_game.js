@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingOverlay.style.display = "none";
   }
 
+  const successSound = new Audio("static/sound/success.mp3");
+  const failSound = new Audio("static/sound/fail.mp3");
+  const decisionSound = new Audio("static/sound/decision.mp3");
+
   const startScreen = document.getElementById("start-screen");
   const gameScreen = document.getElementById("game-screen");
   const endScreen = document.getElementById("end-screen");
@@ -186,7 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const q = questions[currentQuestionIndex];
     console.log("🧠 ユーザー回答:", choice, "正解:", q.answer);
     if (choice === q.answer) {
+      successSound.play();
       console.log("✅ 正解");
+      showMarker("⭕");  // ✅ 正解マーク
       currentQuestionIndex++;
       if (currentQuestionIndex >= questions.length) {
         endGame();
@@ -195,10 +201,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } else {
       console.warn("❌ 不正解！10秒加算！");
+      failSound.play();
+      showMarker("×");  // ✅ 不正解マーク
       penaltyTime += 10;
       alert("不正解！10秒加算！");
   }
 }
+
+  function showMarker(symbol) {
+    const marker = document.getElementById("marker");
+    marker.textContent = symbol;
+    marker.classList.remove("hidden");
+    setTimeout(() => {
+      marker.classList.add("hidden");
+    }, 600);
+  }
 
   function showFeedback(text, type) {
     feedbackDisplay.textContent = text;
