@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1500);
     });
   }
-  }
 
 
   function loadImages(callback) {
