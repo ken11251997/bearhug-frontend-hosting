@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         if (item.type === "ball") {
           balls.push({ x: item.x, y: item.y, dx: 3, dy: -3 }); // ★ボール増加
-        } else if (item.type === "bomb") {
+        } else if (item.type === "blast") {
           // ★爆弾：全ブロックに1ダメージ
           triggerFullScreenExplosion();
           bricks.flat().forEach(b => {
