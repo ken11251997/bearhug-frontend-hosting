@@ -73,7 +73,7 @@ canvas {
   width: 90vw;
   height: auto;
   max-width: 480px;
-  background: rgba(255, 248, 220, 0.85); /* ← 透過色 */
+  background: rgba(255, 248, 220, 0.5); /* ← 透過色 */
   border: 3px solid #d2691e;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);

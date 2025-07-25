@@ -77,13 +77,40 @@ startBtn.addEventListener("click", () => {
 
 
 
-function startGame() {
-  preloadImages(); // 🔧 最初に画像をキャッシュ
+function waitForImagesToLoad() {
+  const promises = Object.values(imageCache).map(img => {
+    return new Promise(resolve => {
+      if (img.complete) {
+        resolve();
+      } else {
+        img.onload = resolve;
+        img.onerror = resolve;
+      }
+    });
+  });
+  return Promise.all(promises);
+}
+
+async function startGame() {
+  preloadImages();
+  await waitForImagesToLoad(); // ✅ 表情画像読み込み完了を待つ
+
   document.getElementById("instruction").classList.add("hidden");
   document.getElementById("quiz-area").classList.remove("hidden");
-  document.getElementById("live-timer").classList.remove("hidden"); // ⏱ タイマー表示
-  startTime = performance.now();
-  showNextQuestion();
+
+  // ✅ カウントダウン表示 → 表情 → タイマー開始
+  const countdown = document.getElementById("countdown-text");
+  countdown.classList.remove("hidden");
+  countdown.textContent = "よーい...";
+  setTimeout(() => {
+    countdown.textContent = "スタート！";
+    setTimeout(() => {
+      countdown.classList.add("hidden");
+      startTime = performance.now();     // ✅ ここでタイマー開始
+      showNextQuestion();                // ✅ ここで問題出す
+      updateTimer();                     // ⏱ タイマー実行
+    }, 800);
+  }, 1000);
 }
 
 function showNextQuestion() {
