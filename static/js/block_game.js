@@ -403,7 +403,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // ctx.fillStyle = item.type === "ball" ? "gold" : "red";
       // ctx.fill();
       // ctx.closePath();
-      ctx.drawImage(itemImages[item.type], item.x - 8, item.y - 8, 16, 16);
+      // ctx.drawImage(itemImages[item.type], item.x - 8, item.y - 8, 16, 16);
+      ctx.drawImage(
+        itemImages[item.type],
+        item.x - ballRadius,
+        item.y - ballRadius,
+        ballRadius * 2,
+        ballRadius * 2
+      );
       
 
       // パドルと当たったか判定
