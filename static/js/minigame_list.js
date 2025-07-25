@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const mbti = localStorage.getItem("user_mbti");
   const BackButton = document.getElementById("buck_btn");
   const loginUrl = localStorage.getItem("backToLogin");
+
+  // 🔁 戻るボタン処理
   BackButton.addEventListener("click", function () {
-    window.location.href =loginUrl 
-        // history.back()
+    window.location.href = loginUrl;
   });
 
   const games = [
@@ -20,26 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "calcbattle",
       title: "計算バトル5！",
-      image: "static/img/some_calc.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
+      image: "static/img/some_calc.png",
       description: "5問の計算クイズをどれだけ早く解けるか！？",
       link: "calcbattle_game.html"
     },
     {
       id: "block",
       title: "ブロックくずし",
-      image: "static/img/some_block.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
+      image: "static/img/some_block.png",
       description: "ボール落とさずブロック崩せ！",
       link: "block_game.html"
     }
-    // 今後の追加用サンプル
-    // {
-    //   id: "click",
-    //   title: "連打チャレンジ",
-    //   image: "static/img/game_click.png",
-    //   description: "10秒間で何回クリックできるか挑戦！",
-    //   link: "click_game.html"
-    // }
   ];
+
+  const imagePromises = [];
 
   games.forEach(game => {
     const card = document.createElement("div");
@@ -51,9 +46,30 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="game-desc">${game.description}</div>
       </div>
     `;
+
+    // ✅ 画像の読み込みが終わるまでPromiseで待つ
+    const img = card.querySelector("img");
+    const p = new Promise(resolve => {
+      if (img.complete) {
+        resolve();
+      } else {
+        img.onload = resolve;
+        img.onerror = resolve;
+      }
+    });
+    imagePromises.push(p);
+
     card.addEventListener("click", () => {
       window.location.href = `${game.link}?user_id=${user_id}&mbti=${mbti}`;
     });
+
     gameList.appendChild(card);
+  });
+
+  // ✅ 全画像が読み終わったらローディング非表示
+  Promise.all(imagePromises).then(() => {
+    const loading = document.getElementById("loading-overlay");
+    if (loading) loading.style.display = "none";
+    console.log("✅ ミニゲーム画像すべて読み込み完了");
   });
 });
