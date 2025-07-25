@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const loadingOverlay = document.getElementById("loading-overlay");
-  if (loadingOverlay) {
-    loadingOverlay.classList.add("hidden");
-    loadingOverlay.style.display = "none";
-  }
+  // if (loadingOverlay) {
+  //   loadingOverlay.classList.add("hidden");
+  //   loadingOverlay.style.display = "none";
+  // }
   
   const bgImage = new Image();
   bgImage.src = "static/img/calc.png";  // あなたの背景画像のパスに合わせてください
