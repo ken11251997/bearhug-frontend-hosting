@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (rand < 0.75) {
                   spawnItem(b.x + brickWidth / 2, b.y + brickHeight / 2, "ball");
                 } else {
-                  spawnItem(b.x + brickWidth / 2, b.y + brickHeight / 2, "bomb");
+                  spawnItem(b.x + brickWidth / 2, b.y + brickHeight / 2, "blast");
                 }
               }
             }
