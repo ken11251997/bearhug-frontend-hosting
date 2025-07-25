@@ -259,7 +259,9 @@ document.addEventListener("DOMContentLoaded", () => {
           status: 1,
           hardness,
           // isItem: true,
-          itemType: itemIndices.has(index) ? types[Math.floor(Math.random() * types.length)] : null
+          // itemType: itemIndices.has(index) ? types[Math.floor(Math.random() * types.length)] : null
+          isItem: isItem,
+          itemType: isItem ? itemType : null  // ← 破壊時にのみ落とす
         };
         index++;
       }
@@ -293,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // ✅ 安全に描画
           if (image && image.complete && image.naturalHeight !== 0) {
-            ctx.drawImage(image, brickX, brickY, brickWidth, brickHeight);
+            ctx.drawImage(blockImages[b.hardness], brickX, brickY, brickWidth, brickHeight);
           } else {
             // 読み込み失敗時の予備描画
             ctx.fillStyle = "gray";
@@ -342,6 +344,10 @@ document.addEventListener("DOMContentLoaded", () => {
               if (b.hardness <= 0) {
                 b.status = 0;
                 createExplosion(b.x + brickWidth / 2, b.y + brickHeight / 2);
+
+                if (b.isItem) {
+                  spawnItem(b.x + brickWidth / 2, b.y + brickHeight / 2, b.itemType);
+                }
               }
 
               if (b.isItem) {
@@ -383,6 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // ctx.fill();
       // ctx.closePath();
       ctx.drawImage(itemImages[item.type], item.x - 8, item.y - 8, 16, 16);
+      
 
       // パドルと当たったか判定
       if (
