@@ -13,21 +13,21 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "reaction",
       title: "反応速度テスト",
-      image: "static/img/game_reaction.png",
+      image: "static/img/some_reaction.png",
       description: "笑ったクマをすばやくタップ！反応速度を競おう！",
       link: "reaction_game.html"
     },
     {
       id: "calcbattle",
       title: "計算バトル5！",
-      image: "static/img/game_calcbattle.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
+      image: "static/img/some_calc.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
       description: "5問の計算クイズをどれだけ早く解けるか！？",
       link: "calcbattle_game.html"
     },
     {
       id: "block",
       title: "ブロックくずし",
-      image: "static/img/game_block.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
+      image: "static/img/some_block.png", // 新規画像を用意（例: 電卓やクマが計算してる画像）
       description: "ボール落とさずブロック崩せ！",
       link: "block_game.html"
     }
