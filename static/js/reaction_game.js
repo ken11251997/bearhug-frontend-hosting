@@ -10,6 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
   const decisionSound = new Audio("static/sound/decision.mp3");
+
+  const loadingOverlay = document.getElementById("loading-overlay");
+  
+  const bgImage = new Image();
+  bgImage.src = "static/img/reaction.png";  // あなたの背景画像のパスに合わせてください
+
+  bgImage.onload = () => {
+    loadingOverlay.style.display = "none";
+    console.log("✅ 背景画像の読み込み完了");
+  };
+
+  bgImage.onerror = () => {
+    loadingOverlay.style.display = "none";
+    console.warn("⚠️ 背景画像の読み込みに失敗");
+  };
+
   
 
  // === 表情一覧（後で画像追加予定） ===

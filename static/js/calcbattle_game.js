@@ -5,6 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingOverlay.classList.add("hidden");
     loadingOverlay.style.display = "none";
   }
+  
+  const bgImage = new Image();
+  bgImage.src = "static/img/calc.png";  // あなたの背景画像のパスに合わせてください
+
+  bgImage.onload = () => {
+    loadingOverlay.style.display = "none";
+    console.log("✅ 背景画像の読み込み完了");
+  };
+
+  bgImage.onerror = () => {
+    loadingOverlay.style.display = "none";
+    console.warn("⚠️ 背景画像の読み込みに失敗");
+  };
+
 
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
