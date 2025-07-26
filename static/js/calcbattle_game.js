@@ -217,9 +217,17 @@ document.addEventListener("DOMContentLoaded", () => {
       console.warn("❌ 不正解！10秒加算！");
       failSound.play();
       showMarker("×");  // ✅ 不正解マーク
-      penaltyTime += 10;
-      alert("不正解！10秒加算！");
-  }
+      penaltyTime += 5;
+      // ✅ ＋5秒の赤文字アニメーション表示
+      const penaltyText = document.getElementById("penalty-text");
+      penaltyText.classList.remove("hidden");
+      penaltyText.classList.remove("fadePenalty"); // リセット
+      void penaltyText.offsetWidth; // 再アニメーション用
+      penaltyText.classList.add("penalty-text");
+      setTimeout(() => {
+        penaltyText.classList.add("hidden");
+      }, 1000);
+        }
 }
 
   function showMarker(symbol) {
