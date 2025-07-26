@@ -320,6 +320,8 @@ esc, .section, .main-button, .sub-button {
   color: #d2691e;
   text-shadow: 2px 2px 0 #fff;
   transition: transform 0.3s;
+  position: relative;
+  z-index: 2; /* ✅ 背景より前に出す */
 }
 
 

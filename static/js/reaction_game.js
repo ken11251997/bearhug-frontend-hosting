@@ -109,22 +109,22 @@ function waitForImagesToLoad() {
 
 async function startGame() {
   preloadImages();
-  await waitForImagesToLoad(); // ✅ 表情画像読み込み完了を待つ
+  await waitForImagesToLoad();
 
   document.getElementById("instruction").classList.add("hidden");
-  document.getElementById("quiz-area").classList.remove("hidden");
-
-  // ✅ カウントダウン表示 → 表情 → タイマー開始
   const countdown = document.getElementById("countdown-text");
   countdown.classList.remove("hidden");
   countdown.textContent = "よーい...";
+
   setTimeout(() => {
     countdown.textContent = "スタート！";
+
     setTimeout(() => {
       countdown.classList.add("hidden");
-      startTime = performance.now();     // ✅ ここでタイマー開始
-      showNextQuestion();                // ✅ ここで問題出す
-      updateTimer();                     // ⏱ タイマー実行
+      document.getElementById("quiz-area").classList.remove("hidden"); // ✅ ここで初めて問題表示
+      startTime = performance.now();
+      showNextQuestion();
+      updateTimer();
     }, 800);
   }, 1000);
 }
