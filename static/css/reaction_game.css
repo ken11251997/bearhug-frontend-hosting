@@ -27,6 +27,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.6); /* ← 白＋60%透明 */
+  position: relative; /* ✅ ←追加！ */
   z-index: 1;
 }
 
@@ -53,6 +54,10 @@ h1 {
   color: #444;
   margin-bottom: 12px;
   text-align: center;
+}
+esc, .section, .main-button, .sub-button {
+  position: relative;  /* ✅ これが無いと z-index 効かない */
+  z-index: 2;           /* ✅ 背景より前面へ */
 }
 
 #question-text {
