@@ -6,7 +6,7 @@ body {
   font-family: 'M PLUS Rounded 1c', 'Arial', sans-serif;
   background: linear-gradient(to bottom, #fffaf0, #ffe4c4);
   overflow: hidden;
-  color: #8b4513;
+  color: #ffba89;
   text-align: center;
   background: url("../img/block.jpg") no-repeat center center fixed;
   background-size: cover;
@@ -35,8 +35,8 @@ h1 {
 }
 
 .desc {
-  font-size: 1rem;
-  color: #6b4b3e;
+  font-size: 1.3rem;
+  color:  #ffba89;
   margin-bottom: 1.2em;
 }
 
@@ -84,7 +84,7 @@ canvas {
 #score, #timer {
   font-weight: bold;
   font-size: 1.2rem;
-  color: #b22222;
+  color: rgb(253, 109, 109);
   margin: 0 0.5em;
 }
 
@@ -189,7 +189,7 @@ canvas {
   animation: bounce-glow 2.5s ease-in-out infinite;
   font-size: 2rem;
   margin-bottom: 0.5em;
-  color: #d2691e;
+  color: #fda260;
   text-shadow: 1px 1px 0 #fff;
 }
 
