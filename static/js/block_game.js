@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgImage = new Image();
   bgImage.src = "static/img/block.jpg";  // あなたの背景画像のパスに合わせてください
 
-  bgI
-mage.onload = () => {
+  bgImage.onload = () => {
     loadingOverlay.style.display = "none";
     console.log("✅ 背景画像の読み込み完了");
   };
+
   bgImage.onerror = () => {
     loadingOverlay.style.display = "none";
     console.warn("⚠️ 背景画像の読み込みに失敗");
