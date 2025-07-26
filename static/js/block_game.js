@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("⚠️ 背景画像の読み込みに失敗");
   };
 
+  const wallHitSound = new Audio("static/sound/wall_hit.mp3");
+  const blockHitSound = new Audio("static/sound/block_hit.mp3");
+  const expSound = new Audio("static/sound/exp.mp3");
+
   
 
   const paddleWidth = canvas.width * 0.25;
@@ -352,6 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
               ball.y < b.y + brickHeight
             ) {
               ball.dy = -ball.dy;
+              blockHitSound.currentTime = 0;
+              blockHitSound.play();
               b.hardness--;
               score += 100; // 💯 1回当てるごとに100点
               scoreEl.textContent = score;
@@ -383,6 +389,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function triggerFullScreenExplosion() {
     const flash = document.createElement("div");
     flash.className = "fullscreen-explosion";
+    blastSound.currentTime = 0;
+    blastSound.play(); // ← ここ！
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 400);
   }
@@ -404,13 +412,25 @@ document.addEventListener("DOMContentLoaded", () => {
       // ctx.fill();
       // ctx.closePath();
       // ctx.drawImage(itemImages[item.type], item.x - 8, item.y - 8, 16, 16);
-      ctx.drawImage(
-        itemImages[item.type],
-        item.x - ballRadius,
-        item.y - ballRadius,
-        ballRadius * 2,
-        ballRadius * 2
-      );
+      // ctx.drawImage(
+      //   itemImages[item.type],
+      //   item.x - ballRadius,
+      //   item.y - ballRadius,
+      //   ballRadius * 2,
+      //   ballRadius * 2
+      // );
+      let itemSize;
+      switch (item.type) {
+        case "ball":
+          itemSize = 24;
+          break;
+        case "blast":
+          itemSize = 28;
+          break;
+        default:
+          itemSize = 20;
+      }
+      ctx.drawImage(itemImages[item.type], item.x - itemSize / 2, item.y - itemSize / 2, itemSize, itemSize);
       
 
       // パドルと当たったか判定
@@ -444,8 +464,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let i = balls.length - 1; i >= 0; i--) {
       const ball = balls[i];
-      if (ball.x + ball.dx > canvas.width - ballRadius || ball.x + ball.dx < ballRadius) ball.dx = -ball.dx;
-      if (ball.y + ball.dy < ballRadius) ball.dy = -ball.dy;
+      if (ball.x + ball.dx > canvas.width - ballRadius || ball.x + ball.dx < ballRadius) {
+        ball.dx = -ball.dx;
+        wallHitSound.currentTime = 0;
+        wallHitSound.play(); // ← ここ！
+      }
+      if (ball.y + ball.dy < ballRadius) {
+        ball.dy = -ball.dy;
+        wallHitSound.currentTime = 0;
+        wallHitSound.play(); // ← ここ！
+        
+      }
       else if (ball.y + ball.dy > canvas.height - ballRadius) {
         if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
           ball.dy = -ball.dy;
