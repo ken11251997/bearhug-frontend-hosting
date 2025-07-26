@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function endGame() {
     stopTimer();
     showScreen(endScreen);
-    finalTimeDisplay.textContent = `あなたの記録：${elapsed.toFixed(3)}秒！`;
+    finalTimeDisplay.textContent = `記録：${elapsed.toFixed(3)}秒！`;
     
 
     // ✅ スコア送信処理
