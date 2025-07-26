@@ -366,6 +366,7 @@ esc, .section, .main-button, .sub-button {
   font-weight: bold;
   z-index: 2000;
   animation: scaleIn 0.3s ease;
+  white-space: nowrap; /* ✅ 1行で表示させるため追加 */
 }
 
 @keyframes scaleIn {

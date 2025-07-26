@@ -112,6 +112,7 @@ async function startGame() {
   await waitForImagesToLoad();
 
   document.getElementById("instruction").classList.add("hidden");
+  document.getElementById("game-title").classList.add("hidden"); // ✅ タイトル非表示にする
   const countdown = document.getElementById("countdown-text");
   countdown.classList.remove("hidden");
   countdown.textContent = "よーい...";
