@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = canvas.width * 1.3;  // ★縦を縮小（1.6 → 1.3）
 
 
-
   const ballRadius = 8;
   let balls = [{ x: canvas.width / 2, y: canvas.height - 30, dx: 3, dy: -3 }]; // ★速度アップ
 
@@ -239,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
       timerEl.textContent = timer;
       if (timer <= 0) {
         clearInterval(timerInterval);
-        alert("時間切れ！ゲームオーバー");
+        // alert("時間切れ！ゲームオーバー");
         showResult(score);
       }
     }, 1000);
@@ -489,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (balls.length === 0) {
       clearInterval(timerInterval);
-      alert("すべてのボールを落としました。ゲームオーバー");
+      // alert("すべてのボールを落としました。ゲームオーバー");
       showResult(score);
       return;
     }
