@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // }
   
   const bgImage = new Image();
-  bgImage.src = "static/img/calc.png";  // あなたの背景画像のパスに合わせてください
+  bgImage.src = "static/img/calc.jpg";  // あなたの背景画像のパスに合わせてください
 
   bgImage.onload = () => {
     loadingOverlay.style.display = "none";

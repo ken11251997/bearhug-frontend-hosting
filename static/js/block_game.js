@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   
   const bgImage = new Image();
-  bgImage.src = "static/img/block.png";  // あなたの背景画像のパスに合わせてください
+  bgImage.src = "static/img/block.jpg";  // あなたの背景画像のパスに合わせてください
 
   bgImage.onload = () => {
     loadingOverlay.style.display = "none";

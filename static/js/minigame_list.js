@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "calcbattle",
       title: "計算バトル5！",
-      image: "static/img/some_calc.png",
+      image: "static/img/some_calc.jpg",
       description: "5問の計算クイズをどれだけ早く解けるか！？",
       link: "calcbattle_game.html"
     },
     {
       id: "block",
       title: "ブロックくずし",
-      image: "static/img/some_block.png",
+      image: "static/img/some_block.jpg",
       description: "ボール落とさずブロック崩せ！",
       link: "block_game.html"
     }
