@@ -139,14 +139,22 @@ function showNextQuestion() {
 
 
   // 仮の表情リスト（本番では画像名に合わせて更新）
-  let allExpressions = [];
-  while (allExpressions.length < count) {
-    allExpressions.push(...shuffle([...expressions]));
-  }
-  allExpressions = allExpressions.slice(0, count);
+  // let allExpressions = [];
+  // while (allExpressions.length < count) {
+  //   allExpressions.push(...shuffle([...expressions]));
+  // }
+  // allExpressions = allExpressions.slice(0, count);
 
+  // correctAnswer = allExpressions.length > 0 ? allExpressions[Math.floor(Math.random() * allExpressions.length)] : expressions[0];
 
-  correctAnswer = allExpressions.length > 0 ? allExpressions[Math.floor(Math.random() * allExpressions.length)] : expressions[0];
+  correctAnswer = expressions[Math.floor(Math.random() * expressions.length)];
+
+  // 正解以外の選択肢を準備
+  const incorrectOptions = expressions.filter(expr => expr !== correctAnswer);
+  const shuffledIncorrect = shuffle(incorrectOptions).slice(0, count - 1);
+
+  // 正解 + 不正解の合計で選択肢リストを作成（正解は1つだけ）
+  let allExpressions = shuffle([correctAnswer, ...shuffledIncorrect]);
 
   
   document.getElementById("question-text").textContent = `この表情を探してね：`;
