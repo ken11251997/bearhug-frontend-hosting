@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const wallHitSound = new Audio("static/sound/wall_hit.mp3");
   const blockHitSound = new Audio("static/sound/block_hit.mp3");
-  const expSound = new Audio("static/sound/exp.mp3");
+  const blastSound = new Audio("static/sound/blast.mp3");
 
   
 
