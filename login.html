@@ -1,96 +1,19 @@
+<!-- static/bgm.html -->
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>MBTI Match - Dashboard</title>
-    <link rel="stylesheet" href="static/css/sanitize.css">
-    <link rel="stylesheet" href="static/css/login.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body::before {
-          content: "";
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background-image: url("static/img/paw.png");
-          background-repeat: repeat;
-          background-size: 80px 80px;
-          opacity: 0.05;
-          transform: rotate(-30deg);
-          z-index: 0;
-          pointer-events: none;
-        }
-      </style>
-</head>
-<body>
-    <button id="logout-btn" class="logout-button">ログアウト</button>
-    <div id="loading-overlay" class="hidden">
-        <div class="loading-box">
-          <div class="spinner"></div>
-          <img src="static/img/bear_3.png" alt="ローディングくま" class="bear-loader">
-          <p class="loading-text">ロード中...</p>
-        </div>
-    </div>
+<head><meta charset="UTF-8"></head>
+<body style="display:none;">
+  <audio id="bgm-player" src="static/sound/bgm_default.mp3" loop></audio>
+  
+  <script>
+    const audio = document.getElementById("bgm-player");
 
-
-    <div class="intro-animation">
-        <img src="static/img/bear_1.png" alt="Bear" class="bear-animation">
-        <div class="speech-bubble">マッチしてリストからメッセージ！</div>
-    </div>
-
-
-    <div class="container">
-        <!-- <h1>MBTI Match </h1> -->
-        <button id="bearspage-btn" class="btn">仲間たち</button>
-
-        <div class="user-info">
-            <!-- <p id="subscribe-type" class="subscribe-type">subscribe-type</p> -->
-            <p id="user-name" class="user-name">User</p>
-            <div class="user-mbti-container">
-                <img id="user-icon" class="user-icon" src="" alt="User Icon">
-                <div class="mbti-block">
-                    <span id="user-mbti" class="user-mbti">MBTI</span>
-                    <span id="user-mbti-desc" class="user-mbti-desc">日本語名</span>
-                </div>
-            </div>
-        </div>
-        
-        <button id="match-btn" class="btn">マッチング</button>
-        <div id="match-animation" class="hidden" style="display: none;">
-            <div class="bear-row">
-              <img id="left-bear" class="bear-img bear-left" src="" />
-              <img id="right-bear" class="bear-img bear-right" src="" />
-            </div>
-            <div id="encounter-text" class="encounter-text">●●さんと遭遇しました！</div>
-        </div>
-        <button id="match_list_reload" class="btn">
-        <span id="message-notification" class="unread-indicator hidden"></span>
-        マッチリスト
-        </button>
-        <ul id="matched-user" class="match-list"></ul>
-        <!-- <button id="subscribe-btn" class="btn">アップグレード</button> -->
-        <button id="minigame-btn" class="btn">ミニゲーム</button>
-        <button id="contact-btn" class="btn">問い合わせ</button>
-    </div>
-
-    <!-- <button id="test-match-animation">🎉 マッチング演出テスト</button> -->
-
-    <script src="static/js/login.js" defer></script>
-    <script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
-
-    <iframe id="bgm-iframe" src="bgm.html" style="display:none;"></iframe>
-    <script>
-    const bgmFrame = document.getElementById("bgm-iframe");
-    document.addEventListener("click", () => {
-        bgmFrame.contentWindow.postMessage({ command: "play" }, "*");
-    }, { once: true });
-    </script>
+    window.addEventListener("message", (e) => {
+      const { command } = e.data || {};
+      if (command === "play") audio.play();
+      if (command === "pause") audio.pause();
+      if (command === "setVolume") audio.volume = e.data.volume ?? 0.4;
+    });
+  </script>
 </body>
 </html>
