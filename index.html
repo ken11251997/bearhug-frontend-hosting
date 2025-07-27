@@ -37,11 +37,11 @@
     <script>
     document.getElementById("start-btn").addEventListener("click", () => {
     // BGM専用の裏ウィンドウを開く（最小＆画面外）
-    window.bgmWindow = window.open(
+    window.open(
         "static/sound/bgm.html",
-        "bgmWindow",
+        "bgmWindow",  // ← ウィンドウ名を "bgmWindow" と明示
         "width=1,height=1,left=-1000,top=-1000"
-    );
+        );
 
     // オーバーレイ非表示
     const overlay = document.getElementById("intro-overlay");

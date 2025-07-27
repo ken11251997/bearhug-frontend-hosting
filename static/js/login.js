@@ -58,8 +58,9 @@ document.addEventListener("DOMContentLoaded",function(){
     document.getElementById("logout-btn").addEventListener("click", function () {
     // セッションやローカルストレージのクリーンアップ
         // ✅ BGMウィンドウが存在する場合は閉じる（BGM停止）
-        if (window.bgmWindow && !window.bgmWindow.closed) {
-            window.bgmWindow.close();
+        const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
+        if (bgmWin && !bgmWin.closed) {
+        bgmWin.close();
         }
         sessionStorage.clear();
         localStorage.removeItem("subs");

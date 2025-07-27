@@ -105,6 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   startBtn.addEventListener("click", () => {
+    const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
+    if (bgmWin && !bgmWin.closed) {
+      bgmWin.close();
+    }
+    
     startBtn.disabled = true;
 
     if (!user_id) {

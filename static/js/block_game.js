@@ -147,6 +147,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-button"); // ✅ 追加
 
   startBtn.addEventListener("click", () => {
+    const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
+    if (bgmWin && !bgmWin.closed) {
+      bgmWin.close();
+    }
+    
     startBtn.disabled = true;
     console.log("▶ start-button clicked");  // ✅ 追加
     console.log("🧪 user_id:", user_id);     // ✅ 追加
