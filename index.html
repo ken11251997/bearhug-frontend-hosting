@@ -29,6 +29,12 @@
       </style>
 </head>
 <body>
+    <div id="intro-overlay">
+    <button id="start-btn">トークを開始</button>
+    </div>
+    <!-- ✅ BGM iframe：共通再生用 -->
+    <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
+
     <div class="background-container">
         <div class="background-slider top-slider">
             <img src="static/img/ENFP.png">
@@ -181,14 +187,6 @@
     <script src="{{ url_for('static', filename='js/default.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/default_ani.js') }}" defer></script>
 
-
-    <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
-    <script>
-    const bgmFrame = document.getElementById("bgm-iframe");
-    document.addEventListener("click", () => {
-        bgmFrame.contentWindow.postMessage({ command: "play" }, "*");
-    }, { once: true });
-    </script>
 
     <footer id="footer" style="text-align: center; padding: 8px; font-size: 10px; color: #555;">
         <hr style="margin-bottom: 10px;">

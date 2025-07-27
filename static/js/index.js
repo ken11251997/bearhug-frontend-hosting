@@ -17,6 +17,20 @@ document.addEventListener("DOMContentLoaded",function(){
         window.location.href = 'mbti_test';
     });
 
+    // ✅ イントロオーバーレイ制御とBGM再生
+  const overlay = document.getElementById("intro-overlay");
+  const startBtn = document.getElementById("start-btn");
+  const bgmFrame = document.getElementById("bgm-iframe");
+
+  if (startBtn && overlay) {
+    startBtn.addEventListener("click", () => {
+      overlay.style.opacity = 0;
+      setTimeout(() => overlay.remove(), 1000);
+      if (bgmFrame && bgmFrame.contentWindow) {
+        bgmFrame.contentWindow.postMessage({ command: "play" }, "*");
+      }
+    });
+  }
     
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
