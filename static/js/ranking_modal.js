@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const mbti = new URLSearchParams(window.location.search).get("mbti");
   const game_name = new URLSearchParams(window.location.search).get("game_name") || "reaction_speed";
 
-  // ✅ MBTIごとの色クラス（list.cssと連携）
   const mbtiColorClasses = {
     ISTJ: "mbti-blue", ISFJ: "mbti-blue",
     INFJ: "mbti-green", INTJ: "mbti-green",
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ENFJ: "mbti-gray", ENTJ: "mbti-gray",
   };
 
-  // ✅ MBTI画像パス（MBTI画像は /static/img/mbti_icons/MBTI.png）
   const mbtiIcons = {};
   Object.keys(mbtiColorClasses).forEach(type => {
     mbtiIcons[type] = `static/img/${type}.png`;
@@ -32,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tabButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       const type = btn.dataset.type;
-      loadRanking(type);
+      loadRanking(type); // game_name は内部で保持
     });
   });
 
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ✅ ランキング取得API
-  function loadRanking(type,game_name) {
+  function loadRanking(type) {
     showLoadingOverlay();
 
     const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/ranking/${game_name}?type=${type}&user_id=${user_id}`;
@@ -68,13 +66,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const isScoreBased = game_name === "block_game" || game_name === "calcbattle";
+
     entries.forEach(entry => {
-      const row = document.createElement("div");
       const type = entry.mbti || "???";
       const icon = mbtiIcons[type] || "static/img/unknown.png";
       const colorClass = mbtiColorClasses[type] || "";
-      const scoreText = entry.score === null ? "記録なし" : `${entry.score.toFixed(3)} 秒`;
+      let scoreText = "記録なし";
+      if (entry.score !== null && entry.score !== undefined) {
+        scoreText = isScoreBased
+          ? `${entry.score.toLocaleString()} 点`
+          : `${entry.score.toFixed(3)} 秒`;
+      }
 
+      const row = document.createElement("div");
       row.className = `ranking-row ${colorClass}`;
       row.innerHTML = `
         <img src="${icon}" alt="${type}" class="mbti-icon" />
@@ -86,10 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✅ 初回読み込み用関数（外から呼べる）
   window.loadRanking = loadRanking;
 
-  // ✅ ローディング表示制御（共通仕様）
   function showLoadingOverlay() {
     const overlay = document.getElementById("loading-overlay");
     if (overlay) {
@@ -105,4 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.display = "none";
     }
   }
+
+  // ✅ 初期表示（MBTI中央値）
+  loadRanking("mbti_median");
 });

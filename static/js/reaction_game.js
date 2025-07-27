@@ -1,3 +1,22 @@
+function restartDefaultBgm(){
+  const oldWin = window.open('', 'bgmWindow');
+  if (oldWin && !oldWin.closed) {
+    oldWin.close();
+  }
+
+  const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+  if (win) {
+    win.document.write(`
+      <html><head><title>BGM</title></head>
+      <body style="margin:0">
+        <audio id="bgm" autoplay loop>
+          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+        </audio>
+      </body></html>
+    `);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
@@ -44,7 +63,14 @@ let correctAnswer = "";
 window.onload = () => {
   // document.getElementById("start-btn").onclick = startGame;
   document.getElementById("play-again-btn").onclick = () => location.reload();
-  document.getElementById("end-btn").onclick = () => location.href = "minigame_list.html";
+  // document.getElementById("end-btn").onclick = () => {
+  //   restartDefaultBgm();  // ✅ 共通BGM再開
+  //   location.href = "minigame_list.html";
+  // };
+  document.getElementById("back-button").onclick = () => {
+    restartDefaultBgm();  // ✅ 共通BGM再開
+    location.href = "minigame_list.html";
+  };
 };
 
 const imageCache = {};

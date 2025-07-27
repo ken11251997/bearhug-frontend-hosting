@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded",function(){
     const ConBtn = document.getElementById("contact-btn");
 
     document.getElementById("logout-btn").addEventListener("click", function () {
+
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ type: "APP_EXIT" }));
+        }
+
     // セッションやローカルストレージのクリーンアップ
         // ✅ BGMウィンドウが存在する場合は閉じる（BGM停止）
         const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される

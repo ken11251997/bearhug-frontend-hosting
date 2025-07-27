@@ -1,3 +1,22 @@
+function restartDefaultBgm(){
+  const oldWin = window.open('', 'bgmWindow');
+  if (oldWin && !oldWin.closed) {
+    oldWin.close();
+  }
+
+  const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+  if (win) {
+    win.document.write(`
+      <html><head><title>BGM</title></head>
+      <body style="margin:0">
+        <audio id="bgm" autoplay loop>
+          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+        </audio>
+      </body></html>
+    `);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const loadingOverlay = document.getElementById("loading-overlay");
@@ -44,6 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
+
+  document.getElementById("back-button").onclick = () => {
+    restartDefaultBgm();  // ✅ 共通BGM再開
+    location.href = "minigame_list.html";
+  };
 
   let currentQuestionIndex = 0;
   let startTime = 0;
@@ -109,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (bgmWin && !bgmWin.closed) {
       bgmWin.close();
     }
-    
+
     startBtn.disabled = true;
 
     if (!user_id) {
@@ -308,7 +332,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🎮 イベント登録
 //   startBtn.addEventListener("click", startGame);
   retryBtn.addEventListener("click", beginGameFlow);
-  backBtn.addEventListener("click", () => showScreen(startScreen));
+  backBtn.addEventListener("click", () => {
+    showScreen(startScreen);
+    openDefaultBGMWindow(); // ✅ default BGM 再起動
+  });
 //   rankingBtn.addEventListener("click", showRanking);
 
 

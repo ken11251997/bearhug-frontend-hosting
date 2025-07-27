@@ -1,3 +1,22 @@
+function restartDefaultBgm(){
+  const oldWin = window.open('', 'bgmWindow');
+  if (oldWin && !oldWin.closed) {
+    oldWin.close();
+  }
+
+  const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+  if (win) {
+    win.document.write(`
+      <html><head><title>BGM</title></head>
+      <body style="margin:0">
+        <audio id="bgm" autoplay loop>
+          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+        </audio>
+      </body></html>
+    `);
+  }
+}
+
 // 🎮 エンドレスブロック崩し：ゲームロジック（スコア＆タイムボーナス対応）
 document.addEventListener("DOMContentLoaded", () => {
   const openingScreen = document.getElementById("opening-screen");
@@ -28,6 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const wallHitSound = new Audio("static/sound/wall_hit.mp3");
   const blockHitSound = new Audio("static/sound/block_hit.mp3");
   const blastSound = new Audio("static/sound/blast.mp3");
+
+  document.getElementById("back-button").onclick = () => {
+    restartDefaultBgm();  // ✅ 共通BGM再開
+    location.href = "minigame_list.html";
+  };
 
   
 
@@ -151,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (bgmWin && !bgmWin.closed) {
       bgmWin.close();
     }
-    
+
     startBtn.disabled = true;
     console.log("▶ start-button clicked");  // ✅ 追加
     console.log("🧪 user_id:", user_id);     // ✅ 追加
