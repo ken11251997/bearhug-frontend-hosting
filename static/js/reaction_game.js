@@ -149,12 +149,17 @@ function showNextQuestion() {
 
   correctAnswer = expressions[Math.floor(Math.random() * expressions.length)];
 
-  // 正解以外の選択肢を準備
+  // ターゲット以外の候補を複製して (count - 1) 個作る
   const incorrectOptions = expressions.filter(expr => expr !== correctAnswer);
-  const shuffledIncorrect = shuffle(incorrectOptions).slice(0, count - 1);
+  let duplicatedIncorrects = [];
 
-  // 正解 + 不正解の合計で選択肢リストを作成（正解は1つだけ）
-  let allExpressions = shuffle([correctAnswer, ...shuffledIncorrect]);
+  while (duplicatedIncorrects.length < count - 1) {
+    duplicatedIncorrects.push(...shuffle([...incorrectOptions]));
+  }
+  duplicatedIncorrects = duplicatedIncorrects.slice(0, count - 1);
+
+  // 正解1つ + 誤答 (重複あり)
+  let allExpressions = shuffle([correctAnswer, ...duplicatedIncorrects]);
 
   
   document.getElementById("question-text").textContent = `この表情を探してね：`;
