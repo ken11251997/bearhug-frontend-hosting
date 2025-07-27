@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ✅ ランキング取得API
-  function loadRanking(type) {
+  function loadRanking(type,game_name) {
     showLoadingOverlay();
 
     const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/ranking/${game_name}?type=${type}&user_id=${user_id}`;
