@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let score = 0;
   let stage = 1;
-  let timer = 180;
+  let timer = 60;
   let timerInterval = null;
   let bricks = [];
 
