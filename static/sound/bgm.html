@@ -1,0 +1,18 @@
+<!-- static/bgm.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"></head>
+<body style="display:none;">
+  <audio id="bgm-player" src="static/sound/bgm_default.mp3" loop></audio>
+  <script>
+    const audio = document.getElementById("bgm-player");
+
+    window.addEventListener("message", (e) => {
+      const { command } = e.data || {};
+      if (command === "play") audio.play();
+      if (command === "pause") audio.pause();
+      if (command === "setVolume") audio.volume = e.data.volume ?? 0.4;
+    });
+  </script>
+</body>
+</html>

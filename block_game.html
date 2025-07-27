@@ -67,5 +67,24 @@
 
   <script src="static/js/block_game.js" defer></script>
   <script src="static/js/ranking_modal.js" defer></script>
+
+  <script>
+    // 共通BGM停止
+    window.parent.postMessage({ command: "pause" }, "*");
+
+    // ミニゲーム専用BGM再生
+    const gameBgm = new Audio("static/sound/bgm_block.mp3");  // 各ゲームで固有に変える
+    gameBgm.loop = true;
+    gameBgm.volume = 0.4;
+
+    document.addEventListener("click", () => {
+      gameBgm.play().catch(err => {
+        console.warn("🔇 ゲームBGM再生ブロック:", err);
+      });
+    }, { once: true });
+
+    // ゲーム終了時などに gameBgm.pause(); 可能
+  </script>
+
 </body>
 </html>

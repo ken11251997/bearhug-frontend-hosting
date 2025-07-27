@@ -35,6 +35,12 @@
 
 　<h2>6. 変更について</h2>
 　<p>本ポリシーの内容は、予告なく変更されることがあります。</p>
-
+    <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
+    <script>
+    const bgmFrame = document.getElementById("bgm-iframe");
+    document.addEventListener("click", () => {
+        bgmFrame.contentWindow.postMessage({ command: "play" }, "*");
+    }, { once: true });
+    </script>
 </body>
 </html>
