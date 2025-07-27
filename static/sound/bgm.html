@@ -3,17 +3,11 @@
 <html lang="ja">
 <head><meta charset="UTF-8"></head>
 <body style="display:none;">
-  <audio id="bgm-player" src="bgm_default.mp3" loop></audio>
 
+  <audio id="bgm-player" src="bgm_default.mp3" autoplay loop></audio>
   <script>
     const audio = document.getElementById("bgm-player");
-
-    window.addEventListener("message", (e) => {
-      const { command } = e.data || {};
-      if (command === "play") audio.play();
-      if (command === "pause") audio.pause();
-      if (command === "setVolume") audio.volume = e.data.volume ?? 0.4;
-    });
+    audio.play().catch(e => console.log("再生失敗:", e));
   </script>
 </body>
 </html>

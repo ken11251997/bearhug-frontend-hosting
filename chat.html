@@ -71,11 +71,11 @@
     <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 
     <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
-    <script>
+    <!-- <script>
     const bgmFrame = document.getElementById("bgm-iframe");
     document.addEventListener("click", () => {
         bgmFrame.contentWindow.postMessage({ command: "play" }, "*");
     }, { once: true });
-    </script>
+    </script> -->
 </body>
 </html>

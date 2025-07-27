@@ -34,6 +34,21 @@
     </div>
     <!-- ✅ BGM iframe：共通再生用 -->
     <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
+    <script>
+    document.getElementById("start-btn").addEventListener("click", () => {
+    // BGM専用の裏ウィンドウを開く（最小＆画面外）
+    window.bgmWindow = window.open(
+        "static/sound/bgm.html",
+        "bgmWindow",
+        "width=1,height=1,left=-1000,top=-1000"
+    );
+
+    // オーバーレイ非表示
+    const overlay = document.getElementById("intro-overlay");
+    overlay.style.opacity = 0;
+    setTimeout(() => overlay.remove(), 1000);
+    });
+    </script>
 
     <div class="background-container">
         <div class="background-slider top-slider">

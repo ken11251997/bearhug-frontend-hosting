@@ -60,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     imagePromises.push(p);
 
     card.addEventListener("click", () => {
-      window.location.href = `${game.link}?user_id=${user_id}&mbti=${mbti}`;
+      const gameName = game.link.replace(".html", "");  // e.g. "reaction_game"
+      window.location.href = `${game.link}?user_id=${user_id}&mbti=${mbti}&game_name=${gameName}`;
     });
 
     gameList.appendChild(card);

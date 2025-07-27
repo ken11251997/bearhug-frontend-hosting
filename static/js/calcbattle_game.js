@@ -295,7 +295,8 @@ document.addEventListener("DOMContentLoaded", () => {
   rankingBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       document.getElementById("ranking-modal").classList.remove("hidden");
-      loadRanking("mbti_median");
+      // loadRanking("mbti_median");
+      loadRanking("mbti_median", "calcbattle")
     });
   });
 
