@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
+  const game_name = new URLSearchParams(window.location.search).get("game_name") || "reaction_speed";
 
   // ✅ MBTIごとの色クラス（list.cssと連携）
   const mbtiColorClasses = {
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadRanking(type) {
     showLoadingOverlay();
 
-    const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/ranking/reaction_speed?type=${type}&user_id=${user_id}`;
+    const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/ranking/${game_name}?type=${type}&user_id=${user_id}`;
     fetch(url)
       .then(res => res.json())
       .then(data => {

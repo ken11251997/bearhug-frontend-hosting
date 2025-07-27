@@ -318,7 +318,7 @@ function shuffle(array) {
     btn.addEventListener("click", () => {
       decisionSound.play();
       document.getElementById("ranking-modal").classList.remove("hidden");
-      loadRanking("mbti_median");
+      loadRanking("mbti_median", "reaction_speed");
     });
   });
 
