@@ -426,10 +426,10 @@ document.addEventListener("DOMContentLoaded", () => {
       let itemSize;
       switch (item.type) {
         case "ball":
-          itemSize = 24;
+          itemSize = 28;
           break;
         case "blast":
-          itemSize = 28;
+          itemSize = 32;
           break;
         default:
           itemSize = 20;
