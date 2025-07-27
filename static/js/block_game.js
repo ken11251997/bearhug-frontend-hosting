@@ -249,16 +249,22 @@ document.addEventListener("DOMContentLoaded", () => {
     bricks = [];
     itemBricks = [];
 
+    const totalBricks = brickColumnCount * brickRowCount;
     const hardnessMap = [];
-    const mode = (stage - 1) % 4 + 1;
-    for (let i = 0; i < brickColumnCount * brickRowCount; i++) {
-      if (mode === 1) hardnessMap.push(1);
-      else if (mode === 2) hardnessMap.push(i < 25 ? 1 : 2);
-      else if (mode === 3) hardnessMap.push(2);
-      else if (mode === 4) hardnessMap.push(i < 25 ? 2 : 3);
-    }
+
+    // 💡 ステージレベルに応じて硬さを決定
+    let baseLevel = Math.min(stage, 5); // 最大ステージ5
+    let levelA = Math.max(1, baseLevel);       // 例：ステージ3 → 3
+    let levelB = Math.min(5, baseLevel + 1);   // 例：ステージ3 → 4（最大5まで）
+
+    // 半々に割り振る（ランダムにシャッフルされるので OK）
+    for (let i = 0; i < totalBricks / 2; i++) hardnessMap.push(levelA);
+    for (let i = totalBricks / 2; i < totalBricks; i++) hardnessMap.push(levelB);
+
+    // シャッフルしてランダム配置
     hardnessMap.sort(() => Math.random() - 0.5);
 
+    // アイテム配置位置（3つ）
     const itemIndices = new Set();
     while (itemIndices.size < 3) {
       itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
@@ -273,13 +279,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const types = ["ball", "blast"];
         const itemType = types[Math.floor(Math.random() * types.length)];
         bricks[c][r] = {
-          x: 0, y: 0,
+          x: 0,
+          y: 0,
           status: 1,
           hardness,
-          // isItem: true,
-          // itemType: itemIndices.has(index) ? types[Math.floor(Math.random() * types.length)] : null
-          isItem: isItem,
-          itemType: isItem ? itemType : null  // ← 破壊時にのみ落とす
+          isItem,
+          itemType: isItem ? itemType : null
         };
         index++;
       }
@@ -477,6 +482,8 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (ball.y + ball.dy > canvas.height - ballRadius) {
         if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
           ball.dy = -ball.dy;
+          wallHitSound.currentTime = 0;
+          wallHitSound.play(); // ← ここ！
         } else {
           balls.splice(i, 1);
         }
