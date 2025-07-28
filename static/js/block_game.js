@@ -1,16 +1,31 @@
 function restartDefaultBgm() {
-  // 既存の BGM ウィンドウがあれば閉じる
   const oldWin = window.open('', 'bgmWindow');
   if (oldWin && !oldWin.closed) {
-    oldWin.close();
+    try {
+      // ✅ すでに開いてるなら BGM を止めてから閉じる
+      const audio = oldWin.document.getElementById("bgm");
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      oldWin.close();  // 完全に閉じる
+    } catch (e) {
+      console.warn("⚠️ 既存bgmWindowの停止に失敗:", e);
+    }
   }
 
-  // ⏩ bgm.html を改めて開き直す（重要）
-  window.open(
-    "static/sound/bgm.html",
-    "bgmWindow",  // ← ウィンドウ名
-    "width=1,height=1,left=-1000,top=-1000"
-  );
+  // ✅ 新たに開き直す（確実にリセットされたBGMウィンドウ）
+  const newWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+  if (newWin) {
+    newWin.document.write(`
+      <html><head><title>BGM</title></head>
+      <body style="margin:0">
+        <audio id="bgm" autoplay loop>
+          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+        </audio>
+      </body></html>
+    `);
+  }
 }
 
 
