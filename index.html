@@ -32,18 +32,30 @@
     <div id="intro-overlay">
     <button id="start-btn">トークを開始</button>
     </div>
-    <!-- ✅ BGM iframe：共通再生用 -->
-    <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
-    <script>
+   <script>
     document.getElementById("start-btn").addEventListener("click", () => {
-    // BGM専用の裏ウィンドウを開く（最小＆画面外）
-    window.open(
+    const bgmWin = window.open('', 'bgmWindow');
+    if (!bgmWin || bgmWin.closed) {
+        // ✅ ウィンドウが存在しない場合は新規オープン
+        window.open(
         "static/sound/bgm.html",
-        "bgmWindow",  // ← ウィンドウ名を "bgmWindow" と明示
+        "bgmWindow",
         "width=1,height=1,left=-1000,top=-1000"
         );
+    } else {
+        // ✅ 存在しているなら再生復元を試みる
+        try {
+        const audio = bgmWin.document.getElementById("bgm");
+        if (audio && audio.paused) {
+            audio.play().catch(err => {
+            console.warn("BGM再生エラー:", err);
+            });
+        }
+        } catch (e) {
+        console.warn("BGM再取得に失敗:", e);
+        }
+    }
 
-    // オーバーレイ非表示
     const overlay = document.getElementById("intro-overlay");
     overlay.style.opacity = 0;
     setTimeout(() => overlay.remove(), 1000);
