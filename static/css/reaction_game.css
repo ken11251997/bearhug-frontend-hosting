@@ -186,12 +186,6 @@ esc, .section, .main-button, .sub-button {
   color: #006400;
 } */
 
-.penalty-text {
-  font-size: 16px;
-  color: red;
-  transition: opacity 0.5s;
-  opacity: 1;
-}
 
 .penalty-text.hidden {
   opacity: 0;

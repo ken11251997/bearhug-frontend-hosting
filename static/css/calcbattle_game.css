@@ -254,7 +254,7 @@ body {
 }
 
 .game-header {
-  /* display: flex; */
+  display: flex;
   justify-content: space-between;
   width: 90%;
   padding: 12px 16px;
@@ -353,6 +353,8 @@ body {
   margin-left: 12px;
   opacity: 0;
   animation: fadePenalty 1s forwards;
+  min-width: 3em;           /* ✅ 幅を確保してズレを防止 */
+  text-align: right;        /* ✅ 右寄せで見栄え安定 */
 }
 
 @keyframes fadePenalty {
