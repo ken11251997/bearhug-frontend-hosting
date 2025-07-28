@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
+  if (!user_id) {
+    alert("⚠️ user_id が取得できません。スコアが保存されません。URLを確認してください。");
+    return;
+  }
 
   document.getElementById("quiz-area").classList.add("hidden");
 
