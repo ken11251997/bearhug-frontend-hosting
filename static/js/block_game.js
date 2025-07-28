@@ -1,34 +1,16 @@
-function restartDefaultBgm(){
+function restartDefaultBgm() {
+  // 既存の BGM ウィンドウがあれば閉じる
   const oldWin = window.open('', 'bgmWindow');
   if (oldWin && !oldWin.closed) {
-    try {
-      oldWin.document.body.innerHTML = `
-        <audio id="bgm" autoplay loop>
-          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-        </audio>
-      `;
-      const audio = oldWin.document.getElementById("bgm");
-      audio.volume = 0.4;
-      audio.play().catch(err => {
-        console.warn("🔇 デフォルトBGM再生失敗:", err);
-      });
-    } catch (e) {
-      console.warn("⚠️ BGM再開に失敗:", e);
-    }
-  } else {
-    // ポップアップが閉じられていたら新たに開く
-    const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-    if (win) {
-      win.document.write(`
-        <html><head><title>BGM</title></head>
-        <body style="margin:0">
-          <audio id="bgm" autoplay loop>
-            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-          </audio>
-        </body></html>
-      `);
-    }
+    oldWin.close();
   }
+
+  // ⏩ bgm.html を改めて開き直す（重要）
+  window.open(
+    "static/sound/bgm.html",
+    "bgmWindow",  // ← ウィンドウ名
+    "width=1,height=1,left=-1000,top=-1000"
+  );
 }
 
 
