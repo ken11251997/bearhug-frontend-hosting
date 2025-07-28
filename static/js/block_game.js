@@ -68,7 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     restartDefaultBgm();  // ✅ 共通BGM再開
+    // location.href = "minigame_list.html";
+    setTimeout(() => {
     location.href = "minigame_list.html";
+  }, 300); // ← 300ms 程度の猶予を与える
   };
 
   
