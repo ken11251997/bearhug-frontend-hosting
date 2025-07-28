@@ -84,11 +84,19 @@ esc, .section, .main-button, .sub-button {
   opacity: 0;
 }
 
+#target-face {
+  min-height: 120px;  /* ✅ 表情画像の高さ＋余白を含めて */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 #target-face img {
   width: 100px;
   height: auto;
-  margin-bottom: 12px;
   min-height: 100px; /* imgタグの高さと同じに */
+  margin-bottom: 0px;  /* ✅ ペナルティ表示との衝突を防ぐ */
 }
 
 #options-grid {
