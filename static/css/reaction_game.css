@@ -84,12 +84,11 @@ esc, .section, .main-button, .sub-button {
   opacity: 0;
 }
 
-
-#target-face {
+#target-face img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 12px;
   min-height: 100px; /* imgタグの高さと同じに */
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #options-grid {
@@ -101,7 +100,6 @@ esc, .section, .main-button, .sub-button {
   margin-top: 8px;
   min-height: 200px; /* 最大81択時の高さに余裕をもたせる */
 }
-
 
 /* グリッドのサイズはJSで可変調整 */
 .option {
