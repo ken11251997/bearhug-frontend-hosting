@@ -34,16 +34,23 @@
     </div>
    <script>
     document.getElementById("start-btn").addEventListener("click", () => {
-    const bgmWin = window.open('', 'bgmWindow');
-    if (!bgmWin || bgmWin.closed) {
-        // ✅ ウィンドウが存在しない場合は新規オープン
-        window.open(
-        "static/sound/bgm.html",
-        "bgmWindow",
-        "width=1,height=1,left=-1000,top=-1000"
-        );
+    let bgmWin = window.open('', 'bgmWindow');
+
+    if (!bgmWin || bgmWin.closed || bgmWin.location.href === "about:blank") {
+        // ✅ 再生成 or 初期生成
+        bgmWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+        if (bgmWin) {
+        bgmWin.document.write(`
+            <html><head><title>BGM</title></head>
+            <body style="margin:0">
+            <audio id="bgm" autoplay loop>
+                <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+            </audio>
+            </body></html>
+        `);
+        }
     } else {
-        // ✅ 存在しているなら再生復元を試みる
+        // ✅ 既存があれば再生を保証
         try {
         const audio = bgmWin.document.getElementById("bgm");
         if (audio && audio.paused) {
