@@ -19,7 +19,7 @@
 .modal-content {
   background: #fffaf0;
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
   width: 90%;
   max-width: 500px;
   max-height: 80vh;
@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  padding: 6px;
   border-radius: 8px;
   background-color: #f8f8f8;
   font-size: 14px;
