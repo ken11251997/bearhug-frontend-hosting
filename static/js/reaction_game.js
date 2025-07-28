@@ -330,7 +330,7 @@ function shuffle(array) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_id: user_id,
-          game_name: "reaction_speed",
+          game_name: "reaction_game",
           score: parseFloat(formatted)
         }),
       })

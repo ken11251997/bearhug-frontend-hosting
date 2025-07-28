@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_id,
-        game_name: "calcbattle",
+        game_name: "calcbattle_game",
         score: parseFloat(elapsed.toFixed(3)),
       }),
     })
