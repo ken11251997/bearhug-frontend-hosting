@@ -73,7 +73,8 @@
     window.parent.postMessage({ command: "pause" }, "*");
 
     // ミニゲーム専用BGM再生
-    const gameBgm = new Audio("static/sound/bgm_block.mp3");  // 各ゲームで固有に変える
+    // const gameBgm = new Audio("static/sound/bgm_block.mp3");  // 各ゲームで固有に変える
+    window.gameBgm = new Audio("static/sound/bgm_block.mp3");  // ← window に保存
     gameBgm.loop = true;
     gameBgm.volume = 0.4;
 

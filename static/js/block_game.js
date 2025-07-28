@@ -48,7 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const blockHitSound = new Audio("static/sound/block_hit.mp3");
   const blastSound = new Audio("static/sound/blast.mp3");
 
+ 
   document.getElementById("back-button").onclick = () => {
+    if (window.gameBgm && typeof window.gameBgm.pause === 'function') {
+      window.gameBgm.pause();  // 🎵 ゲームBGMを停止
+      window.gameBgm.currentTime = 0; // 先頭に戻す（任意）
+    }
+
     restartDefaultBgm();  // ✅ 共通BGM再開
     location.href = "minigame_list.html";
   };
