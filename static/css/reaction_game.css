@@ -179,13 +179,15 @@ esc, .section, .main-button, .sub-button {
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* ✅ 自動折り返し */
 }
 
+
 .timer-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 1.5em; /* ✅ 高さを固定してずれを防ぐ */
-  position: relative;
+  height: 1.8em;         /* ← min-height から height へ */
+  position: relative;    /* ← .penalty-text を中で絶対位置指定するため */
+  overflow: hidden;      /* ← 念のため */
 }
 
 /* #live-timer {
