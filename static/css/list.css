@@ -314,7 +314,7 @@
 
 /* 📱 マッチリスト：高さ固定・スクロール可能・右寄せ */
 #matched-user-list {
-  max-height: 400px;
+  max-height: 470px !important;  /* ← 400px → 470px に増加 */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin; /* Firefox用 */
