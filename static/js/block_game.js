@@ -192,10 +192,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-button"); // ✅ 追加
 
   startBtn.addEventListener("click", () => {
-    const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
+    const bgmWin = window.open('', 'bgmWindow');
     if (bgmWin && !bgmWin.closed) {
-      bgmWin.close();
-    }
+      try {
+        const audio = bgmWin.document.getElementById("bgm");
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        bgmWin.close();
+      } catch (e) {
+        console.warn("🔇 デフォルトBGM停止に失敗:", e);
+      }
 
     startBtn.disabled = true;
     console.log("▶ start-button clicked");  // ✅ 追加
