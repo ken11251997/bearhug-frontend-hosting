@@ -36,9 +36,10 @@
     let bgmWin = null;
 
     document.getElementById("start-btn").addEventListener("click", () => {
-    if (!bgmWin || bgmWin.closed) {
+        // 既存ウィンドウがなければ開く
+        if (!bgmWin || bgmWin.closed) {
         bgmWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-
+        }
         if (bgmWin) {
         const html = `
             <html><head><title>BGM</title></head>
@@ -52,22 +53,16 @@
         bgmWin.document.write(html);
         bgmWin.document.close();
 
-        // 🔑 window.onload の代わりに直接 play をトリガー（ユーザー操作内）
-        const tryPlay = () => {
-            try {
+        // ユーザー操作内で再生を試みる
+        try {
             const audio = bgmWin.document.getElementById("bgm");
             if (audio) {
-                audio.play().catch(err => console.warn("BGM再生エラー:", err));
+            audio.play().catch(err => console.warn("BGM再生エラー:", err));
             }
-            } catch (e) {
+        } catch (e) {
             console.warn("BGMアクセス失敗:", e);
-            }
-        };
-
-        // DOM構築後まで少し待つ
-        setTimeout(tryPlay, 300);
         }
-    }
+        }
     });
     </script>
 
