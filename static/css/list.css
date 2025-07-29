@@ -338,12 +338,10 @@
 
 /* スクロールバーを右側にしっかり寄せる */
 #matched-user-list {
-  direction: rtl; /* 一時的に右寄せのために使う */
+  direction: ltr; /* 一時的に右寄せのために使う */
 }
 
-#matched-user-list > * {
-  direction: ltr; /* コンテンツは通常の左寄せ */
-}
+
 
 h1 {
   margin-top: 8px !important;
