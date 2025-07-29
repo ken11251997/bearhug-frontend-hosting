@@ -35,6 +35,7 @@
    <script>
     document.getElementById("start-btn").addEventListener("click", () => {
     const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+
     if (win) {
         const html = `
         <html><head><title>BGM</title></head>
@@ -42,17 +43,21 @@
             <audio id="bgm" autoplay loop>
             <source src="static/sound/bgm_default.mp3" type="audio/mp3">
             </audio>
-            <script>
-            window.onload = () => {
-                const audio = document.getElementById('bgm');
-                audio.play().catch(err => console.warn("再生エラー", err));
-            };
-            <\/script>
         </body></html>
         `;
         win.document.open();
         win.document.write(html);
         win.document.close();
+
+        // 🔑 ユーザー操作の直後に play() を呼ぶ！
+        win.onload = () => {
+        try {
+            const audio = win.document.getElementById("bgm");
+            audio.play().catch(err => console.warn("再生エラー:", err));
+        } catch (e) {
+            console.warn("BGM再生失敗:", e);
+        }
+        };
     }
     });
     </script>
