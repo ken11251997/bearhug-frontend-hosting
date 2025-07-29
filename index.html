@@ -33,41 +33,42 @@
     <button id="start-btn">トークを開始</button>
     </div>
    <script>
+    let bgmWin = null;
+
     document.getElementById("start-btn").addEventListener("click", () => {
-    const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
+    if (!bgmWin || bgmWin.closed) {
+        bgmWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
 
-    if (win) {
+        if (bgmWin) {
         const html = `
-        <html><head><title>BGM</title></head>
-        <body style="margin:0">
+            <html><head><title>BGM</title></head>
+            <body style="margin:0">
             <audio id="bgm" autoplay loop>
-            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+                <source src="static/sound/bgm_default.mp3" type="audio/mp3">
             </audio>
-        </body></html>
+            </body></html>
         `;
-        win.document.open();
-        win.document.write(html);
-        win.document.close();
+        bgmWin.document.open();
+        bgmWin.document.write(html);
+        bgmWin.document.close();
 
-        // 🔑 ユーザー操作の直後に play() を呼ぶ！
-        win.onload = () => {
-        try {
-            const audio = win.document.getElementById("bgm");
-            audio.play().catch(err => console.warn("再生エラー:", err));
-        } catch (e) {
-            console.warn("BGM再生失敗:", e);
-        }
+        // 🔑 window.onload の代わりに直接 play をトリガー（ユーザー操作内）
+        const tryPlay = () => {
+            try {
+            const audio = bgmWin.document.getElementById("bgm");
+            if (audio) {
+                audio.play().catch(err => console.warn("BGM再生エラー:", err));
+            }
+            } catch (e) {
+            console.warn("BGMアクセス失敗:", e);
+            }
         };
+
+        // DOM構築後まで少し待つ
+        setTimeout(tryPlay, 300);
+        }
     }
     });
-    setTimeout(() => {
-    try {
-        const audio = win.document.getElementById("bgm");
-        if (audio && audio.paused) {
-        audio.play().catch(() => {});
-        }
-    } catch (e) {}
-    }, 500);
     </script>
 
 
