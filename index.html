@@ -60,6 +60,14 @@
         };
     }
     });
+    setTimeout(() => {
+    try {
+        const audio = win.document.getElementById("bgm");
+        if (audio && audio.paused) {
+        audio.play().catch(() => {});
+        }
+    } catch (e) {}
+    }, 500);
     </script>
 
 
