@@ -29,6 +29,9 @@
       </style>
 </head>
 <body>
+    <audio id="bgm-default" preload="auto" loop>
+    <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+    </audio>
     <div id="intro-overlay">
     <button id="start-btn">トークを開始</button>
     </div>
@@ -36,34 +39,14 @@
     let bgmWin = null;
 
     document.getElementById("start-btn").addEventListener("click", () => {
-        // 既存ウィンドウがなければ開く
-        if (!bgmWin || bgmWin.closed) {
-        bgmWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-        }
-        if (bgmWin) {
-        const html = `
-            <html><head><title>BGM</title></head>
-            <body style="margin:0">
-            <audio id="bgm" autoplay loop>
-                <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-            </audio>
-            </body></html>
-        `;
-        bgmWin.document.open();
-        bgmWin.document.write(html);
-        bgmWin.document.close();
+        const bgm = document.getElementById("bgm-default");
+        document.getElementById("start-btn").addEventListener("click", () => {
+            // ユーザー操作内の play() なので必ず鳴る
+            bgm.play().catch(err => console.warn("BGM再生エラー:", err));
 
-        // ユーザー操作内で再生を試みる
-        try {
-            const audio = bgmWin.document.getElementById("bgm");
-            if (audio) {
-            audio.play().catch(err => console.warn("BGM再生エラー:", err));
-            }
-        } catch (e) {
-            console.warn("BGMアクセス失敗:", e);
-        }
-        }
-    });
+            // オーバーレイを消す等、既存の start 処理
+            document.getElementById("intro-overlay").classList.add("hidden");
+        });
     </script>
 
 

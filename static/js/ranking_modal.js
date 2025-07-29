@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
-  const game_name = new URLSearchParams(window.location.search).get("game_name") || "reaction_speed";
+  const game_name = new URLSearchParams(window.location.search).get("game_name") || "reaction_game";
 
   const mbtiColorClasses = {
     ISTJ: "mbti-blue", ISFJ: "mbti-blue",
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const isScoreBased = game_name === "block_game" || game_name === "calcbattle";
+    const isScoreBased = game_name === "block_game" || game_name === "calcbattle_game";
 
     entries.forEach(entry => {
       const type = entry.mbti || "???";
