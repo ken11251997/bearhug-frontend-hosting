@@ -33,28 +33,28 @@
     <button id="start-btn">トークを開始</button>
     </div>
    <script>
-        // ✅ トーク開始ボタン押下でBGMウインドウを確実に生成
-    function startDefaultBgm() {
+    document.getElementById("start-btn").addEventListener("click", () => {
     const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
     if (win) {
-        win.document.write(`
+        const html = `
         <html><head><title>BGM</title></head>
         <body style="margin:0">
             <audio id="bgm" autoplay loop>
             <source src="static/sound/bgm_default.mp3" type="audio/mp3">
             </audio>
             <script>
-            const audio = document.getElementById("bgm");
-            document.addEventListener("click", () => {
-                audio.play().catch(() => {});
-            }, { once: true });
-            </script>
+            window.onload = () => {
+                const audio = document.getElementById('bgm');
+                audio.play().catch(err => console.warn("再生エラー", err));
+            };
+            <\/script>
         </body></html>
-        `);
+        `;
+        win.document.open();
+        win.document.write(html);
         win.document.close();
     }
-    }
-
+    });
     </script>
 
 
