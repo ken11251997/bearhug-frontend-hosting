@@ -185,18 +185,39 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const bgm = document.getElementById("bgm-default");
-        const startBtn = document.getElementById("start-btn");
+    const startBtn = document.getElementById("start-btn");
 
-        startBtn.addEventListener("click", () => {
-        // ① デフォルト BGM を一度リセットして再生
-        bgm.pause();
-        bgm.currentTime = 0;
-        bgm.play().catch(err => console.warn("BGM再生エラー:", err));
+    startBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // リンク遷移を一旦止める
 
-        // ② オーバーレイを隠す
-        document.getElementById("intro-overlay").classList.add("hidden");
-        });
+        // ① BGM用の別ウィンドウを開く or 再利用
+        let bgmWin = window.open("", "bgmWindow", "width=300,height=100");
+        if (bgmWin.closed) {
+        bgmWin = window.open("", "bgmWindow", "width=300,height=100");
+        }
+
+        // ② 中身に <audio> がなければ初回生成
+        if (!bgmWin.document.getElementById("bgm-default")) {
+        bgmWin.document.open();
+        bgmWin.document.write(`
+            <html><body style="margin:0">
+            <audio id="bgm-default" autoplay loop>
+                <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+            </audio>
+            </body></html>
+        `);
+        bgmWin.document.close();
+        } else {
+        // 既存ウィンドウなら再生を保証
+        const audio = bgmWin.document.getElementById("bgm-default");
+        audio.play().catch(err => console.warn("BGM再生エラー:", err));
+        }
+
+        // ③ 少し待ってから次ページへ移動（URL は実際の遷移先に置き換え）
+        setTimeout(() => {
+        window.location.href = "game_list.html";
+        }, 100);
+    });
     });
     </script>
 
