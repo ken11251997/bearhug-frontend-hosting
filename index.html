@@ -196,6 +196,7 @@
         if (bgmWin.closed) {
         bgmWin = window.open("", "bgmWindow", "width=300,height=100");
         }
+
         // ── 初回なら <audio> を書き込む
         if (!bgmWin.document.getElementById("bgm-default")) {
         bgmWin.document.open();
@@ -207,14 +208,20 @@
             </body></html>
         `);
         bgmWin.document.close();
-        } else {
-        bgmWin.document.getElementById("bgm-default")
-            .play().catch(err => console.warn("BGM再生エラー:", err));
+        }
+
+        // ── 書き込んだ or 既存の audio を必ず再生
+        try {
+        const audio = bgmWin.document.getElementById("bgm-default");
+        if (audio) {
+            audio.play().catch(err => console.warn("BGM再生エラー:", err));
+        }
+        } catch (e) {
+        console.warn("bgmWindow へのアクセス失敗:", e);
         }
 
         // ── オーバーレイを隠す（ページ遷移はしない）
-        document.getElementById("intro-overlay")
-                .classList.add("hidden");
+        document.getElementById("intro-overlay").classList.add("hidden");
     });
     });
     </script>
