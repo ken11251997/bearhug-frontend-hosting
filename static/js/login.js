@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 });
             } else if (data.status === "error" && data.message === "Nobudy") {
                 loadingOverlay.style.display = "none";
-                showPopup("マッチング相手がいません。");
+                showPopup("マッチング相手が\nいないよ");
             } else {
                 loadingOverlay.style.display = "none";
                 showPopup("予期せぬエラーが発生しました。");

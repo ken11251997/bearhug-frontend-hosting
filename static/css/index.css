@@ -396,7 +396,7 @@ footer {
 /* ✅ トークを開始ボタンを下部に配置 */
 #start-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: 20%;
   background: white;
   color: black;
   padding: 16px 32px;

@@ -235,7 +235,7 @@ h1 {
   text-align: center;
 }
 
-.popup-close-btn {
+/* .popup-close-btn {
   position: absolute;
   top: 0;
   right: 0;
@@ -245,14 +245,14 @@ h1 {
   color: #8b4513;
   cursor: pointer;
   padding: 6px 10px;
-}
+} */
 
-
+/* 
 .popup-header span {
   display: block;
   text-align: center;
   width: 100%;
-}
+} */
 
 .fade-out {
   animation: fadeOut 1s ease-in-out forwards;
@@ -516,4 +516,37 @@ h1 {
     font-weight: bold;
     margin-top: 2px;
     font-family: 'Poppins', sans-serif;
+}
+
+.popup-message.persistent-popup {
+  padding-top: 32px; /* 上部余裕を追加 */
+}
+
+/* ✅ ×ボタン右上端へ配置＋枠つきスタイル */
+.popup-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: white;
+  border: 2px solid #8b4513;
+  border-radius: 50%;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  color: #8b4513;
+  cursor: pointer;
+  text-align: center;
+  line-height: 28px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ✅ メッセージを中央2段で自然に表示 */
+.popup-header span {
+  display: block;
+  text-align: center;
+  white-space: pre-line; /* \n 改行を反映させる */
+  line-height: 1.6;
+  font-size: 16px;
+  padding: 0 16px;
 }
