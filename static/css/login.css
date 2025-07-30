@@ -228,6 +228,26 @@ h1 {
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
+
+.popup-header {
+  position: relative;
+  padding-right: 30px; /* ✕ボタン分のスペースを確保 */
+  text-align: center;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #8b4513;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+
 .popup-header span {
   display: block;
   text-align: center;
