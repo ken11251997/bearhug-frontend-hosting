@@ -191,36 +191,19 @@
     startBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        // ── BGM用ウィンドウを開く or 再利用
-        let bgmWin = window.open("", "bgmWindow", "width=300,height=100");
-        if (bgmWin.closed) {
-        bgmWin = window.open("", "bgmWindow", "width=300,height=100");
-        }
-
-        // ── 初回なら <audio> を書き込む
-        if (!bgmWin.document.getElementById("bgm-default")) {
-        bgmWin.document.open();
-        bgmWin.document.write(`
-            <html><body style="margin:0">
-            <audio id="bgm-default" autoplay loop>
-                <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+        const html = `
+        <html><body style="margin:0">
+            <audio autoplay loop>
+            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
             </audio>
-            </body></html>
-        `);
-        bgmWin.document.close();
-        }
+        </body></html>
+        `;
+        const bgmUrl = "data:text/html;charset=utf-8," + encodeURIComponent(html);
 
-        // ── 書き込んだ or 既存の audio を必ず再生
-        try {
-        const audio = bgmWin.document.getElementById("bgm-default");
-        if (audio) {
-            audio.play().catch(err => console.warn("BGM再生エラー:", err));
-        }
-        } catch (e) {
-        console.warn("bgmWindow へのアクセス失敗:", e);
-        }
+        // ウィンドウ名を固定することでページ遷移時もウィンドウは継続
+        let bgmWin = window.open(bgmUrl, "bgmWindow", "width=1,height=1,left=-9999,top=-9999");
 
-        // ── オーバーレイを隠す（ページ遷移はしない）
+        // オーバーレイを隠す
         document.getElementById("intro-overlay").classList.add("hidden");
     });
     });
