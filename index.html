@@ -35,20 +35,6 @@
     <div id="intro-overlay">
     <button id="start-btn">トークを開始</button>
     </div>
-   <script>
-    let bgmWin = null;
-
-    document.getElementById("start-btn").addEventListener("click", () => {
-        const bgm = document.getElementById("bgm-default");
-        document.getElementById("start-btn").addEventListener("click", () => {
-            // ユーザー操作内の play() なので必ず鳴る
-            bgm.play().catch(err => console.warn("BGM再生エラー:", err));
-
-            // オーバーレイを消す等、既存の start 処理
-            document.getElementById("intro-overlay").classList.add("hidden");
-        });})
-    </script>
-
 
     <div class="background-container">
         <div class="background-slider top-slider">
@@ -196,6 +182,23 @@
             document.getElementById(`${formType}-form`).classList.remove("hidden");
         }
     </script> -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const bgm = document.getElementById("bgm-default");
+        const startBtn = document.getElementById("start-btn");
+
+        startBtn.addEventListener("click", () => {
+        // ① デフォルト BGM を一度リセットして再生
+        bgm.pause();
+        bgm.currentTime = 0;
+        bgm.play().catch(err => console.warn("BGM再生エラー:", err));
+
+        // ② オーバーレイを隠す
+        document.getElementById("intro-overlay").classList.add("hidden");
+        });
+    });
+    </script>
 
     <script src="static/js/index.js" defer></script>
     <script src="static/js/index_ani.js" defer></script>
