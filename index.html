@@ -188,15 +188,14 @@
     const startBtn = document.getElementById("start-btn");
 
     startBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // リンク遷移を一旦止める
+        e.preventDefault();
 
-        // ① BGM用の別ウィンドウを開く or 再利用
+        // ── BGM用ウィンドウを開く or 再利用
         let bgmWin = window.open("", "bgmWindow", "width=300,height=100");
         if (bgmWin.closed) {
         bgmWin = window.open("", "bgmWindow", "width=300,height=100");
         }
-
-        // ② 中身に <audio> がなければ初回生成
+        // ── 初回なら <audio> を書き込む
         if (!bgmWin.document.getElementById("bgm-default")) {
         bgmWin.document.open();
         bgmWin.document.write(`
@@ -208,18 +207,17 @@
         `);
         bgmWin.document.close();
         } else {
-        // 既存ウィンドウなら再生を保証
-        const audio = bgmWin.document.getElementById("bgm-default");
-        audio.play().catch(err => console.warn("BGM再生エラー:", err));
+        bgmWin.document.getElementById("bgm-default")
+            .play().catch(err => console.warn("BGM再生エラー:", err));
         }
 
-        // ③ 少し待ってから次ページへ移動（URL は実際の遷移先に置き換え）
-        setTimeout(() => {
-        window.location.href = "game_list.html";
-        }, 100);
+        // ── オーバーレイを隠す（ページ遷移はしない）
+        document.getElementById("intro-overlay")
+                .classList.add("hidden");
     });
     });
     </script>
+
 
     <script src="static/js/index.js" defer></script>
     <script src="static/js/index_ani.js" defer></script>
