@@ -205,49 +205,48 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-    const startBtn = document.getElementById("start-btn");
-    let bgmWin = null;
+        const startBtn = document.getElementById("start-btn");
+        let bgmWin = null;
+        let bgmSrc = "static/sound/bgm_default.mp3";
 
-    startBtn.addEventListener("click", (e) => {
-        e.preventDefault();
+        startBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
 
-        // 初回クリックで bgmWindow を開くか再利用
-        if (!bgmWin || bgmWin.closed) {
-        bgmWin = window.open("", "bgmWindow", "width=1,height=1,left=-10000,top=-10000");
-        }
+            // 一度ウインドウ開く
+            if (!bgmWin || bgmWin.closed) {
+                bgmWin = window.open("", "bgmWindow", "width=1,height=1,left=-10000,top=-10000");
+            }
 
-        // HTML を書き込み
-        bgmWin.document.open();
-        bgmWin.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <body style="margin:0; background:black;">
-            <audio id="bgm" autoplay loop>
-            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-            </audio>
-            <script>
-            const audio = document.getElementById("bgm");
-            window.onload = () => {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log("BGM started");
-                }).catch((error) => {
-                    console.warn("BGM play error in child:", error);
-                });
-                }
-            };
-            <\/script>
-        </body>
-        </html>
-        `);
-        bgmWin.document.close();
+            // 子ウインドウにHTML書き込み＋BGM再生
+            bgmWin.document.open();
+            bgmWin.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <body style="margin:0; background:black;">
+                <audio id="bgm" loop></audio>
+                <script>
+                    const audio = document.getElementById("bgm");
+                    audio.src = "${bgmSrc}";
+                    document.body.addEventListener("click", () => {
+                        audio.play();
+                    });
+                    // 自動的にクリックイベントを発火
+                    window.onload = () => {
+                        const evt = new MouseEvent("click");
+                        document.body.dispatchEvent(evt);
+                    };
+                <\/script>
+            </body>
+            </html>
+            `);
+            bgmWin.document.close();
 
-        // オーバーレイを非表示にする
-        document.getElementById("intro-overlay").classList.add("hidden");
+            // intro画面を非表示に
+            document.getElementById("intro-overlay").classList.add("hidden");
+        });
     });
-    });
+
     </script>
-    
+
 </body>
 </html>
