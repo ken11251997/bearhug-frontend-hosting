@@ -184,30 +184,6 @@
         }
     </script> -->
 
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const startBtn = document.getElementById("start-btn");
-
-    startBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const html = `
-        <html><body style="margin:0">
-            <audio autoplay loop>
-            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-            </audio>
-        </body></html>
-        `;
-        const bgmUrl = "data:text/html;charset=utf-8," + encodeURIComponent(html);
-
-        // ウィンドウ名を固定することでページ遷移時もウィンドウは継続
-        let bgmWin = window.open(bgmUrl, "bgmWindow", "width=1,height=1,left=-9999,top=-9999");
-
-        // オーバーレイを隠す
-        document.getElementById("intro-overlay").classList.add("hidden");
-    });
-    });
-    </script>
 
 
     <script src="static/js/index.js" defer></script>
@@ -226,5 +202,52 @@
             <a href="privacy">プライバシーポリシー</a>
         </div>
     </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const startBtn = document.getElementById("start-btn");
+    let bgmWin = null;
+
+    startBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // 初回クリックで bgmWindow を開くか再利用
+        if (!bgmWin || bgmWin.closed) {
+        bgmWin = window.open("", "bgmWindow", "width=1,height=1,left=-10000,top=-10000");
+        }
+
+        // HTML を書き込み
+        bgmWin.document.open();
+        bgmWin.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <body style="margin:0; background:black;">
+            <audio id="bgm" autoplay loop>
+            <source src="static/sound/bgm_default.mp3" type="audio/mp3">
+            </audio>
+            <script>
+            const audio = document.getElementById("bgm");
+            window.onload = () => {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("BGM started");
+                }).catch((error) => {
+                    console.warn("BGM play error in child:", error);
+                });
+                }
+            };
+            <\/script>
+        </body>
+        </html>
+        `);
+        bgmWin.document.close();
+
+        // オーバーレイを非表示にする
+        document.getElementById("intro-overlay").classList.add("hidden");
+    });
+    });
+    </script>
+    
 </body>
 </html>
