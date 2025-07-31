@@ -204,46 +204,24 @@
     </footer>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
         const startBtn = document.getElementById("start-btn");
-        let bgmWin = null;
+
+        // グローバルな Audio オブジェクト
+        let bgmAudio = new Audio("static/sound/bgm_default.mp3");
+        bgmAudio.loop = true;
+        bgmAudio.volume = 0.6;
+
+        // すでに再生しているか確認（ページまたぎでも維持）
+        if (sessionStorage.getItem("bgmPlaying") === "true") {
+            bgmAudio.play().catch(err => console.warn("BGM自動再生エラー:", err));
+        }
 
         startBtn.addEventListener("click", () => {
-            // 既に開いていなければウインドウを開く
-            if (!bgmWin || bgmWin.closed) {
-                bgmWin = window.open("", "bgmWindow", "width=1,height=1,left=-10000,top=-10000");
+            bgmAudio.play().then(() => {
+                sessionStorage.setItem("bgmPlaying", "true");
+            }).catch(err => console.warn("BGM再生失敗:", err));
 
-                const html = `
-                    <!DOCTYPE html>
-                    <html><head><title>BGM</title></head><body>
-                    <audio id="bgm" autoplay loop>
-                        <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-                    </audio>
-                    </body></html>
-                `;
-
-                // 子ウインドウにHTML書き込み
-                bgmWin.document.write(html);
-                bgmWin.document.close();
-
-                // 再生は読み込み後に行う
-                bgmWin.onload = () => {
-                    const tryPlay = () => {
-                        try {
-                            const audio = bgmWin.document.getElementById("bgm");
-                            if (audio) {
-                                audio.play().catch(err => console.warn("子BGM再生エラー:", err));
-                            }
-                        } catch (e) {
-                            console.warn("BGMウインドウアクセス失敗:", e);
-                        }
-                    };
-                    // DOM反映まで遅延して再生
-                    setTimeout(tryPlay, 300);
-                };
-            }
-
-            // トーク開始画面非表示
             document.getElementById("intro-overlay").classList.add("hidden");
         });
     });
