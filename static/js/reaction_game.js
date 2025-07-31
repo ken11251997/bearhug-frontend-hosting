@@ -1,21 +1,3 @@
-function restartDefaultBgm(){
-  const oldWin = window.open('', 'bgmWindow');
-  if (oldWin && !oldWin.closed) {
-    oldWin.close();
-  }
-
-  const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-  if (win) {
-    win.document.write(`
-      <html><head><title>BGM</title></head>
-      <body style="margin:0">
-        <audio id="bgm" autoplay loop>
-          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-        </audio>
-      </body></html>
-    `);
-  }
-}
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -72,8 +54,16 @@ window.onload = () => {
   //   location.href = "minigame_list.html";
   // };
   document.getElementById("back-button").onclick = () => {
-    restartDefaultBgm();  // ✅ 共通BGM再開
-    location.href = "minigame_list.html";
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SWITCH_BGM",
+        mode: "default"
+      }));
+    }
+
+    setTimeout(() => {
+      location.href = "minigame_list.html";
+    }, 300);
   };
 };
 
