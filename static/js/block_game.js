@@ -607,18 +607,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
   window.addEventListener("AD_WATCHED", (event) => {
-            // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-            const adType = event.detail?.type || "unknown";
-            closeLoadingOverlay();
-            // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        });
+    // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+    const adType = event.detail?.type || "unknown";
+    closeLoadingOverlay();
+    // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+  });
 
     window.addEventListener("AD_FAILED", (event) => {
-        // alert("❌ AD_FAILED カスタムイベントを受信しました");
-        const msg = event.detail?.message || "不明なエラー";
-        closeLoadingOverlay();
-        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
-    });
+      // alert("❌ AD_FAILED カスタムイベントを受信しました");
+      const msg = event.detail?.message || "不明なエラー";
+      closeLoadingOverlay();
+      // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+  });
 
+  function closeLoadingOverlay() {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+    }
+    }
 
 });

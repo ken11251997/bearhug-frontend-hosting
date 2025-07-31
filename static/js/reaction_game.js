@@ -404,4 +404,12 @@ function shuffle(array) {
       closeLoadingOverlay();
       // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
   });
+
+  function closeLoadingOverlay() {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+    }
+    }
 });
