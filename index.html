@@ -29,9 +29,6 @@
       </style>
 </head>
 <body>
-    <audio id="bgm-default" preload="auto" loop>
-    <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-    </audio>
     <div id="intro-overlay">
         <img id="intro-bear" src="static/img/bear_1.png" alt="くま" />
         <button id="start-btn">トークを開始</button>
@@ -204,27 +201,15 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const startBtn = document.getElementById("start-btn");
-
-        // グローバルな Audio オブジェクト
-        let bgmAudio = new Audio("static/sound/bgm_default.mp3");
-        bgmAudio.loop = true;
-        bgmAudio.volume = 0.6;
-
-        // すでに再生しているか確認（ページまたぎでも維持）
-        if (sessionStorage.getItem("bgmPlaying") === "true") {
-            bgmAudio.play().catch(err => console.warn("BGM自動再生エラー:", err));
-        }
-
         startBtn.addEventListener("click", () => {
-            bgmAudio.play().then(() => {
-                sessionStorage.setItem("bgmPlaying", "true");
-            }).catch(err => console.warn("BGM再生失敗:", err));
-
+            if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: "SWITCH_BGM",
+            mode: "default"
+            }));
+        }
             document.getElementById("intro-overlay").classList.add("hidden");
         });
-    });
     </script>
 
 </body>
