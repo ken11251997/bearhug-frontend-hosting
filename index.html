@@ -201,6 +201,9 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const startBtn = document.getElementById("start-btn");
+
         startBtn.addEventListener("click", () => {
             if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -210,6 +213,7 @@
         }
             document.getElementById("intro-overlay").classList.add("hidden");
         });
+    });
     </script>
 
 </body>
