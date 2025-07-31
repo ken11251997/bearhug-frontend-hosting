@@ -1,33 +1,3 @@
-function restartDefaultBgm() {
-  const oldWin = window.open('', 'bgmWindow');
-  if (oldWin && !oldWin.closed) {
-    try {
-      // ✅ すでに開いてるなら BGM を止めてから閉じる
-      const audio = oldWin.document.getElementById("bgm");
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-      oldWin.close();  // 完全に閉じる
-    } catch (e) {
-      console.warn("⚠️ 既存bgmWindowの停止に失敗:", e);
-    }
-  }
-
-  // ✅ 新たに開き直す（確実にリセットされたBGMウィンドウ）
-  const newWin = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-  if (newWin) {
-    newWin.document.write(`
-      <html><head><title>BGM</title></head>
-      <body style="margin:0">
-        <audio id="bgm" autoplay loop>
-          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-        </audio>
-      </body></html>
-    `);
-  }
-}
-
 
 // 🎮 エンドレスブロック崩し：ゲームロジック（スコア＆タイムボーナス対応）
 document.addEventListener("DOMContentLoaded", () => {
@@ -60,18 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const blockHitSound = new Audio("static/sound/block_hit.mp3");
   const blastSound = new Audio("static/sound/blast.mp3");
 
- 
+
   document.getElementById("back-button").onclick = () => {
-    if (window.gameBgm && typeof window.gameBgm.pause === 'function') {
-      window.gameBgm.pause();  // 🎵 ゲームBGMを停止
-      window.gameBgm.currentTime = 0; // 先頭に戻す（任意）
+    // ✅ ネイティブ側にデフォルトBGM再開指示
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SWITCH_BGM",
+        mode: "default"
+      }));
     }
 
-    restartDefaultBgm();  // ✅ 共通BGM再開
-    // location.href = "minigame_list.html";
     setTimeout(() => {
-    location.href = "minigame_list.html";
-  }, 300); // ← 300ms 程度の猶予を与える
+      location.href = "minigame_list.html";
+    }, 300);
   };
 
   
@@ -192,19 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-button"); // ✅ 追加
 
   startBtn.addEventListener("click", () => {
-    const bgmWin = window.open('', 'bgmWindow');
-    if (bgmWin && !bgmWin.closed) {
-      try {
-        const audio = bgmWin.document.getElementById("bgm");
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-        bgmWin.close();
-      } catch (e) {
-        console.warn("🔇 デフォルトBGM停止に失敗:", e);
-      }
-    } 
 
     startBtn.disabled = true;
     console.log("▶ start-button clicked");  // ✅ 追加
@@ -574,7 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 3000);
 
       stage++;
-      timer = 180;
+      timer = 60;
       timerEl.textContent = timer;
       createBricks();
     }
