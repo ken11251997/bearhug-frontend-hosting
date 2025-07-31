@@ -28,6 +28,27 @@
         }
       </style>
 </head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const startBtn = document.getElementById("start-btn");
+    const overlay = document.getElementById("intro-overlay");
+
+    startBtn.addEventListener("click", () => {
+      // 暗転解除
+      overlay.classList.add("hidden");
+
+      // ✅ React Native 側の App.js に BGM 再生指示を送信
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: "SWITCH_BGM",
+            mode: "default"
+          })
+        );
+      }
+    });
+  });
+</script>
 <body>
     <div id="intro-overlay">
         <img id="intro-bear" src="static/img/bear_1.png" alt="くま" />
@@ -199,22 +220,5 @@
             <a href="privacy">プライバシーポリシー</a>
         </div>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const startBtn = document.getElementById("start-btn");
-
-        startBtn.addEventListener("click", () => {
-            if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-            type: "SWITCH_BGM",
-            mode: "default"
-            }));
-        }
-            document.getElementById("intro-overlay").classList.add("hidden");
-        });
-    });
-    </script>
-
 </body>
 </html>
