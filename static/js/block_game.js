@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const wallHitSound = new Audio("static/sound/wall_hit.mp3");
   const blockHitSound = new Audio("static/sound/block_hit.mp3");
   const blastSound = new Audio("static/sound/blast.mp3");
+  const GOSound = new Audio("static/sound/gameover.mp3");
 
 
   document.getElementById("back-button").onclick = () => {
@@ -514,6 +515,8 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInterval(timerInterval);
       // alert("すべてのボールを落としました。ゲームオーバー");
       showResult(score);
+      GOSound.currentTime = 0;
+      GOSound.play(); // ← ここ！
       return;
     }
 
