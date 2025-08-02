@@ -34,22 +34,22 @@
     const overlay = document.getElementById("intro-overlay");
 
     startBtn.addEventListener("click", () => {
-      overlay.classList.add("hidden");
+    overlay.classList.add("hidden");  // 🔸opacity 0 でふわっとフェードアウト開始
 
-      // ✅ 完全非表示（必要に応じて）
-      setTimeout(() => {
+    // 🔽 1秒後に display: none を付けて完全非表示（フェードアニメーション完了後）
+    setTimeout(() => {
         overlay.style.display = "none";
-      }, 1000);
+    }, 1000);
 
-      // ReactNative側へBGM切替通知
-      if (window.ReactNativeWebView) {
+    // React Native 側の BGM 指示
+    if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(
-          JSON.stringify({
+        JSON.stringify({
             type: "SWITCH_BGM",
             mode: "default"
-          })
+        })
         );
-      }
+    }
     });
   });
 </script>

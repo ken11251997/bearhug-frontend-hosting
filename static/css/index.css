@@ -113,9 +113,9 @@ label {
   text-decoration: underline;
 }
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 h1 {
   font-size: 26px;
@@ -416,4 +416,5 @@ footer {
   pointer-events: none;
   transition: opacity 1s ease;
 }
+
 
