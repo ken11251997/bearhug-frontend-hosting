@@ -113,9 +113,9 @@ label {
   text-decoration: underline;
 }
 
-/* .hidden {
+.hidden {
   display: none;
-} */
+}
 
 h1 {
   font-size: 26px;
