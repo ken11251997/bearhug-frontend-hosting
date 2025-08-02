@@ -34,10 +34,14 @@
     const overlay = document.getElementById("intro-overlay");
 
     startBtn.addEventListener("click", () => {
-      // 暗転解除
       overlay.classList.add("hidden");
 
-      // ✅ React Native 側の App.js に BGM 再生指示を送信
+      // ✅ 完全非表示（必要に応じて）
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 1000);
+
+      // ReactNative側へBGM切替通知
       if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(
           JSON.stringify({

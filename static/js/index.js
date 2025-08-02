@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded",function(){
     });
 
     // ✅ イントロオーバーレイ制御とBGM再生
-  const overlay = document.getElementById("intro-overlay");
-  const startBtn = document.getElementById("start-btn");
+    const overlay = document.getElementById("intro-overlay");
+    const startBtn = document.getElementById("start-btn");
     
     // Register to buckend
     document.getElementById("register-form").addEventListener("submit",function(event){
