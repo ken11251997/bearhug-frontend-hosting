@@ -280,6 +280,11 @@
   text-align: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
+
+    /* ✅ 以下を追加または調整 */
+  min-width: 300px;
+  max-width: 80vw;
+  white-space: pre-line; /* 改行を反映するため */
 }
 
 .fade-out {
