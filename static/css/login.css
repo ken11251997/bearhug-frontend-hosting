@@ -212,8 +212,6 @@ h1 {
 }
 
 /* ポップアップメッセージのスタイル */
-tion: fadeIn 0.3s ease-in-out;
-}
 
 .popup-message {
   position: fixed;

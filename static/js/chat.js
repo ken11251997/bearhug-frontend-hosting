@@ -535,7 +535,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const adType = event.detail?.type || "unknown";
         closeLoadingOverlay();
         showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        console.log("🎯 API呼び出し開始: 回復タイプ =", adType, "ユーザーID =", user_id);
+        alert("🎯 API呼び出し開始: 回復タイプ =", adType, "ユーザーID =", user_id);
         // ✅ 実際のチャット回数のリセット
         if (adType === "chat") {
             try {
