@@ -610,6 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
     const adType = event.detail?.type || "unknown";
     closeLoadingOverlay();
+    beginGameFlow(); // ✅ 広告視聴成功後にゲーム開始
     // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
   });
 
