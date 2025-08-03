@@ -68,6 +68,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isScoreBased = game_name === "block_game";
 
+    entries.sort((a, b) => {
+      if (isScoreBased) {
+        return b.score - a.score; // 高い方が上位（block_game）
+      } else {
+        return a.score - b.score; // 速い方が上位（reaction_gameなど）
+      }
+    });
+
     entries.forEach(entry => {
       const type = entry.mbti || "???";
       const icon = mbtiIcons[type] || "static/img/unknown.png";
