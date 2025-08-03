@@ -238,13 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("AD_WATCHED", (event) => {
         // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
         const adType = event.detail?.type || "unknown";
-        closeLoadingOverlay();
-        showPopup(`✅ チャット開始！`);
-    });
 
-    window.addEventListener("AD_FAILED", (event) => {
-        // alert("❌ AD_FAILED カスタムイベントを受信しました");
-        const msg = event.detail?.message || "不明なエラー";
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/chatroom/unlock_by_ad", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -266,6 +260,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("開放エラー:", err);
                 showPopup("❌ 通信エラーが発生しました");
             })
+
+        closeLoadingOverlay();
+        showPopup(`✅ チャット開始！`);
+    });
+
+    window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
         closeLoadingOverlay();
         showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
     });
