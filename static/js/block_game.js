@@ -617,9 +617,28 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("AD_WATCHED", (event) => {
     // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
     const adType = event.detail?.type || "unknown";
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type })
+        })
+        .then(res => {
+        if (!res.ok) throw new Error("リミット解除失敗");
+        })
+        .catch(err => {
+        console.error("広告解除エラー:", err);
+        // alert("通信エラー（広告）: " + err.message);
+        })
+        .finally(() => {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        // alert("gameflow"); // ✅ 確実に表示される
+        // beginGameFlow();
+        });
+
     closeLoadingOverlay();
-    beginGameFlow(); // ✅ 広告視聴成功後にゲーム開始
-    // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+    // beginGameFlow(); // ✅ 広告視聴成功後にゲーム開始
   });
 
     window.addEventListener("AD_FAILED", (event) => {

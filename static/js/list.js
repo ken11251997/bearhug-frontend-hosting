@@ -224,13 +224,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("開放エラー:", err);
                 showPopup("❌ 通信エラーが発生しました");
             })
-            .finally(() => {
+            .finally(() => {loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+                location.reload();
                 // ✅ 通信後は必ずロード画面を隠す
                 // setTimeout(() => refreshMatchedList(), 1000);
                 console.log("reload")
-                loadingOverlay.classList.add("hidden");
-                loadingOverlay.style.display = "none";
-                location.reload();
+                
             });
         }
     }
@@ -260,7 +260,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("開放エラー:", err);
                 showPopup("❌ 通信エラーが発生しました");
             })
-
+            .finally(() => {loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+                location.reload();
+                // ✅ 通信後は必ずロード画面を隠す
+                // setTimeout(() => refreshMatchedList(), 1000);
+                console.log("reload")
+                
+            });
         closeLoadingOverlay();
         showPopup(`✅ チャット開始！`);
     });
