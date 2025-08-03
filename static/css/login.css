@@ -548,18 +548,17 @@ h1 {
   position: absolute;
   top: 6px;
   right: 6px;
-  background: white;
-  border: 2px solid #8b4513;
-  border-radius: 50%;
-  font-size: 14px;             /* ← ✅ 小さめに */
-  width: 24px;                 /* ← ✅ 小さめに */
-  height: 24px;
+  background: transparent;  /* ✅ 白背景を削除 */
+  border: none;             /* ✅ 枠線を削除 */
+  border-radius: 0;         /* ✅ 丸みをなくす */
+  font-size: 18px;          /* ✅ 見やすさを調整（お好みで） */
   color: #8b4513;
   cursor: pointer;
-  text-align: center;
-  line-height: 20px;           /* ← ✅ 中央揃え調整 */
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  line-height: 1;
+  width: auto;
+  height: auto;
+  box-shadow: none;         /* ✅ 影も不要なら */
 }
 
 /* ✅ メッセージを中央2段で自然に表示 */
