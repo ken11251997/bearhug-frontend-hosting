@@ -296,8 +296,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     socket.on("new_file", function(data) {
         console.log("✅ receive new_file event:", data);
-        // closeLoadingOverlay(); 
-        // showPopup("🔔 画像/動画が送信されました");
+        closeLoadingOverlay(); 
+        showPopup("🔔 画像/動画が送信されました");
     
         var chatBox = document.getElementById('chat-box');
         var messageDiv = document.createElement("div");
@@ -361,8 +361,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     sendFileButton.addEventListener("click", function () {
 
-        // loadingOverlay.classList.remove("hidden");
-        // loadingOverlay.style.display = "flex";
+        loadingOverlay.classList.remove("hidden");
+        loadingOverlay.style.display = "flex";
 
         let file = fileInput.files[0];
         if (!file) {
