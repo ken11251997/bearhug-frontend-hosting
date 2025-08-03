@@ -245,6 +245,27 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
         const msg = event.detail?.message || "不明なエラー";
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/chatroom/unlock_by_ad", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                room_id: room_id,
+                user_id: user_id
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                showPopup("チャットが開放されました🎉");
+                  // リスト再取得 or ページリロード
+                } else {
+                showPopup("⚠️ 開放に失敗：" + data.message);
+                }
+            })
+            .catch(err => {
+                console.error("開放エラー:", err);
+                showPopup("❌ 通信エラーが発生しました");
+            })
         closeLoadingOverlay();
         showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
     });
