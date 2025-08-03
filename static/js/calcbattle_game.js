@@ -405,10 +405,10 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify({ user_id, type: adType })
       })
       .finally(() => {
-          closeLoadingOverlay();          // ✅ ここで呼び出す
-          startGame();                    // ✅ ゲーム再開
+          closeLoadingOverlay();
+          beginGameFlow();  // ✅ 修正: startGame() → beginGameFlow()
       });
-  });
+    });
 
     window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
