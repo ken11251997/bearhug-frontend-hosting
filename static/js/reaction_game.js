@@ -349,12 +349,15 @@ function shuffle(array) {
 
 
 
+  let currentRoomId = null;  // ← グローバル変数
 
   // 📺 広告再生
   function onWatchAd(type) {
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.classList.remove("hidden");
     loadingOverlay.style.display = "flex";
+
+    currentRoomId = room_id;  // ✅ 保存しておく
 
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -392,23 +395,40 @@ function shuffle(array) {
   // });
 
   window.addEventListener("AD_WATCHED", (event) => {
-        alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-        const adType = event.detail?.type || "unknown";
-        
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+    const adType = event.detail?.type || "unknown";
+
+    if (!currentRoomId || !user_id) {
+        console.warn("room_id または user_id が未定義");
+        closeLoadingOverlay();
+        showPopup("❌ チャット開始に失敗しました");
+        return;
+    }
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/chatroom/unlock_by_ad", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
-      })
-      .finally(() => {
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.style.display = "none";
-        // startGame();
-      })
-        
-        closeLoadingOverlay();
-        // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        body: JSON.stringify({
+            room_id: currentRoomId,
+            user_id: user_id
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            showPopup("✅ チャット開始！");
+            location.reload();
+        } else {
+            showPopup("⚠️ 開放に失敗：" + data.message);
+        }
+    })
+    .catch(err => {
+        console.error("開放エラー:", err);
+        showPopup("❌ 通信エラーが発生しました");
+    })
+    .finally(() => {
+        closeLoadingOverlay(); // ✅ 確実に消す
     });
+});
 
   window.addEventListener("AD_FAILED", (event) => {
       alert("❌ AD_FAILED カスタムイベントを受信しました");
