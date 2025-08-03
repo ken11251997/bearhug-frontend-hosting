@@ -524,11 +524,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ✅ React Native WebView から送信される CustomEvent を受け取る
-    window.addEventListener("AD_WATCHED", (event) => {
-        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+
+    window.addEventListener("AD_WATCHED", async (event) => {
         const adType = event.detail?.type || "unknown";
         closeLoadingOverlay();
         showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+
+        // ✅ 実際のチャット回数のリセット
+        if (adType === "chat") {
+            try {
+                const res = await fetch(`${BACKEND_URL}/limit/recover`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        user_id: USER_ID,
+                        type: "chat"
+                    })
+                });
+                const json = await res.json();
+                console.log("✅ チャット回数リセット結果:", json);
+            } catch (err) {
+                console.error("❌ チャット回数リセット失敗:", err);
+            }
+        }
     });
 
     window.addEventListener("AD_FAILED", (event) => {
