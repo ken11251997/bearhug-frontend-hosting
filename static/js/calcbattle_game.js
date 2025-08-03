@@ -129,9 +129,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   startBtn.addEventListener("click", () => {
-    const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
-    if (bgmWin && !bgmWin.closed) {
-      bgmWin.close();
+    // const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
+    // if (bgmWin && !bgmWin.closed) {
+    //   bgmWin.close();
+    // }
+
+    // ✅ ネイティブにBGM切替を依頼（mode: "calc"）
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SWITCH_BGM",
+        mode: "calc"
+      }));
     }
 
     startBtn.disabled = true;

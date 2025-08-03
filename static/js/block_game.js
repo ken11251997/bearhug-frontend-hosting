@@ -204,6 +204,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function beginGameFlow() {
     console.log("🚀 beginGameFlow 開始"); // ← 追加
+      // ✅ 修正追加：ゲーム用のBGM再生をネイティブに指示
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: "SWITCH_BGM",
+          mode: "block"  // ← このゲーム専用のBGMモード名（App.js 側と一致させる）
+        }));
+      }
+
     openingScreen.classList.add("hidden");
     countdownText.classList.remove("hidden");
     console.log("📺 countdownText 表示中");

@@ -78,12 +78,12 @@ function preloadImages() {
 
 const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
-    const bgmWin = window.open('', 'bgmWindow'); // すでに存在していれば参照される
-    if (bgmWin && !bgmWin.closed) {
-      bgmWin.close();
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "SWITCH_BGM",
+        mode: "reaction"
+      }));
     }
-    startBtn.disabled = true;
-    decisionSound.play();
     
 
     if (!user_id) {
