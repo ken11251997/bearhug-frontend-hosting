@@ -112,17 +112,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     socket.on("ad_message", (data) => {
+        let attempts = 0;
+
         const tryShowPopup = () => {
-            if (!document.getElementById("loading-overlay").classList.contains("hidden")) {
-                setTimeout(tryShowPopup, 100);  // ローディングが消えるまで待機
+            const overlay = document.getElementById("loading-overlay");
+            if (!overlay.classList.contains("hidden") && attempts < 30) {
+                attempts++;
+                setTimeout(tryShowPopup, 100);  // 最大3秒まで待機
             } else {
+                closeLoadingOverlay(); // 念のため
                 showAdPopup({
                     message: data.type === "chat" ? "広告を見てチャット開始！" : "広告を見てマッチング開始！",
                     onWatchAd: () => onWatchAd(data.type)
                 });
             }
         };
-        tryShowPopup();  // ✅ 安全にポップアップ表示
+
+        tryShowPopup();
     });
     
     // ログインページへ
@@ -290,8 +296,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     socket.on("new_file", function(data) {
         console.log("✅ receive new_file event:", data);
-        closeLoadingOverlay(); 
-        showPopup("🔔 画像/動画が送信されました");
+        // closeLoadingOverlay(); 
+        // showPopup("🔔 画像/動画が送信されました");
     
         var chatBox = document.getElementById('chat-box');
         var messageDiv = document.createElement("div");
@@ -355,8 +361,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     sendFileButton.addEventListener("click", function () {
 
-        loadingOverlay.classList.remove("hidden");
-        loadingOverlay.style.display = "flex";
+        // loadingOverlay.classList.remove("hidden");
+        // loadingOverlay.style.display = "flex";
 
         let file = fileInput.files[0];
         if (!file) {
