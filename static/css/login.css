@@ -212,6 +212,9 @@ h1 {
 }
 
 /* ポップアップメッセージのスタイル */
+tion: fadeIn 0.3s ease-in-out;
+}
+
 .popup-message {
   position: fixed;
   top: 50%;
@@ -227,6 +230,10 @@ h1 {
   text-align: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
+
+  /* ✅ 追加: 横幅調整 */
+  min-width: 280px;
+  max-width: 320px;
 }
 
 .popup-header {
