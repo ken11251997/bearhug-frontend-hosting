@@ -584,35 +584,4 @@ h1 {
     font-family: 'Poppins', sans-serif;
 }
 
-.popup-message.persistent-popup {
-  padding-top: 32px; /* 上部余裕を追加 */
-}
-
-/* ✅ ×ボタン右上端へ配置＋枠つきスタイル */
-.popup-close-btn {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: transparent;  /* ✅ 白背景を削除 */
-  border: none;             /* ✅ 枠線を削除 */
-  border-radius: 0;         /* ✅ 丸みをなくす */
-  font-size: 18px;          /* ✅ 見やすさを調整（お好みで） */
-  color: #8b4513;
-  cursor: pointer;
-  font-weight: bold;
-  line-height: 1;
-  width: auto;
-  height: auto;
-  box-shadow: none;         /* ✅ 影も不要なら */
-}
-
-/* ✅ メッセージを中央2段で自然に表示 */
-.popup-header span {
-  display: block;
-  text-align: center;
-  white-space: pre-line; /* \n 改行を反映させる */
-  line-height: 1.6;
-  font-size: 16px;
-  padding: 0 12px;
-}
 
