@@ -492,11 +492,40 @@ document.addEventListener("DOMContentLoaded",function(){
     // });
 
     // ✅ React Native WebView から送信される CustomEvent を受け取る
-    window.addEventListener("AD_WATCHED", (event) => {
-        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+    // window.addEventListener("AD_WATCHED", (event) => {
+    //     // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+    //     const adType = event.detail?.type || "unknown";
+    //     closeLoadingOverlay();
+    //     showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+    // });
+
+
+    window.addEventListener("AD_WATCHED", async (event) => {
         const adType = event.detail?.type || "unknown";
+        const user_id = sessionStorage.getItem("user_id");
         closeLoadingOverlay();
-        showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+
+        try {
+            const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: user_id,
+                    type: adType  // "match" や "chat"
+                })
+            });
+            const json = await res.json();
+            if (json.status === "success") {
+                showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ検索'}回数が回復しました！`);
+            } else {
+                showPopup("⚠️ 回復に失敗しました：" + json.message);
+            }
+        } catch (e) {
+            console.error("❌ AD_WATCHED 回復通信エラー:", e);
+            showPopup("❌ 回復通信に失敗しました");
+        }
     });
 
     window.addEventListener("AD_FAILED", (event) => {

@@ -531,31 +531,31 @@ document.addEventListener("DOMContentLoaded", function () {
     //     showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
     // });
 
-    // window.addEventListener("AD_WATCHED", async (event) => {
-    //     const adType = event.detail?.type || "unknown";
-    //     closeLoadingOverlay();
-    //     showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+    window.addEventListener("AD_WATCHED", async (event) => {
+        const adType = event.detail?.type || "unknown";
+        closeLoadingOverlay();
+        showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
 
-    //     // ✅ 実際のチャット回数のリセット
-    //     if (adType === "chat") {
-    //         try {
-    //             const res = await fetch(`${BACKEND_URL}/limit/recover`, {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json"
-    //                 },
-    //                 body: JSON.stringify({
-    //                     user_id: USER_ID,
-    //                     type: "chat"
-    //                 })
-    //             });
-    //             const json = await res.json();
-    //             console.log("✅ チャット回数リセット結果:", json);
-    //         } catch (err) {
-    //             console.error("❌ チャット回数リセット失敗:", err);
-    //         }
-    //     }
-    // });
+        // ✅ 実際のチャット回数のリセット
+        if (adType === "chat") {
+            try {
+                const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        user_id: user_id,
+                        type: adType
+                    })
+                });
+                const json = await res.json();
+                console.log("✅ チャット回数リセット結果:", json);
+            } catch (err) {
+                console.error("❌ チャット回数リセット失敗:", err);
+            }
+        }
+    });
 
     window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
