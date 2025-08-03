@@ -15,6 +15,24 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(Partnername)
     console.log(user_id)
     console.log(other_mbti)
+    const mbtiNames = {
+        "INTJ": "建築家",
+        "INTP": "論理学者",
+        "ENTJ": "指揮官",
+        "ENTP": "討論者",
+        "INFJ": "提唱者",
+        "INFP": "仲介者",
+        "ENFJ": "主人公",
+        "ENFP": "運動家",
+        "ISTJ": "管理者",
+        "ISFJ": "擁護者",
+        "ESTJ": "幹部",
+        "ESFJ": "領事",
+        "ISTP": "巨匠",
+        "ISFP": "冒険家",
+        "ESTP": "起業家",
+        "ESFP": "エンターテイナー"
+        };
 
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.classList.remove("hidden");
@@ -57,10 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatMbti = document.getElementById("chat-mbti");
     console.log("if")
     if (chatTitle && chatMbti) {
-        // chatTitle.innerText = `${Partnername}`;
-        // chatMbti.innerText = ` ${other_mbti}`;
-        chatTitle.innerHTML = `<span class='chat-name'>${Partnername}</span> <span class='chat-mbti'>(${other_mbti})</span>`;
-    } else {
+    const mbtiLabel = mbtiNames[other_mbti] || "";
+    chatTitle.innerHTML = `
+      <span class='chat-name'>${Partnername}</span> 
+      <span class='chat-mbti'>(${other_mbti}${mbtiLabel ? " - " + mbtiLabel : ""})</span>
+        `;
+    } 
+    else {
         console.log("⚠️ `chat-title` または `chat-mbti` の要素が見つかりません！");
     }
 
