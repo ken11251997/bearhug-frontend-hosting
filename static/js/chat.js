@@ -539,7 +539,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ 実際のチャット回数のリセット
         if (adType === "chat") {
             try {
-                const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/limit/recover", {
+                const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
