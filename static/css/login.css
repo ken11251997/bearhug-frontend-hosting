@@ -584,4 +584,47 @@ h1 {
     font-family: 'Poppins', sans-serif;
 }
 
+/* ✅ ポップアップを中央表示 */
+.popup-message.persistent-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ✅ 上段に×、中段にメッセージを表示するための構造 */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 8px;
+}
+
+/* ✅ メッセージを中央寄せ */
+.popup-header span {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: #8b4513;
+  font-weight: bold;
+}
+
+/* ✅ ×ボタンを右上に設置 */
+.popup-close-btn {
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  color: #8b4513;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* ✅ OKボタンを中央に */
+.popup-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
