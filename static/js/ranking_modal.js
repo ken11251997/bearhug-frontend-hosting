@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const isScoreBased = game_name === "block_game" || game_name === "calcbattle_game";
+    const isScoreBased = game_name === "block_game";
 
     entries.forEach(entry => {
       const type = entry.mbti || "???";
