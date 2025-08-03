@@ -381,6 +381,13 @@ document.addEventListener("DOMContentLoaded",function(){
                     
 
     function showPopup(message, callback = null) {
+        // オブジェクトで渡された場合の対応を追加
+        if (typeof message === "object" && message !== null) {
+            const actualMessage = message.message || "メッセージがありません";
+            const onWatchAd = message.onWatchAd || null;
+            return showPopup(actualMessage, onWatchAd);
+        }
+
         // 既存ポップアップ・オーバーレイを削除
         document.querySelectorAll(".popup-message, .popup-overlay").forEach(e => e.remove());
 
