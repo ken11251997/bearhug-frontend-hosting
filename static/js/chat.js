@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //         });
     //     }
     // });
-    
+
     socket.on("ad_message", (data) => {
         const tryShowPopup = () => {
             if (!document.getElementById("loading-overlay").classList.contains("hidden")) {
@@ -424,7 +424,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const popup = document.createElement("div");
         popup.className = "popup-message";
-        popup.innerText = message;
+        // popup.innerText = message;
+        popup.innerHTML = `
+            <div class="popup-top-row">
+                <button class="popup-close-btn">✕</button>
+            </div>
+            <div class="popup-middle-row">
+                <span class="popup-message-text">${message}</span>
+            </div>
+            <div class="popup-bottom-row">
+                <button class="popup-ok-btn">OK</button>
+            </div>
+            `;
         document.body.appendChild(popup);
         console.log("funshow")
         
