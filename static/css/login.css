@@ -211,7 +211,6 @@ h1 {
   }
 }
 
-/* ポップアップメッセージのスタイル */
 /* .popup-message {
   position: fixed;
   top: 50%;
@@ -227,27 +226,73 @@ h1 {
   text-align: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
+
+  
+  min-width: 280px;
+  max-width: 320px;
 } */
 
 .popup-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  color: #8b4513;
-  font-weight: bold;
-  text-align: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
-
-  /* ✅ 追加: 横幅調整 */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 20px 16px;
   min-width: 280px;
   max-width: 320px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-top-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.popup-close-btn {
+  font-size: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #8b4513;
+  font-weight: bold;
+}
+
+.popup-middle-row {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.popup-message-text {
+  font-size: 16px;
+  color: #8b4513;
+  white-space: pre-line;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+.popup-bottom-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.popup-ok-btn {
+  background: #8b4513;
+  color: white;
+  border: none;
+  padding: 8px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup-ok-btn:hover {
+  background: #a0522d;
 }
 
 .popup-header {
