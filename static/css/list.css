@@ -63,7 +63,7 @@
   }
   
   .chat-list li {
-    padding: 14px 16px;
+    /* padding: 14px 16px; */
     background-color: #fff8e6;
     border-radius: 12px;
     margin-bottom: 12px;
@@ -302,8 +302,8 @@
 }
 
 .bear-icon {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36x;
   object-fit: contain;
   margin: 0 4px;
   border-radius: 50%;

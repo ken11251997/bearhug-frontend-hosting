@@ -96,19 +96,33 @@ document.addEventListener("DOMContentLoaded", function () {
         showPopup(data.message); // or 任意のUI表示
     });
 
+    // socket.on("ad_message", (data) => {
+    //     if (data.type == "chat") {
+    //         showAdPopup({
+    //             message: "広告を見てチャット開始！",
+    //             onWatchAd: () => onWatchAd("chat")  // ✅ type指定
+    //         });
+    //     }
+    //     if (data.type == "match") { 
+    //         showAdPopup({
+    //             message: "広告を見てマッチング開始！",
+    //             onWatchAd: () => onWatchAd("match")  // ✅ type指定
+    //         });
+    //     }
+    // });
+    
     socket.on("ad_message", (data) => {
-        if (data.type == "chat") {
-            showAdPopup({
-                message: "広告を見てチャット開始！",
-                onWatchAd: () => onWatchAd("chat")  // ✅ type指定
-            });
-        }
-        if (data.type == "match") { 
-            showAdPopup({
-                message: "広告を見てマッチング開始！",
-                onWatchAd: () => onWatchAd("match")  // ✅ type指定
-            });
-        }
+        const tryShowPopup = () => {
+            if (!document.getElementById("loading-overlay").classList.contains("hidden")) {
+                setTimeout(tryShowPopup, 100);  // ローディングが消えるまで待機
+            } else {
+                showAdPopup({
+                    message: data.type === "chat" ? "広告を見てチャット開始！" : "広告を見てマッチング開始！",
+                    onWatchAd: () => onWatchAd(data.type)
+                });
+            }
+        };
+        tryShowPopup();  // ✅ 安全にポップアップ表示
     });
     
     // ログインページへ
