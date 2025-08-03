@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
                 if (user.username === "？？？") {
                     listItem.onclick = () => {
-                        showPopup("相手からマッチされています！\n広告を見てチャット開始✨");
+                        showPopup("相手からマッチ！\n広告を見てチャット開始✨");
                         try {
                             // ✅ React Native 側の AsyncStorage に room_id を保存するよう命令
                             if (window.ReactNativeWebView) {
