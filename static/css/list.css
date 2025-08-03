@@ -302,8 +302,8 @@
 }
 
 .bear-icon {
-  width: 36px;
-  height: 36x;
+  width: 48px;         /* ← 横幅を拡大 */
+  height: 48px; 
   object-fit: contain;
   margin: 0 4px;
   border-radius: 50%;
