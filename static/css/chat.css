@@ -487,3 +487,8 @@ button:hover {
 .popup-watch-ad-btn:hover {
   background: linear-gradient(135deg, #a0522d, #8b4513);
 }
+
+.mbti-purple { color: #9b59b6; } /* INTJ, INFJ, ENTJ, ENFJ */
+.mbti-green  { color: #2ecc71; } /* INTP, INFP, ENTP, ENFP */
+.mbti-blue   { color: #3498db; } /* ISTP, ISFP, ESTP, ESFP */
+.mbti-yellow { color: #f1c40f; } /* ISTJ, ISFJ, ESTJ, ESFJ */

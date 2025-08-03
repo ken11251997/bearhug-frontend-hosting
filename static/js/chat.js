@@ -34,6 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
         "ESFP": "エンターテイナー"
         };
 
+
+    function getMbtiColorClass(mbti) {
+    const purple = ["INTJ", "INFJ", "ENTJ", "ENFJ"];
+    const green = ["INTP", "INFP", "ENTP", "ENFP"];
+    const blue = ["ISTP", "ISFP", "ESTP", "ESFP"];
+    const yellow = ["ISTJ", "ISFJ", "ESTJ", "ESFJ"];
+
+    if (purple.includes(mbti)) return "mbti-purple";
+    if (green.includes(mbti)) return "mbti-green";
+    if (blue.includes(mbti)) return "mbti-blue";
+    if (yellow.includes(mbti)) return "mbti-yellow";
+    return "";
+    }
+
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.classList.remove("hidden");
     loadingOverlay.style.display = "flex";
@@ -75,12 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatMbti = document.getElementById("chat-mbti");
     console.log("if")
     if (chatTitle && chatMbti) {
-    const mbtiLabel = mbtiNames[other_mbti] || "";
-    chatTitle.innerHTML = `
-      <span class='chat-name'>${Partnername}</span> 
-      <span class='chat-mbti'>(${other_mbti}${mbtiLabel ? " - " + mbtiLabel : ""})</span>
+        const mbtiLabel = mbtiNames[other_mbti] || "";
+        const colorClass = getMbtiColorClass(other_mbti);
+        chatTitle.innerHTML = `
+        <span class='chat-name'>${Partnername}</span>
         `;
-    } 
+        chatMbti.className = `chat-mbti ${colorClass}`;
+        chatMbti.textContent = `(${other_mbti} - ${mbtiLabel})`;
+    }
     else {
         console.log("⚠️ `chat-title` または `chat-mbti` の要素が見つかりません！");
     }
