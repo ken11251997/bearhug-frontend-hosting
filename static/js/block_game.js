@@ -293,41 +293,45 @@ document.addEventListener("DOMContentLoaded", () => {
     hardnessMap.sort(() => Math.random() - 0.5);
 
     // アイテム配置位置（3つ）
+    const dokuroCount = Math.min(stage, 5);  // 最大5個まで
+
+// アイテムを全体で4つ＋ドクロCount個にする（上限は totalBricks に応じて）
+  const totalItemCount = Math.min(3 + dokuroCount, totalBricks);
     const itemIndices = new Set();
-while (itemIndices.size < 4) {
-  itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
-}
-
-  const dokuroIndex = [...itemIndices][Math.floor(Math.random() * 4)]; // ✅ 1つをドクロに
-
-  let index = 0;
-  for (let c = 0; c < brickColumnCount; c++) {
-    bricks[c] = [];
-    for (let r = 0; r < brickRowCount; r++) {
-      const hardness = hardnessMap[index];
-      const isItem = itemIndices.has(index);
-      let itemType = null;
-
-      if (isItem) {
-        if (index === dokuroIndex) {
-          itemType = "dokuro"; // ✅ ドクロ割り当て
-        } else {
-          const types = ["ball", "blast"];
-          itemType = types[Math.floor(Math.random() * types.length)];
-        }
-      }
-
-      bricks[c][r] = {
-        x: 0,
-        y: 0,
-        status: 1,
-        hardness,
-        isItem,
-        itemType
-      };
-      index++;
+    while (itemIndices.size < totalItemCount) {
+      itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
     }
-  }
+
+    const dokuroIndices = [...itemIndices].sort(() => Math.random() - 0.5).slice(0, dokuroCount);
+
+    let index = 0;
+    for (let c = 0; c < brickColumnCount; c++) {
+      bricks[c] = [];
+      for (let r = 0; r < brickRowCount; r++) {
+        const hardness = hardnessMap[index];
+        const isItem = itemIndices.has(index);
+        let itemType = null;
+
+        if (isItem) {
+          if (dokuroIndices.includes(index)) {
+            itemType = "dokuro";
+          } else {
+            const types = ["ball", "blast"];
+            itemType = types[Math.floor(Math.random() * types.length)];
+          }
+        }
+
+        bricks[c][r] = {
+          x: 0,
+          y: 0,
+          status: 1,
+          hardness,
+          isItem,
+          itemType
+        };
+        index++;
+      }
+    }
   }
 
 
