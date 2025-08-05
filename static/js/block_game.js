@@ -294,9 +294,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // アイテム配置位置（3つ）
     const itemIndices = new Set();
-  while (itemIndices.size < 4) {
-    itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
-  }
+while (itemIndices.size < 4) {
+  itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
+}
 
   const dokuroIndex = [...itemIndices][Math.floor(Math.random() * 4)]; // ✅ 1つをドクロに
 
@@ -327,7 +327,8 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       index++;
     }
-}}
+  }
+  }
 
 
   function createExplosion(x, y) {
@@ -508,6 +509,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         fallingItems.splice(i, 1); // アイテム削除
       }
+
+    }
 
     collisionDetection();
 
