@@ -33,6 +33,7 @@ html, body {
     justify-content: center;  /* ← 中央寄せ */
     align-items: center;
     width: 100%;
+    position: relative;
     /* margin-bottom: 10px; */
 
     /* ✅ 追加部分 */
@@ -43,10 +44,16 @@ html, body {
     z-index: 10;
 }
 
-#chat-info {
+
+
+#back-btn {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 10px;
+  z-index: 2;
+}
+
+#chat-info {
+  position: relative;
   text-align: center;
   z-index: 1;
 }
