@@ -29,7 +29,8 @@ html, body {
 
 .chat-header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;  /* ← 中央寄せ */
     align-items: center;
     width: 100%;
     /* margin-bottom: 10px; */
@@ -42,10 +43,14 @@ html, body {
     z-index: 10;
 }
 
-.chat-info {
-    text-align: center;
-    margin-top: 5px;
+#chat-info {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 1;
 }
+
 
 .chat-name {
     font-size: 18px;
