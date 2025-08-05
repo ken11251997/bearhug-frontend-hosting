@@ -492,3 +492,8 @@ button:hover {
 .mbti-green  { color: #2ecc71; } /* INTP, INFP, ENTP, ENFP */
 .mbti-blue   { color: #3498db; } /* ISTP, ISFP, ESTP, ESFP */
 .mbti-yellow { color: #f1c40f; } /* ISTJ, ISFJ, ESTJ, ESFJ */
+
+
+#leave-btn {
+  display: none;
+}
