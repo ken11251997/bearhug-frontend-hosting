@@ -121,10 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
   const itemImages = {
     ball: new Image(),
-    blast: new Image()
+    blast: new Image(),
+    dokuro: new Image() // ✅ 追加
   };
   itemImages.ball.src = `${basePath}/static/img/item_ball.png`;
   itemImages.blast.src = `${basePath}/static/img/item_blast.png`;
+  itemImages.dokuro.src = `${basePath}/static/img/dokuro.png`; // ✅ 追加
     
   // if (b.isItem) {
   //   ctx.drawImage(itemImages[b.itemType], brickX, brickY, brickWidth, brickHeight);
@@ -292,30 +294,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // アイテム配置位置（3つ）
     const itemIndices = new Set();
-    while (itemIndices.size < 3) {
-      itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
-    }
-
-    let index = 0;
-    for (let c = 0; c < brickColumnCount; c++) {
-      bricks[c] = [];
-      for (let r = 0; r < brickRowCount; r++) {
-        const hardness = hardnessMap[index];
-        const isItem = itemIndices.has(index);
-        const types = ["ball", "blast"];
-        const itemType = types[Math.floor(Math.random() * types.length)];
-        bricks[c][r] = {
-          x: 0,
-          y: 0,
-          status: 1,
-          hardness,
-          isItem,
-          itemType: isItem ? itemType : null
-        };
-        index++;
-      }
-    }
+  while (itemIndices.size < 4) {
+    itemIndices.add(Math.floor(Math.random() * hardnessMap.length));
   }
+
+  const dokuroIndex = [...itemIndices][Math.floor(Math.random() * 4)]; // ✅ 1つをドクロに
+
+  let index = 0;
+  for (let c = 0; c < brickColumnCount; c++) {
+    bricks[c] = [];
+    for (let r = 0; r < brickRowCount; r++) {
+      const hardness = hardnessMap[index];
+      const isItem = itemIndices.has(index);
+      let itemType = null;
+
+      if (isItem) {
+        if (index === dokuroIndex) {
+          itemType = "dokuro"; // ✅ ドクロ割り当て
+        } else {
+          const types = ["ball", "blast"];
+          itemType = types[Math.floor(Math.random() * types.length)];
+        }
+      }
+
+      bricks[c][r] = {
+        x: 0,
+        y: 0,
+        status: 1,
+        hardness,
+        isItem,
+        itemType
+      };
+      index++;
+    }
+}}
 
 
   function createExplosion(x, y) {
@@ -457,6 +469,9 @@ document.addEventListener("DOMContentLoaded", () => {
         case "blast":
           itemSize = 32;
           break;
+        case "dokuro":
+          itemSize = 36; // ✅ ドクロは少し大きめ
+          break;
         default:
           itemSize = 20;
       }
@@ -470,9 +485,8 @@ document.addEventListener("DOMContentLoaded", () => {
         item.x < paddleX + paddleWidth
       ) {
         if (item.type === "ball") {
-          balls.push({ x: item.x, y: item.y, dx: 3, dy: -3 }); // ★ボール増加
+          balls.push({ x: item.x, y: item.y, dx: 3, dy: -3 });
         } else if (item.type === "blast") {
-          // ★爆弾：全ブロックに1ダメージ
           triggerFullScreenExplosion();
           bricks.flat().forEach(b => {
             if (b.status > 0) {
@@ -483,12 +497,17 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             }
           });
+        } else if (item.type === "dokuro") {
+          console.log("☠️ ドクロ取得 → 即ゲームオーバー");
+          clearInterval(timerInterval);
+          showResult(score);
+          GOSound.currentTime = 0;
+          GOSound.play();
+          return; // ゲーム強制終了
         }
-        fallingItems.splice(i, 1); // アイテムを削除
-      } else if (item.y > canvas.height) {
-        fallingItems.splice(i, 1); // 落下しきったら削除
+
+        fallingItems.splice(i, 1); // アイテム削除
       }
-    }
 
     collisionDetection();
 
@@ -653,4 +672,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     }
 
-});
+}});
