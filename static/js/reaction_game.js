@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
   if (!user_id) {
-    alert("⚠️ user_id が取得できません。スコアが保存されません。URLを確認してください。");
+    // alert("⚠️ user_id が取得できません。スコアが保存されません。URLを確認してください。");
     return;
   }
 
@@ -395,7 +395,7 @@ function shuffle(array) {
   // });
 
   window.addEventListener("AD_WATCHED", (event) => {
-        alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
         const adType = event.detail?.type || "unknown";
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
