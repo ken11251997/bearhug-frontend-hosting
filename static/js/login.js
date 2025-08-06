@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded",function(){
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
                 showPopup({
-                    message: "広告を見て\nマッチング開始！",
+                    message: "広告を見て<br>マッチング開始！",
                     onWatchAd: () => onWatchAd("match")  // ✅ type指定
                 });
             } else if (data.status === "error" && data.message === "Nobudy") {
