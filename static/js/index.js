@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded",function(){
 
-
-
     let receivedFcmToken = null;
     // 🔽 App.js（ネイティブ）から FCM トークンを受け取る
     window.addEventListener("FCM_TOKEN_RECEIVED", (event) => {
