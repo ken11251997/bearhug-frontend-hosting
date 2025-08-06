@@ -53,23 +53,31 @@ html, body {
 }
 
 #chat-info {
-  position: relative;
+  display: flex;
+  flex-direction: row;  /* 横並びにする */
+  align-items: center;  /* 縦位置揃え */
+  justify-content: center; /* 中央寄せ */
+  gap: 8px; /* 名前とMBTIの間にスペース */
   text-align: center;
+  position: relative;
   z-index: 1;
 }
 
-
 .chat-name {
-    font-size: 18px;
-    font-weight: bold;
-
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .chat-mbti {
+  font-size: 14px;
+  color: #666;
+}
+
+/* .chat-mbti {
     font-size: 14px;
     color: #666;
     margin-left: 5px;
-}
+} */
 
 #chat-container {
     flex-grow: 1;
