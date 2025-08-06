@@ -40,6 +40,13 @@
     setTimeout(() => {
         overlay.style.display = "none";
     }, 1000);
+    const loadingOverlay = document.getElementById("loading-overlay");
+    if (loadingOverlay) {
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+    }
+    }, 1000);
+
 
     // React Native 側の BGM 指示
     if (window.ReactNativeWebView) {
