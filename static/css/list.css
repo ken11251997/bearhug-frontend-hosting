@@ -238,11 +238,20 @@
     gap: 10px;
   }
   
-  .chat-left-group {
+  /* .chat-left-group {
     display: flex;
     align-items: center;
     gap: 6px;
-  }
+  } */
+
+  .chat-left-group {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* ← スペースを少し狭くする */
+  flex-shrink: 1;
+  flex-grow: 1;
+  min-width: 0; /* ← テキスト折り返し防止 */
+}
   
   /* 名前 */
   .chat-main-row {
@@ -309,7 +318,9 @@
   border-radius: 50%;
   background-color: #fff8e6;
   border: 1px solid #d2b48c;
+  flex-shrink: 0; /* ← アイコンだけ幅固定 */
 }
+
 
 .chat-list-item.has-unread {
   background-color: #fff3cd; /* 明るい黄色系 */
