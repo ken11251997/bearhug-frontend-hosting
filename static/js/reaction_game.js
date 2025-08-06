@@ -99,8 +99,11 @@ startBtn.addEventListener("click", () => {
     })
         .then(async res => {
         if (res.status === 429) {
-            alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
-            onWatchAd("game"); // ← game_name に合わせて変更
+            // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+            showPopup("広告を見てあそぶ！", () => {
+                        onWatchAd("game");
+                    });
+            // onWatchAd("game"); 
             return;
         }
         const data = await res.json();
@@ -424,4 +427,23 @@ function shuffle(array) {
         loadingOverlay.style.display = "none";
     }
     }
+
+  function showPopup(message,callback) {
+      // Remove existing popups
+      document.querySelectorAll(".popup-message").forEach(p => p.remove());
+      console.log(message)
+      const popup = document.createElement("div");
+      popup.className = "popup-message";
+      popup.innerText = message;
+      console.log(popup)
+      document.body.appendChild(popup);
+      
+      setTimeout(() => {
+          popup.classList.add("fade-out");
+          setTimeout(() => {
+              popup.remove();
+              if (callback) callback();
+          }, 100);
+      }, 750);
+  }
 });

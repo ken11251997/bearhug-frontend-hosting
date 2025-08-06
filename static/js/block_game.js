@@ -184,8 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(async res => {
       if (res.status === 429) {
-        alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
-        onWatchAd("game");
+        // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
+        showPopup("広告を見てあそぶ！", () => {
+                        onWatchAd("game");
+                    });
+        // onWatchAd("game");
         return;
       }
       const data = await res.json();
@@ -629,12 +632,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => {
         console.error("広告解除エラー:", err);
-        alert("通信エラー（広告）: " + err.message);
+        // alert("通信エラー（広告）: " + err.message);
         })
         .finally(() => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
-        alert("gameflow"); // ✅ 確実に表示される
+        // alert("gameflow"); // ✅ 確実に表示される
         beginGameFlow();
         });
     }
@@ -677,6 +680,24 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
     }
+    }
+  function showPopup(message,callback) {
+        // Remove existing popups
+        document.querySelectorAll(".popup-message").forEach(p => p.remove());
+        console.log(message)
+        const popup = document.createElement("div");
+        popup.className = "popup-message";
+        popup.innerText = message;
+        console.log(popup)
+        document.body.appendChild(popup);
+        
+        setTimeout(() => {
+            popup.classList.add("fade-out");
+            setTimeout(() => {
+                popup.remove();
+                if (callback) callback();
+            }, 100);
+        }, 750);
     }
 
 });
