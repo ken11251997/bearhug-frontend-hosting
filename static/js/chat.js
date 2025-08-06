@@ -592,7 +592,8 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("AD_WATCHED", async (event) => {
         const adType = event.detail?.type || "unknown";
         closeLoadingOverlay();
-        showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+        showPopup(`メッセージができるよ！`);
         // alert("🎯 API呼び出し開始: 回復タイプ =", adType, "ユーザーID =", user_id);
         // ✅ 実際のチャット回数のリセット
         if (adType === "chat") {

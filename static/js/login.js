@@ -529,7 +529,8 @@ document.addEventListener("DOMContentLoaded",function(){
             });
             const json = await res.json();
             if (json.status === "success") {
-                showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ検索'}回数が回復しました！`);
+                // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ検索'}回数が回復しました！`);
+                showPopup(`マッチング回数が<br>回復しました！`);
                 closeLoadingOverlay();
             } else {
                 showPopup("⚠️ 回復に失敗しました：" );
