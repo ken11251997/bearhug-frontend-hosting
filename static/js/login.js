@@ -554,5 +554,13 @@ document.addEventListener("DOMContentLoaded",function(){
         }
     );
 
+    function closeLoadingOverlay() {
+        const loadingOverlay = document.getElementById("loading-overlay");
+        if (loadingOverlay) {
+            loadingOverlay.classList.add("hidden");
+            loadingOverlay.style.display = "none";
+        }
+    }
+
 });
 
