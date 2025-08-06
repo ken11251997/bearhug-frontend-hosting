@@ -67,19 +67,17 @@ document.addEventListener("DOMContentLoaded",function(){
         })
         .then(response => response.json())
         .then(result => {
-            loadingOverlay.style.display = "none";
-            console.log("登録結果:", result);
+                loadingOverlay.style.display = "none";
+                console.log("登録結果:", result);
 
-            if (result.status === "success") {
-                showPopup("登録成功！", () => {
-                    // location.reload();
-                    window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
-                });
-            } else {
-                showPopup(`❌ 登録失敗`);
-            }
-        })
-        })
+                if (result.status === "success") {
+                    showPopup("登録成功！", () => {
+                        location.reload();
+                    });
+                } else {
+                    showPopup(`❌ 登録失敗: ${result.message}`);
+                }
+            })
         .catch(error => {
             // loadingOverlay.classList.add("hidden");
             loadingOverlay.style.display = "none";
