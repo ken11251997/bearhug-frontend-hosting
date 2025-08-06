@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded",function(){
         console.log(fcmToken)
    
         // ✅ パスワードの長さをチェック（5文字未満なら登録不可）
-        if (password.length < 5) {
-            showPopup("パスワードは5文字以上に!");
-            return;  // 登録処理中断
-        }
+        // if (password.length < 5) {
+        //     showPopup("パスワードは5文字以上に!");
+        //     return;  
+        // }
             // alert("fcm_token: " + fcmToken);
 
         const data ={

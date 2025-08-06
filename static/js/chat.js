@@ -416,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (file.size > maxSizeMB * 1024 * 1024) {
             console.log(file.size)
-            alert(`${isImage ? '画像' : '動画'}のサイズは${maxSizeMB}MB以下にしてください`);
+            showPopup(`${isImage ? '画像' : '動画'}のサイズは${maxSizeMB}MB以下にしてください`);
             fileInput.value = ""; // クリア
             closeLoadingOverlay(); // ✅ サイズ超過時にもローディングを閉じる
             return;
@@ -593,7 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const adType = event.detail?.type || "unknown";
         closeLoadingOverlay();
         showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-        alert("🎯 API呼び出し開始: 回復タイプ =", adType, "ユーザーID =", user_id);
+        // alert("🎯 API呼び出し開始: 回復タイプ =", adType, "ユーザーID =", user_id);
         // ✅ 実際のチャット回数のリセット
         if (adType === "chat") {
             try {
