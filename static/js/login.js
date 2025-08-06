@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded",function(){
             } else if (data.status === "error" && data.message === "matching limit exceeded") {
                 loadingOverlay.style.display = "none";
                 showPopup({
-                    message: "広告を見てマッチング開始！",
+                    message: "広告を見て\nマッチング開始！",
                     onWatchAd: () => onWatchAd("match")  // ✅ type指定
                 });
             } else if (data.status === "error" && data.message === "Nobudy") {
@@ -530,8 +530,10 @@ document.addEventListener("DOMContentLoaded",function(){
             const json = await res.json();
             if (json.status === "success") {
                 showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ検索'}回数が回復しました！`);
+                closeLoadingOverlay();
             } else {
-                showPopup("⚠️ 回復に失敗しました：" + json.message);
+                showPopup("⚠️ 回復に失敗しました：" );
+                closeLoadingOverlay();
             }
         } catch (e) {
             console.error("❌ AD_WATCHED 回復通信エラー:", e);
