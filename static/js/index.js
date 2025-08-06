@@ -64,7 +64,11 @@ document.addEventListener("DOMContentLoaded",function(){
             // loadingOverlay.classList.add("hidden");
             loadingOverlay.style.display = "none";
             console.log("登録結果:", result);
-            showPopup(result.message, () => {
+            // showPopup(result.message, () => {
+            //     location.reload();
+            // });
+            showPopup("登録成功！", () => {
+                alert("seikozane")
                 location.reload();
             });
         })
@@ -141,7 +145,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
                 // loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
-                showPopup("Login success", () => {
+                showPopup("ログイン成功！", () => {
                     window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                     localStorage.setItem("subs", result.subs);
                     console.log("✅ 遷移コード実行完了");
@@ -162,8 +166,9 @@ document.addEventListener("DOMContentLoaded",function(){
                 // alert("Error!:"+ result.message);
                 // loadingOverlay.classList.add("hidden");
                 loadingOverlay.style.display = "none";
-                showPopup("Error!:"+ result.message);
-            }
+            //     showPopup("Error!:"+ result.message);
+            showPopup("ユーザ名・パスワードが異なります");
+             }
         })
         .catch(error =>{
             loadingOverlay.classList.add("hidden");

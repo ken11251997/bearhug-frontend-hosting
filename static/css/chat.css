@@ -38,7 +38,7 @@ html, body {
 
     /* ✅ 追加部分 */
     background-color: #fff4a8;
-    padding: 0px 10px;
+    padding: 15px 10px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     border-bottom: 1px solid #ddd;
     z-index: 10;
