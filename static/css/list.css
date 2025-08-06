@@ -148,7 +148,7 @@
 
   
   .chat-list-item {
-    padding: 12px;
+    padding: 6px;
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #fffef5;
@@ -314,7 +314,7 @@
   width: 48px;         /* ← 横幅を拡大 */
   height: 48px; 
   object-fit: contain;
-  margin: 0 4px;
+  margin: 0 2px;
   border-radius: 50%;
   background-color: #fff8e6;
   border: 1px solid #d2b48c;
