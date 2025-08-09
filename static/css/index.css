@@ -206,6 +206,11 @@ footer {
   animation: fadeIn 0.3s ease-in-out;
 }
 
+.popup-message {
+    max-width: 90%;  /* 80% → 90% に変更 */
+    padding: 15px 30px; /* 横の余白も増やすと広く見える */
+}
+
 .fade-out {
   animation: fadeOut 1s ease-in-out forwards;
 }
