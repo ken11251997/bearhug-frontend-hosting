@@ -184,13 +184,14 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(async res => {
       if (res.status === 429) {
-        // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
         showPopup("広告を見て\nあそぶ！", () => {
-                        onWatchAd("game");
-                    });
-        // onWatchAd("game");
+          console.log("▶ 広告視聴リクエスト（429経路）");
+          openLoadingOverlay("🎬 広告読み込み中…");
+          onWatchAd("game"); // ← 必ずオーバーレイ表示後に呼ぶ
+        });
         return;
       }
+
       const data = await res.json();
       if (data.show_ad) {
         onWatchAd("game");
@@ -612,8 +613,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function onWatchAd(type) {
     const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.classList.remove("hidden");
-    loadingOverlay.style.display = "flex";
+    // loadingOverlay.classList.remove("hidden");
+    // loadingOverlay.style.display = "flex";
+    openLoadingOverlay("🎬 広告再生中…"); // ←【変更】共通関数で確実に表示
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -658,8 +660,13 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(() => {
       console.log("✅ リミット回復成功 → ゲーム開始");
-      closeLoadingOverlay();      // ✅ ローディング画面解除
-      beginGameFlow();            // ✅ ゲーム開始 ← ここが抜けていた
+      // closeLoadingOverlay();      
+      // beginGameFlow();            
+      openLoadingOverlay("✅ 回復完了！ゲーム開始…");
+      setTimeout(() => {
+        closeLoadingOverlay();    // ✨ 演出しつつ確実に解除
+        beginGameFlow();          // ▶ スタート
+      }, 300);
     })
     .catch(err => {
       console.error("広告解除エラー:", err);
@@ -674,30 +681,48 @@ document.addEventListener("DOMContentLoaded", () => {
       // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
   });
 
-  function closeLoadingOverlay() {
-    const loadingOverlay = document.getElementById("loading-overlay");
-    if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.style.display = "none";
-    }
-    }
-  function showPopup(message,callback) {
-        // Remove existing popups
-        document.querySelectorAll(".popup-message").forEach(p => p.remove());
-        console.log(message)
-        const popup = document.createElement("div");
-        popup.className = "popup-message";
-        popup.innerText = message;
-        console.log(popup)
-        document.body.appendChild(popup);
-        
-        setTimeout(() => {
-            popup.classList.add("fade-out");
-            setTimeout(() => {
-                popup.remove();
-                if (callback) callback();
-            }, 100);
-        }, 750);
-    }
+  function openLoadingOverlay(msg) {
+    const el = document.getElementById("loading-overlay");
+    if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
+    // オーバーレイ内にメッセージ欄があれば更新（任意）
+    const textEl = el.querySelector(".loading-text");
+    if (textEl && msg) textEl.textContent = msg;
+    el.classList.remove("hidden");
+    el.style.display = "flex";
+    console.log("🌀 OPEN LoadingOverlay:", msg || "");
+  }
 
+  function closeLoadingOverlay() {
+    const el = document.getElementById("loading-overlay");
+    if (!el) return;
+    if (!el.classList.contains("hidden")) {
+      el.classList.add("hidden");
+    }
+    el.style.display = "none";
+    console.log("✅ CLOSE LoadingOverlay");
+  }
+
+
+  function showPopup(message, callback) {
+    // 既存ポップアップを削除
+    document.querySelectorAll(".popup-message").forEach(p => p.remove());
+    console.log(message);
+
+    const popup = document.createElement("div");
+    popup.className = "popup-message";
+
+    // ✅ ここを innerText → innerHTML に変更
+    // ✅ ついでに \n を <br> に変換（"広告を見て\nあそぶ！" もOK）
+    popup.innerHTML = String(message).replace(/\n/g, "<br>");
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.classList.add("fade-out");
+      setTimeout(() => {
+        popup.remove();
+        if (callback) callback();
+      }, 100);
+    }, 750);
+  }
 });
