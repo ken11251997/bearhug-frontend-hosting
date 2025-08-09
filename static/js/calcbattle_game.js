@@ -159,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.status === 429) {
             // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
             showPopup("広告を見て\nあそぶ!", () => {
+              openLoadingOverlay("🎬 広告読み込み中…");
                         onWatchAd("game");
                     });
             // onWatchAd("game"); 
@@ -421,13 +422,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
 
-    function closeLoadingOverlay() {
-      const loadingOverlay = document.getElementById("loading-overlay");
-      if (loadingOverlay) {
-          loadingOverlay.classList.add("hidden");
-          loadingOverlay.style.display = "none";
-          console.log("🔻 ローディングオーバーレイを強制的に非表示化");
-      }
+   
+  function openLoadingOverlay(msg) {
+    const el = document.getElementById("loading-overlay");
+    if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
+    // オーバーレイ内にメッセージ欄があれば更新（任意）
+    const textEl = el.querySelector(".loading-text");
+    if (textEl && msg) textEl.textContent = msg;
+    el.classList.remove("hidden");
+    el.style.display = "flex";
+    console.log("🌀 OPEN LoadingOverlay:", msg || "");
+  }
+
+  function closeLoadingOverlay() {
+    const el = document.getElementById("loading-overlay");
+    if (!el) return;
+    if (!el.classList.contains("hidden")) {
+      el.classList.add("hidden");
+    }
+    el.style.display = "none";
+    console.log("✅ CLOSE LoadingOverlay");
   }
 
   function showPopup(message, callback) {
