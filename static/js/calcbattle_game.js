@@ -420,30 +420,36 @@ document.addEventListener("DOMContentLoaded", () => {
         // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
     });
     
-    function closeLoadingOverlay() {
-    const loadingOverlay = document.getElementById("loading-overlay");
-    if (loadingOverlay && !loadingOverlay.classList.contains("hidden")) {
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.style.display = "none";
-    }
-    }
 
-  function showPopup(message,callback) {
-        // Remove existing popups
-        document.querySelectorAll(".popup-message").forEach(p => p.remove());
-        console.log(message)
-        const popup = document.createElement("div");
-        popup.className = "popup-message";
-        popup.innerText = message;
-        console.log(popup)
-        document.body.appendChild(popup);
-        
-        setTimeout(() => {
-            popup.classList.add("fade-out");
-            setTimeout(() => {
-                popup.remove();
-                if (callback) callback();
-            }, 100);
-        }, 750);
-    }
+    function closeLoadingOverlay() {
+      const loadingOverlay = document.getElementById("loading-overlay");
+      if (loadingOverlay) {
+          loadingOverlay.classList.add("hidden");
+          loadingOverlay.style.display = "none";
+          console.log("🔻 ローディングオーバーレイを強制的に非表示化");
+      }
+  }
+
+  function showPopup(message, callback) {
+    // 既存ポップアップを削除
+    document.querySelectorAll(".popup-message").forEach(p => p.remove());
+    console.log(message);
+
+    const popup = document.createElement("div");
+    popup.className = "popup-message";
+
+    // ✅ ここを innerText → innerHTML に変更
+    // ✅ ついでに \n を <br> に変換（"広告を見て\nあそぶ！" もOK）
+    popup.innerHTML = String(message).replace(/\n/g, "<br>");
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.classList.add("fade-out");
+      setTimeout(() => {
+        popup.remove();
+        if (callback) callback();
+      }, 100);
+    }, 750);
+  }
 });
