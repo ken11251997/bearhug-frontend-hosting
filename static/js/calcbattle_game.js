@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
   bgImage.src = "static/img/calc.jpg";  // あなたの背景画像のパスに合わせてください
 
   bgImage.onload = () => {
-    loadingOverlay.style.display = "none";
+    closeLoadingOverlay(); // ✅ 統一
     console.log("✅ 背景画像の読み込み完了");
   };
 
   bgImage.onerror = () => {
-    loadingOverlay.style.display = "none";
+    closeLoadingOverlay(); // ✅ 統一
     console.warn("⚠️ 背景画像の読み込みに失敗");
   };
 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.status === 429) {
             // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
             showPopup("広告を見て\nあそぶ!", () => {
-              openLoadingOverlay("🎬 広告読み込み中…");
+              // openLoadingOverlay("🎬 広告読み込み中…");
                         onWatchAd("game");
                     });
             // onWatchAd("game"); 
@@ -376,8 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // alert("通信エラー（広告）: " + err.message);
         })
         .finally(() => {
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.style.display = "none";
+        closeLoadingOverlay(); // ✅ 統一
         // alert("gameflow"); // ✅ 確実に表示される
         beginGameFlow();
         });
@@ -423,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("🏁 recover 完了 → ゲーム開始");
         beginGameFlow();
       });
+    });
 
     window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
