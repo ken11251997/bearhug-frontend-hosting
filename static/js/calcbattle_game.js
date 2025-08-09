@@ -403,6 +403,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
       const adType = event.detail?.type || "unknown";
       closeLoadingOverlay();
+      const loadingOverlay = document.getElementById("loading-overlay");
+      if (loadingOverlay) {
+          loadingOverlay.classList.add("hidden");
+          loadingOverlay.style.display = "none";
+      }
 
       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
           method: "POST",
