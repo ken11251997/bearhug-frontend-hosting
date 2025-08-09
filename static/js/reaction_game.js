@@ -100,7 +100,7 @@ startBtn.addEventListener("click", () => {
         .then(async res => {
         if (res.status === 429) {
             // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
-            showPopup("広告を見て\nあそぶ！", () => {
+            showPopup("広告を見て\nあそぶ!", () => {
                         onWatchAd("game");
                     });
             // onWatchAd("game"); 

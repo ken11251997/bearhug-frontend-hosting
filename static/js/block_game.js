@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(async res => {
       if (res.status === 429) {
-        showPopup("広告を見て\nあそぶ！", () => {
+        showPopup("広告を見て\nあそぶ!", () => {
           console.log("▶ 広告視聴リクエスト（429経路）");
           openLoadingOverlay("🎬 広告読み込み中…");
           onWatchAd("game"); // ← 必ずオーバーレイ表示後に呼ぶ
