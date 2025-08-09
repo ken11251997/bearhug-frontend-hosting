@@ -400,25 +400,29 @@ document.addEventListener("DOMContentLoaded", () => {
 //   });
 
     window.addEventListener("AD_WATCHED", (event) => {
-      // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
       const adType = event.detail?.type || "unknown";
-      closeLoadingOverlay();
-      const loadingOverlay = document.getElementById("loading-overlay");
-      if (loadingOverlay) {
-          loadingOverlay.classList.add("hidden");
-          loadingOverlay.style.display = "none";
-      }
+      console.log("📩 AD_WATCHED 受信:", adType);
+
+      // ✅ まず即時に隠す（forceRemove=false）
+      closeLoadingOverlay(false);
+
+      // ⏱ 遅延でもう一度（描画タイミング差異対策）
+      setTimeout(() => closeLoadingOverlay(false), 150);
 
       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user_id, type: adType })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, type: adType })
+      })
+      .catch(err => {
+        console.log("⚠️ recover API エラー:", err);
       })
       .finally(() => {
-          closeLoadingOverlay();
-          beginGameFlow();  // ✅ 修正: startGame() → beginGameFlow()
+        // ✅ finallyでもう一度畳みかける
+        closeLoadingOverlay(false);
+        console.log("🏁 recover 完了 → ゲーム開始");
+        beginGameFlow();
       });
-    });
 
     window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
