@@ -404,6 +404,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ✅ まず即時に隠す（forceRemove=false）
       closeLoadingOverlay(false);
+        const el = document.getElementById("loading-overlay");
+      if (!el) return;
+      if (!el.classList.contains("hidden")) {
+        el.classList.add("hidden");
+      }
+      el.style.display = "none";
+      console.log("✅ CLOSE LoadingOverlay");
 
       // ⏱ 遅延でもう一度（描画タイミング差異対策）
       setTimeout(() => closeLoadingOverlay(false), 150);
@@ -418,7 +425,12 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .finally(() => {
         // ✅ finallyでもう一度畳みかける
-        closeLoadingOverlay(false);
+        const el = document.getElementById("loading-overlay");
+        if (!el) return;
+        if (!el.classList.contains("hidden")) {
+          el.classList.add("hidden");
+        }
+        el.style.display = "none";
         console.log("🏁 recover 完了 → ゲーム開始");
         beginGameFlow();
       });
