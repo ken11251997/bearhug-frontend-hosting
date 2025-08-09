@@ -402,6 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("AD_WATCHED", (event) => {
       // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
       const adType = event.detail?.type || "unknown";
+      closeLoadingOverlay();
 
       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
           method: "POST",
