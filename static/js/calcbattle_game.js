@@ -1,25 +1,7 @@
-function restartDefaultBgm(){
-  const oldWin = window.open('', 'bgmWindow');
-  if (oldWin && !oldWin.closed) {
-    oldWin.close();
-  }
-
-  const win = window.open('', 'bgmWindow', 'width=1,height=1,left=-1000,top=-1000');
-  if (win) {
-    win.document.write(`
-      <html><head><title>BGM</title></head>
-      <body style="margin:0">
-        <audio id="bgm" autoplay loop>
-          <source src="static/sound/bgm_default.mp3" type="audio/mp3">
-        </audio>
-      </body></html>
-    `);
-  }
-}
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const loadingOverlay = document.getElementById("loading-overlay");
+  // const loadingOverlay = document.getElementById("loading-overlay");
   // if (loadingOverlay) {
   //   loadingOverlay.classList.add("hidden");
   //   loadingOverlay.style.display = "none";
@@ -352,9 +334,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function onWatchAd(type) {
-    const loadingOverlay = document.getElementById("loading-overlay");
-    loadingOverlay.classList.remove("hidden");
-    loadingOverlay.style.display = "flex";
+    // const loadingOverlay = document.getElementById("loading-overlay");
+    // loadingOverlay.classList.remove("hidden");
+    // loadingOverlay.style.display = "flex";
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -403,14 +385,14 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("📩 AD_WATCHED 受信:", adType);
 
       // ✅ まず即時に隠す（forceRemove=false）
-      closeLoadingOverlay(false);
-        const el = document.getElementById("loading-overlay");
-      if (!el) return;
-      if (!el.classList.contains("hidden")) {
-        el.classList.add("hidden");
-      }
-      el.style.display = "none";
-      console.log("✅ CLOSE LoadingOverlay");
+      // closeLoadingOverlay(false);
+      //   const el = document.getElementById("loading-overlay");
+      // if (!el) return;
+      // if (!el.classList.contains("hidden")) {
+      //   el.classList.add("hidden");
+      // }
+      // el.style.display = "none";
+      // console.log("✅ CLOSE LoadingOverlay");
 
       // ⏱ 遅延でもう一度（描画タイミング差異対策）
       setTimeout(() => closeLoadingOverlay(false), 150);
@@ -446,25 +428,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
    
   function openLoadingOverlay(msg) {
-    const el = document.getElementById("loading-overlay");
-    if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
-    // オーバーレイ内にメッセージ欄があれば更新（任意）
-    const textEl = el.querySelector(".loading-text");
-    if (textEl && msg) textEl.textContent = msg;
-    el.classList.remove("hidden");
-    el.style.display = "flex";
+    // const el = document.getElementById("loading-overlay");
+    // if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
+    // // オーバーレイ内にメッセージ欄があれば更新（任意）
+    // const textEl = el.querySelector(".loading-text");
+    // if (textEl && msg) textEl.textContent = msg;
+    // el.classList.remove("hidden");
+    // el.style.display = "flex";
     console.log("🌀 OPEN LoadingOverlay:", msg || "");
   }
 
-  function closeLoadingOverlay() {
-    const el = document.getElementById("loading-overlay");
-    if (!el) return;
-    if (!el.classList.contains("hidden")) {
-      el.classList.add("hidden");
-    }
-    el.style.display = "none";
-    console.log("✅ CLOSE LoadingOverlay");
-  }
+  // function closeLoadingOverlay() {
+  //   const el = document.getElementById("loading-overlay");
+  //   if (!el) return;
+  //   if (!el.classList.contains("hidden")) {
+  //     el.classList.add("hidden");
+  //   }
+  //   el.style.display = "none";
+  //   console.log("✅ CLOSE LoadingOverlay");
+  // }
 
   function showPopup(message, callback) {
     // 既存ポップアップを削除
