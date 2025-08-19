@@ -69,8 +69,11 @@ document.addEventListener("DOMContentLoaded",function(){
                 console.log("登録結果:", result);
 
                 if (result.status === "success") {
-                    showPopup("登録成功！", () => {
-                        location.reload();
+                    showPopup("登録成功！レッツおしゃべり！", () => {
+                        // location.reload();
+                        window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
+                        localStorage.setItem("subs", result.subs);
+                        console.log("✅ 遷移コード実行完了");
                     });
                 } else {
                     showPopup(`❌ 登録失敗: ${result.message}`);
