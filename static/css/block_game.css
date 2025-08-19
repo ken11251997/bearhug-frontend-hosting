@@ -315,3 +315,5 @@ canvas {
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
+
+#loading-overlay.hidden { display: none !important; pointer-events: none !important; }

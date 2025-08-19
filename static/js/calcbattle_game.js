@@ -470,4 +470,74 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 100);
     }, 750);
   }
+
+  const overlayEl = document.getElementById('loading-overlay');
+function openLoadingOverlay() {
+  if (!overlayEl) return;
+  overlayEl.classList.remove('hidden');
+  overlayEl.style.display = 'flex';
+  overlayEl.style.pointerEvents = 'auto';
+}
+function closeLoadingOverlay() {
+  if (!overlayEl) return;
+  overlayEl.classList.add('hidden');
+  overlayEl.style.display = 'none';
+  overlayEl.style.pointerEvents = 'none';
+}
+
+// 開始ボタン制御
+function enableStart() {
+  if (!startBtn) return;
+  startBtn.disabled = false;
+  startBtn.style.pointerEvents = 'auto';
+  startBtn.style.opacity = '1';
+}
+function disableStart() {
+  if (!startBtn) return;
+  startBtn.disabled = true;
+  startBtn.style.pointerEvents = 'none';
+  startBtn.style.opacity = '0.6';
+}
+
+// 重複登録を避けるため一度 remove → add
+window.removeEventListener('AD_WATCHED', window.__CALC_AD_WATCHED || (()=>{}));
+window.__CALC_AD_WATCHED = async (event) => {
+  // 広告完了 → UI復帰
+  closeLoadingOverlay();
+  enableStart();
+
+  // （任意）サーバ側で上限回数を復活
+  try {
+    const user_id = sessionStorage.getItem('user_id');
+    const adType = event?.detail?.type || 'calcbattle';
+    if (user_id) {
+      await fetch('https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id, target: adType })
+      });
+    }
+  } catch (e) { /* ネットワーク失敗は無視してUIだけ復帰 */ }
+};
+window.addEventListener('AD_WATCHED', window.__CALC_AD_WATCHED);
+
+window.removeEventListener('AD_FAILED', window.__CALC_AD_FAILED || (()=>{}));
+window.__CALC_AD_FAILED = (event) => {
+  // 広告失敗でも固まらないよう必ず復帰
+  closeLoadingOverlay();
+  enableStart();
+};
+window.addEventListener('AD_FAILED', window.__CALC_AD_FAILED);
+
+// タブ復帰時の保険（実機で稀に取りこぼす対策）
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    closeLoadingOverlay();
+    enableStart();
+  }
+});
+
+// 初期状態でクリック可能にしておく
+closeLoadingOverlay();
+enableStart();
 });
