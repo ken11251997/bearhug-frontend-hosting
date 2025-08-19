@@ -68,11 +68,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isScoreBased = game_name === "block_game";
 
+    // entries.sort((a, b) => {
+    //   if (isScoreBased) {
+    //     return b.score - a.score; // 高い方が上位（block_game）
+    //   } else {
+    //     return a.score - b.score; // 速い方が上位（reaction_gameなど）
+    //   }
+    // });
+
     entries.sort((a, b) => {
+      // 記録なしは常に下に
+      if (a.score === null && b.score === null) return 0;
+      if (a.score === null) return 1;   // aが記録なし → bを上に
+      if (b.score === null) return -1;  // bが記録なし → aを上に
+
+      // ここからは両方スコアありの場合
+      const isScoreBased = game_name === "block_game" || game_name === "calcbattle";
+      
       if (isScoreBased) {
-        return b.score - a.score; // 高い方が上位（block_game）
+        // ブロック崩し・計算ゲーム → スコア大きい順
+        return b.score - a.score;
       } else {
-        return a.score - b.score; // 速い方が上位（reaction_gameなど）
+        // リアクションゲーム → 時間短い順
+        return a.score - b.score;
       }
     });
 
