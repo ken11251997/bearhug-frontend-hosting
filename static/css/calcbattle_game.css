@@ -240,18 +240,6 @@ body {
   padding: 0 !important;
 }
 
-#loading-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.8);
-  z-index: 9999;
-  display: none;  /* ← 初期は非表示 */
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
 .game-header {
   display: flex;
@@ -306,6 +294,7 @@ body {
   align-items: center;
   z-index: 9999;
 }
+
 
 .loading-box {
   position: relative;
@@ -382,3 +371,5 @@ body {
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
+
+#loading-overlay.hidden { display: none !important; pointer-events: none !important; }
