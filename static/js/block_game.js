@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 300);
   };
 
-  
 
   const paddleWidth = canvas.width * 0.25;
   const paddleHeight = 10;
@@ -612,10 +611,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function onWatchAd(type) {
-    const loadingOverlay = document.getElementById("loading-overlay");
     // loadingOverlay.classList.remove("hidden");
     // loadingOverlay.style.display = "flex";
-    openLoadingOverlay("🎬 広告再生中…"); // ←【変更】共通関数で確実に表示
+    openLoadingOverlay("ロード中…"); // ←【変更】共通関数で確実に表示
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({

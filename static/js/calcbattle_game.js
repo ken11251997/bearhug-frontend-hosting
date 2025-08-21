@@ -7,19 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   loadingOverlay.style.display = "none";
   // }
   
-  const bgImage = new Image();
-  bgImage.src = "static/img/calc.jpg";  // あなたの背景画像のパスに合わせてください
-
-  bgImage.onload = () => {
-    closeLoadingOverlay(); // ✅ 統一
-    console.log("✅ 背景画像の読み込み完了");
-  };
-
-  bgImage.onerror = () => {
-    closeLoadingOverlay(); // ✅ 統一
-    console.warn("⚠️ 背景画像の読み込みに失敗");
-  };
-
+  
 
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
@@ -37,17 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
 
   const timerDisplay = document.getElementById("timer");
-  const questionDisplay = document.getElementById("question");
-  const choicesContainer = document.getElementById("choices");
-  const questionCountDisplay = document.getElementById("question-count");
+  const loadingOverlay = document.getElementById("loading-overlay");
   const feedbackDisplay = document.getElementById("feedback");
   const finalTimeDisplay = document.getElementById("final-time");
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
 
+  const bgImage = new Image();
+  bgImage.src = "static/img/calc.jpg";  // あなたの背景画像のパスに合わせてください
+
+  bgImage.onload = () => {
+    loadingOverlay.style.display = "none";
+    console.log("✅ 背景画像の読み込み完了");
+  };
+
+  bgImage.onerror = () => {
+    loadingOverlay.style.display = "none";
+    console.warn("⚠️ 背景画像の読み込みに失敗");
+  };
+
+
   document.getElementById("back-button").onclick = () => {
-    restartDefaultBgm();  // ✅ 共通BGM再開
     location.href = "minigame_list.html";
   };
 
@@ -141,8 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.status === 429) {
             // alert("無料プレイ回数が上限に達しました。\n広告を見ると続行できます。");
             showPopup("広告を見て\nあそぶ!", () => {
-              // openLoadingOverlay("🎬 広告読み込み中…");
-                        onWatchAd("game");
+              openLoadingOverlay("🎬 広告読み込み中…");
+              onWatchAd("game");
                     });
             // onWatchAd("game"); 
             return;
@@ -337,6 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const loadingOverlay = document.getElementById("loading-overlay");
     // loadingOverlay.classList.remove("hidden");
     // loadingOverlay.style.display = "flex";
+    openLoadingOverlay("ロード中…"); 
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -426,27 +426,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // });
     
 
-   
-  function openLoadingOverlay(msg) {
-    // const el = document.getElementById("loading-overlay");
-    // if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
-    // // オーバーレイ内にメッセージ欄があれば更新（任意）
-    // const textEl = el.querySelector(".loading-text");
-    // if (textEl && msg) textEl.textContent = msg;
-    // el.classList.remove("hidden");
-    // el.style.display = "flex";
-    console.log("🌀 OPEN LoadingOverlay:", msg || "");
-  }
-
-  // function closeLoadingOverlay() {
-  //   const el = document.getElementById("loading-overlay");
-  //   if (!el) return;
-  //   if (!el.classList.contains("hidden")) {
-  //     el.classList.add("hidden");
-  //   }
-  //   el.style.display = "none";
-  //   console.log("✅ CLOSE LoadingOverlay");
-  // }
 
   function showPopup(message, callback) {
     // 既存ポップアップを削除
@@ -471,27 +450,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 750);
   }
 
-  const overlayEl = document.getElementById('loading-overlay');
-function openLoadingOverlay() {
-  if (!overlayEl) return;
-  overlayEl.classList.remove('hidden');
-  overlayEl.style.display = 'flex';
-  overlayEl.style.pointerEvents = 'auto';
-}
-function closeLoadingOverlay() {
-  if (!overlayEl) return;
-  overlayEl.classList.add('hidden');
-  overlayEl.style.display = 'none';
-  overlayEl.style.pointerEvents = 'none';
-}
+  function openLoadingOverlay(msg) {
+    const el = document.getElementById("loading-overlay");
+    if (!el) { console.warn("⚠️ #loading-overlay が見つかりません"); return; }
+    // オーバーレイ内にメッセージ欄があれば更新（任意）
+    const textEl = el.querySelector(".loading-text");
+    if (textEl && msg) textEl.textContent = msg;
+    el.classList.remove("hidden");
+    el.style.display = "flex";
+    console.log("🌀 OPEN LoadingOverlay:", msg || "");
+  }
 
-// 開始ボタン制御
-function enableStart() {
-  if (!startBtn) return;
-  startBtn.disabled = false;
-  startBtn.style.pointerEvents = 'auto';
-  startBtn.style.opacity = '1';
-}
+  function closeLoadingOverlay() {
+    const el = document.getElementById("loading-overlay");
+    if (!el) return;
+    if (!el.classList.contains("hidden")) {
+      el.classList.add("hidden");
+    }
+    el.style.display = "none";
+    console.log("✅ CLOSE LoadingOverlay");
+  }
+
+  // 開始ボタン制御
+  function enableStart() {
+    if (!startBtn) return;
+    startBtn.disabled = false;
+    startBtn.style.pointerEvents = 'auto';
+    startBtn.style.opacity = '1';
+  }
 // function disableStart() {
 //   if (!startBtn) return;
 //   startBtn.disabled = true;
@@ -554,43 +540,71 @@ function hideLoadingOverlay() {
 }
 
 // ✅ 広告視聴イベント受信時の処理（ReactNativeWebViewからのイベント）
-window.addEventListener("AD_WATCHED", async (event) => {
-  const adType = event.detail?.type || "unknown";
-  const user_id = sessionStorage.getItem("user_id");
+// window.addEventListener("AD_WATCHED", async (event) => {
+//   const adType = event.detail?.type || "unknown";
+//   const user_id = sessionStorage.getItem("user_id");
 
-  showLoadingOverlay();  // ✅ 広告視聴完了時に一度ローディング（回復通信の間）
+//   showLoadingOverlay();  // ✅ 広告視聴完了時に一度ローディング（回復通信の間）
 
-  try {
-    const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//   try {
+//     const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ user_id: user_id, type: adType })
+//     });
+
+//     const result = await res.json();
+//     console.log("✅ AD_WATCHED result:", result);
+
+//     // ✅ 成功したらローディングを外す
+//     hideLoadingOverlay();
+
+//     // ✅ 必要に応じてポップアップ表示など追加
+//     alert("✅ 広告視聴が完了し、プレイ回数が回復しました！");
+//   } catch (err) {
+//     console.error("❌ AD_WATCHED error:", err);
+//     hideLoadingOverlay(); // 念のためエラー時も非表示
+//     alert("❌ 広告視聴後の通信に失敗しました");
+//   }
+// });
+  window.addEventListener("AD_WATCHED", (event) => {
+    const adType = event.detail?.type || "unknown";
+    console.log("✅ AD_WATCHED 受信:", adType);
+
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: user_id, type: adType })
+      body: JSON.stringify({ user_id, type: adType })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("リミット解除失敗");
+      return res.json();
+    })
+    .then(() => {
+      console.log("✅ リミット回復成功 → ゲーム開始");
+      // closeLoadingOverlay();      
+      // beginGameFlow();            
+      openLoadingOverlay("✅ 回復完了！ゲーム開始…");
+      setTimeout(() => {
+        closeLoadingOverlay();    // ✨ 演出しつつ確実に解除
+        // beginGameFlow();          // ▶ スタート
+      }, 300);
+    })
+    .catch(err => {
+      console.error("広告解除エラー:", err);
+      closeLoadingOverlay();      // ✅ 念のためここでも解除
     });
-
-    const result = await res.json();
-    console.log("✅ AD_WATCHED result:", result);
-
-    // ✅ 成功したらローディングを外す
-    hideLoadingOverlay();
-
-    // ✅ 必要に応じてポップアップ表示など追加
-    alert("✅ 広告視聴が完了し、プレイ回数が回復しました！");
-  } catch (err) {
-    console.error("❌ AD_WATCHED error:", err);
-    hideLoadingOverlay(); // 念のためエラー時も非表示
-    alert("❌ 広告視聴後の通信に失敗しました");
-  }
-});
+  });
 
 // ✅ 広告失敗イベント（必要に応じて）
-window.addEventListener("AD_FAILED", (event) => {
-  const msg = event.detail?.message || "不明なエラー";
-  console.warn("❌ AD_FAILED:", msg);
-  hideLoadingOverlay(); // 念のため外す
-  alert(`❌ 広告視聴に失敗しました: ${msg}`);
-});
+  window.addEventListener("AD_FAILED", (event) => {
+        // alert("❌ AD_FAILED カスタムイベントを受信しました");
+        const msg = event.detail?.message || "不明なエラー";
+        closeLoadingOverlay();
+        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    });
 
-// 初期状態でクリック可能にしておく
-closeLoadingOverlay();
-enableStart();
+  // 初期状態でクリック可能にしておく
+  closeLoadingOverlay();
+  enableStart();
 });
