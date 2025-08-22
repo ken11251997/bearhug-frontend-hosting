@@ -596,6 +596,13 @@ function hideLoadingOverlay() {
     });
   });
 
+  window.addEventListener("AD_CLOSED", (event) => {
+    console.log("[WEB] AD_CLOSED", event?.detail);
+    closeLoadingOverlay();
+    // 必要ならここで beginGameFlow() を呼ぶ
+    // beginGameFlow();
+  });
+
 // ✅ 広告失敗イベント（必要に応じて）
   window.addEventListener("AD_FAILED", (event) => {
         // alert("❌ AD_FAILED カスタムイベントを受信しました");
