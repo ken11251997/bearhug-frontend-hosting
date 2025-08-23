@@ -372,4 +372,7 @@ body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-#loading-overlay.hidden { display: none !important; pointer-events: none !important; }
+
+#loading-overlay.hidden {
+  display: none !important;  /* ← これを追加 */
+}
