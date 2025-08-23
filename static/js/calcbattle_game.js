@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingOverlay.style.display = "none";
     console.log("✅ 初期にローディングを消しました");
   }
+
+  alert("a")
   
   
 
