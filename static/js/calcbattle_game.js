@@ -662,6 +662,33 @@ function hideLoadingOverlay() {
       }, { passive: true });
         // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
 
+  // === Debug alert bridge: Web → React Native (Androidでalertが出ない対策) ===
+(function () {
+  if (window.__DEBUG_ALERT_BRIDGE__) return;
+  window.__DEBUG_ALERT_BRIDGE__ = true;
+
+  function debugAlert(msg) {
+    try {
+      // React Native WebView なら RN 側へ postMessage
+      if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({ __debugAlert: true, msg: String(msg) })
+        );
+      } else {
+        // ブラウザ(PC)等では通常の alert
+        window.alert(String(msg));
+      }
+    } catch (e) {
+      try { window.alert(String(msg)); } catch {}
+      console.error("debugAlert error:", e);
+    }
+  }
+
+  // 既存コードの alert() をそのまま生かすため、alert を差し替え（追記のみ）
+  window.alert = debugAlert;
+})();
+
+
 
   // 初期状態でクリック可能にしておく
   closeLoadingOverlay();
