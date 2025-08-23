@@ -530,21 +530,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //   }
 // });
 
-  function showLoadingOverlay() {
-  const loadingOverlay = document.getElementById("loading-overlay");
-  if (loadingOverlay) {
-    loadingOverlay.style.display = "flex";
-    loadingOverlay.classList.remove("hidden");
-  }
-}
-
-function hideLoadingOverlay() {
-  const loadingOverlay = document.getElementById("loading-overlay");
-  if (loadingOverlay) {
-    loadingOverlay.style.display = "none";
-    loadingOverlay.classList.add("hidden");
-  }
-}
 
 // ✅ 広告視聴イベント受信時の処理（ReactNativeWebViewからのイベント）
 // window.addEventListener("AD_WATCHED", async (event) => {

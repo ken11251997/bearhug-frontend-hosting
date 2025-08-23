@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("AD_WATCHED", (event) => {
     const adType = event.detail?.type || "unknown";
-    console.log("✅ AD_WATCHED 受信:", adType);
+    alert("✅ AD_WATCHED 受信:", adType);
 
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
       method: "POST",

@@ -397,6 +397,7 @@ function shuffle(array) {
   window.addEventListener("AD_WATCHED", (event) => {
         // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
         const adType = event.detail?.type || "unknown";
+        alert("AD1",adType)
 
         fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
         method: "POST",
@@ -404,6 +405,7 @@ function shuffle(array) {
         body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
       })
       .finally(() => {
+        alert("AD1",adType)
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
         // startGame();
