@@ -601,34 +601,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ★ AD_WATCHED: 報酬獲得 → 回復API → ローディングを閉じる
-  window.addEventListener("AD_WATCHED", async (event) => {
-    const adType = event?.detail?.type || "unknown";
-    const user_id = sessionStorage.getItem("user_id");
+  window.addEventListener("AD_WATCHED", (event) => {
+        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+        const adType = event.detail?.type || "unknown";
+        alert("AD1",adType)
 
-    alert(`(1/5) AD_WATCHED 受信: type=${adType}`);
-    alert(`(2/5) 閉じる前の可視状態: ${isOverlayVisible()}`);
-
-    try {
-      alert("(3/5) 回復API呼び出し開始");
-      const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id, type: adType })
-      });
-      const raw = await res.text();
-      console.log("[WEB] recover raw:", raw);
-      let ok = false;
-      try { JSON.parse(raw); ok = true; } catch (e) {}
-      alert(`(3.5/5) 回復API応答: status=${res.status} / JSON=${ok ? "OK" : "parse失敗"}`);
-    } catch (e) {
-      console.error("[WEB] recover fetch error:", e);
-      alert(`(3.x/5) 回復API失敗: ${e?.message || e}`);
-    } finally {
-      alert("(4/5) ローディングを閉じます");
-      try { closeLoadingOverlay && closeLoadingOverlay(); } catch (e) { console.warn("closeLoadingOverlay error", e); }
-      alert(`(5/5) 閉じた後の可視状態: ${isOverlayVisible()}`);
-    }
-  }, { passive: true });
+        body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
+      })
+      .finally(() => {
+        alert("AD2",adType)
+        loadingOverlay.classList.add("hidden");
+        loadingOverlay.style.display = "none";
+        // startGame();
+      })
+        closeLoadingOverlay();
+        // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+    });
+  
 
   window.addEventListener("AD_CLOSED", (event) => {
     console.log("[WEB] AD_CLOSED", event?.detail);

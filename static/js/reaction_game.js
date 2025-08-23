@@ -407,12 +407,11 @@ function shuffle(array) {
         body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
       })
       .finally(() => {
-        alert("AD1",adType)
+        alert("AD2",adType)
         loadingOverlay.classList.add("hidden");
         loadingOverlay.style.display = "none";
         // startGame();
       })
-        
         closeLoadingOverlay();
         // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
     });
