@@ -108,6 +108,7 @@ startBtn.addEventListener("click", () => {
         }
         const data = await res.json();
         if (data.show_ad) {
+          alert("onWAtch")
             onWatchAd("game");
         } else {
             startGame();
@@ -355,6 +356,7 @@ function shuffle(array) {
   
   // 📺 広告再生
   function onWatchAd(type) {
+    alert("onWatchAd(type) ")
     const loadingOverlay = document.getElementById("loading-overlay");
     loadingOverlay.classList.remove("hidden");
     loadingOverlay.style.display = "flex";
