@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   //   console.log("✅ 初期にローディングを消しました");
   // }
 
-  alert("a")
   alert("🧭 [calc] calcbattle_game.js loaded");
 
 // ★修正: BRIDGED_◯◯ を受ける（ブリッジ経由で確実に1回だけ来る）
@@ -158,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
     }
 
-    startBtn.disabled = true;
+    disableStart(); // ★ここで確実に無効化（連打防止）
     if (!user_id) {
       console.warn("⚠️ user_id が見つかりません。ローカルモードで開始します。");
       beginGameFlow();  // ← ローカルモードでも開始
@@ -422,38 +421,107 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 開始ボタン制御
-  function enableStart() {
-    if (!startBtn) return;
-    startBtn.disabled = false;
-    startBtn.style.pointerEvents = 'auto';
-    startBtn.style.opacity = '1';
+  // function enableStart() {
+  //   if (!startBtn) return;
+  //   startBtn.disabled = false;
+  //   startBtn.style.pointerEvents = 'auto';
+  //   startBtn.style.opacity = '1';
+  // }
+
+  function disableStart() {
+    const btn = document.getElementById("startBtn");
+    if (!btn) { console.log("⚠️ startBtnが見つかりません"); return; }
+    btn.disabled = true;                      // ★無効化
+    btn.classList.add("disabled");
+    btn.style.pointerEvents = "none";
+    console.log("🔒 startBtn disabled");
   }
 
-  window.addEventListener("AD_WATCHED", (event) => {
-    // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-    const adType = event.detail?.type || "unknown";
-    alert("AD1: " + adType); // ← これで実際の adType の中身が見える
+  function enableStart() {
+    const btn = document.getElementById("startBtn");
+    if (!btn) { console.log("⚠️ startBtnが見つかりません"); return; }
+    btn.disabled = false;                     // ★再有効化
+    btn.classList.remove("disabled");
+    btn.style.pointerEvents = "auto";
+    console.log("🔓 startBtn enabled");
+}
 
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//   window.addEventListener("AD_WATCHED", (event) => {
+//     // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+//     const adType = event.detail?.type || "unknown";
+//     alert("AD1: " + adType); // ← これで実際の adType の中身が見える
+
+//     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
+//   })
+//   .finally(() => {
+//     alert("AD2",adType)
+//     loadingOverlay.classList.add("hidden");
+//     loadingOverlay.style.display = "none";
+//     // startGame();
+//   })
+//     closeLoadingOverlay();
+// });
+
+//   window.addEventListener("AD_FAILED", (event) => {
+//       alert("❌ AD_FAILED カスタムイベントを受信しました");
+//       const msg = event.detail?.message || "不明なエラー";
+//       closeLoadingOverlay();
+//       // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+//   });
+
+// ★置き換え開始（L394〜418 付近を丸ごと差し替え）
+// =========================
+
+// ★共通ハンドラ：視聴完了→回復API→UI復帰（最後に必ずボタン有効化）
+function handleAdWatched(e) {
+  const detail = e?.detail || {};
+  alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(detail));
+
+  fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
+    body: JSON.stringify({
+      user_id: user_id,                          // ← 既存の上部(L34)で宣言済み
+      type: detail.type || "unknown"
+    })
   })
+  .catch(err => alert("🚨 recover API error: " + (err?.message || err)))
   .finally(() => {
-    alert("AD2",adType)
-    loadingOverlay.classList.add("hidden");
-    loadingOverlay.style.display = "none";
-    // startGame();
-  })
-    closeLoadingOverlay();
-});
-
-  window.addEventListener("AD_FAILED", (event) => {
-      alert("❌ AD_FAILED カスタムイベントを受信しました");
-      const msg = event.detail?.message || "不明なエラー";
-      closeLoadingOverlay();
-      // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+    closeLoadingOverlay();                       // ローディング解除
+    enableStart();                               // ★最重要：開始ボタンを再有効化
+    // 自動開始したい場合は↓を有効化
+    // if (typeof beginGameFlow === "function") beginGameFlow();
   });
+}
+
+function handleAdClosed(e) {
+  alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(e?.detail || {}));
+  closeLoadingOverlay();
+  enableStart();                                 // 閉じた場合でも復帰
+}
+
+function handleAdFailed(e) {
+  alert("❌ [calc] AD_FAILED: " + JSON.stringify(e?.detail || {}));
+  closeLoadingOverlay();
+  enableStart();                                 // 失敗でも復帰
+}
+
+  // ★通常/BRIDGED の両方を束ねて登録（ループ防止ブリッジ対応）
+  ["AD_WATCHED","BRIDGED_AD_WATCHED"].forEach(n =>
+    window.addEventListener(n, handleAdWatched)
+  );
+  ["AD_CLOSED","BRIDGED_AD_CLOSED"].forEach(n =>
+    window.addEventListener(n, handleAdClosed)
+  );
+  ["AD_FAILED","BRIDGED_AD_FAILED"].forEach(n =>
+    window.addEventListener(n, handleAdFailed)
+  );
+
+// =========================
+// ★置き換え終了
 
   // 初期状態でクリック可能にしておく
   closeLoadingOverlay();
