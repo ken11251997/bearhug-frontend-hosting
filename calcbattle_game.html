@@ -9,26 +9,32 @@
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
   <script>
     (function () {
-      // ★追加: ファイル読込確認（アラート）
-      alert("🧭 [calc] head-bridge loaded"); // ← 実機で見える
+      alert("🧭 [calc] head-bridge loaded"); // 読み込み確認
+
+      // ★追加: ループ防止フラグ
+      const markBridged = (d) => Object.assign({}, d || {}, { __fromBridge: true });
+      const isBridged   = (d) => d && d.__fromBridge === true;
 
       function forward(type, detail) {
-        // ★追加: 受信確認（アラート）
+        // 受信確認（1回だけ出る）
         alert("📥 [calc] bridge got " + type + " " + JSON.stringify(detail));
-        // 既存のwindowイベントにも流す（互換）
+
+        // ★重要: 同じイベント名で再dispatchしない（=無限ループ回避）
+        // 代わりに "BRIDGED_◯◯" へ変えて下流へ流す
         try {
-          window.dispatchEvent(new CustomEvent(type, { detail }));
+          window.dispatchEvent(new CustomEvent("BRIDGED_" + type, { detail: markBridged(detail) }));
         } catch (e) {}
-        // 関数フォールバック（App.js側から直呼びされる場合に備え）
+
+        // 関数フォールバック（App.js からの直呼び対策）
         if (typeof window._onAD === "function") {
           try { window._onAD(type, detail); } catch (e) {}
         }
       }
 
-      // ★追加: 3種のイベントを最優先で受信
-      window.addEventListener("AD_WATCHED", (e) => forward("AD_WATCHED", e.detail));
-      window.addEventListener("AD_FAILED",  (e) => forward("AD_FAILED",  e.detail));
-      window.addEventListener("AD_CLOSED",  (e) => forward("AD_CLOSED",  e.detail));
+      // ★ループ防止: ブリッジ自身が再送イベントを拾わないようガード
+      window.addEventListener("AD_WATCHED", (e) => { if (!isBridged(e.detail)) forward("AD_WATCHED", e.detail); });
+      window.addEventListener("AD_FAILED",  (e) => { if (!isBridged(e.detail)) forward("AD_FAILED",  e.detail); });
+      window.addEventListener("AD_CLOSED",  (e) => { if (!isBridged(e.detail)) forward("AD_CLOSED",  e.detail); });
     })();
   </script>
 </head>
