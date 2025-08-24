@@ -663,7 +663,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 既存コードの alert() をそのまま生かすため、alert を差し替え（追記のみ）
   window.alert = debugAlert;
-})();
+
+  (function () {
+    if (window.__CALCBATTLE_AD_SINK__) return;
+    window.__CALCBATTLE_AD_SINK__ = true;
+
+    function closeSafe(reason) {
+      console.log(`[WEB] closeSafe: ${reason}`);
+      try { closeLoadingOverlay && closeLoadingOverlay(); } catch (e) { console.warn('close err', e); }
+    }
+
+    // 広告を「閉じた」通知が来たら必ず畳む（完了通知が欠落しても閉じる）
+    window.addEventListener('AD_CLOSED', (ev) => {
+      const reason = ev?.detail?.reason || 'closed';
+      closeSafe(`AD_CLOSED(${reason})`);
+    }, { passive: true });
+
+    // 広告失敗でも必ず畳む
+    window.addEventListener('AD_FAILED', (ev) => {
+      const msg = ev?.detail?.message || 'unknown';
+      closeSafe(`AD_FAILED(${msg})`);
+    }, { passive: true });
+  })();
+  })();
 
 
 
