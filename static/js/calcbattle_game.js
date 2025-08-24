@@ -1,7 +1,3 @@
-window.addEventListener("AD_WATCHED", (event) => {
-  alert("✅ AD_WATCHED 受信:", event.detail);
-});
-
 document.addEventListener("DOMContentLoaded", () => {
 
 

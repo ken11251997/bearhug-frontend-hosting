@@ -7,6 +7,42 @@
   <link rel="stylesheet" href="static/css/reaction_game.css" />
   <link rel="stylesheet" href="static/css/ranking_modal.css" />
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      console.log("🧭 [calc] head-bridge loaded");
+
+      // 既存の calcbattle_game.js に委譲する“統一窓口”
+      function forward(type, detail) {
+        try {
+          // 既存の window 側へもイベントを配信（従来互換）
+          window.dispatchEvent(new CustomEvent(type, { detail }));
+        } catch (e) {
+          console.error("bridge dispatch error:", e);
+        }
+        // 既存JSが後から読む想定のグローバル関数にもフォールバック（任意）
+        if (typeof window._onAD === "function") {
+          try { window._onAD(type, detail); } catch (e) {}
+        }
+        // 保険ログ
+        console.log("📥 [calc] bridge forwarded:", type, detail);
+      }
+
+      // 3種すべて最優先で受信（取りこぼし防止）
+      window.addEventListener("AD_WATCHED", (e) => forward("AD_WATCHED", e.detail));
+      window.addEventListener("AD_FAILED",  (e) => forward("AD_FAILED",  e.detail));
+      window.addEventListener("AD_CLOSED",  (e) => forward("AD_CLOSED",  e.detail));
+
+      // 自己テスト（?debug_ad=1 で 1秒後に自前発火）
+      try {
+        if (new URLSearchParams(location.search).get("debug_ad") === "1") {
+          setTimeout(() => {
+            console.log("🧪 [calc] self-dispatch AD_WATCHED");
+            window.dispatchEvent(new CustomEvent("AD_WATCHED", { detail: { type: "self-test" } }));
+          }, 1000);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div id="loading-overlay">
