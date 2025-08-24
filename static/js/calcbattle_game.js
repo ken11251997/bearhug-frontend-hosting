@@ -12,42 +12,42 @@ document.addEventListener("DOMContentLoaded", () => {
   alert("🧭 [calc] calcbattle_game.js loaded");
 
 // ★修正: BRIDGED_◯◯ を受ける（ブリッジ経由で確実に1回だけ来る）
-  // window.addEventListener("BRIDGED_AD_WATCHED", (event) => {
-  //   alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(event.detail));
+  window.addEventListener("BRIDGED_AD_WATCHED", (event) => {
+    alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(event.detail));
 
-  //   const user_id = new URLSearchParams(location.search).get("user_id");
-  //   fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-  //     method: "POST",
-  //     headers: {"Content-Type": "application/json"},
-  //     body: JSON.stringify({ user_id, type: event.detail?.type || "unknown" })
-  //   })
-  //   .catch(err => alert("🚨 recover API error: " + (err?.message || err)))
-  //   .finally(() => {
-  //     const el = document.getElementById("loading-overlay");
-  //     if (el) { el.classList.add("hidden"); el.style.display = "none"; }
+    const user_id = new URLSearchParams(location.search).get("user_id");
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ user_id, type: event.detail?.type || "unknown" })
+    })
+    .catch(err => alert("🚨 recover API error: " + (err?.message || err)))
+    .finally(() => {
+      const el = document.getElementById("loading-overlay");
+      if (el) { el.classList.add("hidden"); el.style.display = "none"; }
 
-  //     if (typeof window.beginGameFlow === "function") {
-  //       alert("▶️ [calc] beginGameFlow after AD_WATCHED");
-  //       window.beginGameFlow();
-  //     } else {
-  //       window.__beginAfterAd = true;
-  //       alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
-  //     }
-  //   });
-  // });
+      if (typeof window.beginGameFlow === "function") {
+        alert("▶️ [calc] beginGameFlow after AD_WATCHED");
+        window.beginGameFlow();
+      } else {
+        window.__beginAfterAd = true;
+        alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
+      }
+    });
+  });
 
-  // // ★推奨: 失敗/クローズもBRIDGED名で受信
-  // window.addEventListener("BRIDGED_AD_FAILED", (event) => {
-  //   alert("❌ [calc] AD_FAILED: " + JSON.stringify(event.detail));
-  //   const el = document.getElementById("loading-overlay");
-  //   if (el) { el.classList.add("hidden"); el.style.display = "none"; }
-  // });
+  // ★推奨: 失敗/クローズもBRIDGED名で受信
+  window.addEventListener("BRIDGED_AD_FAILED", (event) => {
+    alert("❌ [calc] AD_FAILED: " + JSON.stringify(event.detail));
+    const el = document.getElementById("loading-overlay");
+    if (el) { el.classList.add("hidden"); el.style.display = "none"; }
+  });
 
-  // window.addEventListener("BRIDGED_AD_CLOSED", (event) => {
-  //   alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(event.detail));
-  //   const el = document.getElementById("loading-overlay");
-  //   if (el) { el.classList.add("hidden"); el.style.display = "none"; }
-  // });
+  window.addEventListener("BRIDGED_AD_CLOSED", (event) => {
+    alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(event.detail));
+    const el = document.getElementById("loading-overlay");
+    if (el) { el.classList.add("hidden"); el.style.display = "none"; }
+  });
 
   const successSound = new Audio("static/sound/success.mp3");
   const failSound = new Audio("static/sound/fail.mp3");
@@ -476,69 +476,69 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================
 
 // ★共通ハンドラ：視聴完了→回復API→UI復帰（最後に必ずボタン有効化）
-function handleAdWatched(e) {
-  const detail = e?.detail || {};
-  // ★デバッグ（実機用は1引数のalertに統一）
-  alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(detail));
-  console.log("✅ [calc] AD_WATCHED detail:", detail);
+// function handleAdWatched(e) {
+//   const detail = e?.detail || {};
+//   // ★デバッグ（実機用は1引数のalertに統一）
+//   alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(detail));
+//   console.log("✅ [calc] AD_WATCHED detail:", detail);
 
-  fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      user_id: user_id,                         // 既存の上部で定義済み
-      type: detail.type || "unknown"
-    })
-  })
-  .catch(err => {
-    console.error("🚨 recover API error:", err);
-    alert("🚨 recover API error: " + (err?.message || err));
-  })
-  .finally(() => {
-    // ★必ずUI復帰
-    if (loadingOverlay) {
-      loadingOverlay.classList.add("hidden");
-      loadingOverlay.style.display = "none";
-    }
-    enableStart();                              // ★最重要：開始ボタンを再有効化
-    console.log("🔓 [calc] start re-enabled after AD_WATCHED");
-    // 自動開始したい場合は↓を解放
-    // if (typeof startGame === "function") startGame();
-  });
-}
+//   fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       user_id: user_id,                         // 既存の上部で定義済み
+//       type: detail.type || "unknown"
+//     })
+//   })
+//   .catch(err => {
+//     console.error("🚨 recover API error:", err);
+//     alert("🚨 recover API error: " + (err?.message || err));
+//   })
+//   .finally(() => {
+//     // ★必ずUI復帰
+//     if (loadingOverlay) {
+//       loadingOverlay.classList.add("hidden");
+//       loadingOverlay.style.display = "none";
+//     }
+//     enableStart();                              // ★最重要：開始ボタンを再有効化
+//     console.log("🔓 [calc] start re-enabled after AD_WATCHED");
+//     // 自動開始したい場合は↓を解放
+//     // if (typeof startGame === "function") startGame();
+//   });
+// }
 
-function handleAdClosed(e) {
-  alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(e?.detail || {}));
-  if (loadingOverlay) {
-    loadingOverlay.classList.add("hidden");
-    loadingOverlay.style.display = "none";
-  }
-  enableStart();
-  console.log("🔓 [calc] start re-enabled after AD_CLOSED");
-}
+// function handleAdClosed(e) {
+//   alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(e?.detail || {}));
+//   if (loadingOverlay) {
+//     loadingOverlay.classList.add("hidden");
+//     loadingOverlay.style.display = "none";
+//   }
+//   enableStart();
+//   console.log("🔓 [calc] start re-enabled after AD_CLOSED");
+// }
 
-function handleAdFailed(e) {
-  alert("❌ [calc] AD_FAILED: " + JSON.stringify(e?.detail || {}));
-  if (loadingOverlay) {
-    loadingOverlay.classList.add("hidden");
-    loadingOverlay.style.display = "none";
-  }
-  enableStart();
-  console.log("🔓 [calc] start re-enabled after AD_FAILED");
-}
+// function handleAdFailed(e) {
+//   alert("❌ [calc] AD_FAILED: " + JSON.stringify(e?.detail || {}));
+//   if (loadingOverlay) {
+//     loadingOverlay.classList.add("hidden");
+//     loadingOverlay.style.display = "none";
+//   }
+//   enableStart();
+//   console.log("🔓 [calc] start re-enabled after AD_FAILED");
+// }
 
-// =========================
-// ★追加: 通常/BRIDGED の両方を束ねて登録
-// =========================
-["AD_WATCHED","BRIDGED_AD_WATCHED"].forEach(n =>
-  window.addEventListener(n, handleAdWatched)
-);
-["AD_CLOSED","BRIDGED_AD_CLOSED"].forEach(n =>
-  window.addEventListener(n, handleAdClosed)
-);
-["AD_FAILED","BRIDGED_AD_FAILED"].forEach(n =>
-  window.addEventListener(n, handleAdFailed)
-);
+// // =========================
+// // ★追加: 通常/BRIDGED の両方を束ねて登録
+// // =========================
+// ["AD_WATCHED","BRIDGED_AD_WATCHED"].forEach(n =>
+//   window.addEventListener(n, handleAdWatched)
+// );
+// ["AD_CLOSED","BRIDGED_AD_CLOSED"].forEach(n =>
+//   window.addEventListener(n, handleAdClosed)
+// );
+// ["AD_FAILED","BRIDGED_AD_FAILED"].forEach(n =>
+//   window.addEventListener(n, handleAdFailed)
+// );
 // =========================
 // ★置き換え終了
 
