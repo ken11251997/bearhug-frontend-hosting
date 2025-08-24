@@ -72,6 +72,7 @@ body {
   width: 100%;
 }
 
+
 .main-button {
   background: #ffccdd;
   color: #800040;
@@ -370,9 +371,4 @@ body {
   text-align: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
-}
-
-
-#loading-overlay.hidden {
-  display: none !important;  /* ← これを追加 */
 }

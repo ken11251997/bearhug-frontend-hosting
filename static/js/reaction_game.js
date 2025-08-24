@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const rankingBtns = document.querySelectorAll("#ranking-btn, #ranking-again-btn");
+  
 
   const user_id = new URLSearchParams(window.location.search).get("user_id");
   const mbti = new URLSearchParams(window.location.search).get("mbti");
