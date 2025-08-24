@@ -1,3 +1,6 @@
+window.addEventListener("AD_WATCHED", (event) => {
+  alert("✅ AD_WATCHED 受信:", event.detail);
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -308,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // loadingOverlay.classList.remove("hidden");
     // loadingOverlay.style.display = "flex";
     openLoadingOverlay("ロード中…"); 
-    alert("ad game")
     alert("AD1: " + type)
 
     if (window.ReactNativeWebView) {
