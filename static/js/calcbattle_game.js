@@ -446,31 +446,31 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("🔓 startBtn enabled");
 }
 
-//   window.addEventListener("AD_WATCHED", (event) => {
-//     // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-//     const adType = event.detail?.type || "unknown";
-//     alert("AD1: " + adType); // ← これで実際の adType の中身が見える
+  window.addEventListener("AD_WATCHED", (event) => {
+    // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+    const adType = event.detail?.type || "unknown";
+    alert("AD1: " + adType); // ← これで実際の adType の中身が見える
 
-//     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
-//   })
-//   .finally(() => {
-//     alert("AD2",adType)
-//     loadingOverlay.classList.add("hidden");
-//     loadingOverlay.style.display = "none";
-//     // startGame();
-//   })
-//     closeLoadingOverlay();
-// });
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
+  })
+  .finally(() => {
+    alert("AD2",adType)
+    loadingOverlay.classList.add("hidden");
+    loadingOverlay.style.display = "none";
+    // startGame();
+  })
+    closeLoadingOverlay();
+});
 
-//   window.addEventListener("AD_FAILED", (event) => {
-//       alert("❌ AD_FAILED カスタムイベントを受信しました");
-//       const msg = event.detail?.message || "不明なエラー";
-//       closeLoadingOverlay();
-//       // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
-//   });
+  window.addEventListener("AD_FAILED", (event) => {
+      alert("❌ AD_FAILED カスタムイベントを受信しました");
+      const msg = event.detail?.message || "不明なエラー";
+      closeLoadingOverlay();
+      // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+  });
 
 // ★置き換え開始（L394〜418 付近を丸ごと差し替え）
 // =========================
