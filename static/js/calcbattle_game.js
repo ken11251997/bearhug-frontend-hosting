@@ -687,6 +687,71 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
   })();
 
+  (function () {
+    if (window.__CALCBATTLE_AD_SINK__) return;
+    window.__CALCBATTLE_AD_SINK__ = true;
+
+    // ハードクローズ：既存の closeLoadingOverlay が効かない場合も畳む
+    function closeLoadingOverlayHard(reason) {
+      try {
+        console.log('[WEB] closeLoadingOverlayHard:', reason);
+        // 1) 既存API
+        try { typeof closeLoadingOverlay === 'function' && closeLoadingOverlay(); } catch {}
+        // 2) 直接DOM操作（ID/クラスどちらでも）
+        const els = [
+          document.getElementById('loading-overlay'),
+          ...document.querySelectorAll('#loading-overlay, .loading-overlay, [data-role="loading-overlay"]')
+        ].filter(Boolean);
+        els.forEach(el => {
+          el.classList.add('hidden');
+          el.style.setProperty('display', 'none', 'important');
+          el.style.pointerEvents = 'none';
+          el.style.opacity = '0';
+        });
+      } catch (e) {
+        console.warn('[WEB] closeLoadingOverlayHard error:', e);
+      }
+    }
+
+    // 報酬確定：回復API → finally で必ず閉じる
+    window.addEventListener('AD_WATCHED', async (event) => {
+      const adType = event?.detail?.type || 'game';
+      const user_id = sessionStorage.getItem('user_id');
+      console.log('[WEB] AD_WATCHED 受信:', adType, 'uid=', user_id);
+
+      try {
+        console.log('[WEB] 回復API 呼び出し開始');
+        const res = await fetch('https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id, type: adType })
+        });
+        const raw = await res.text();
+        console.log('[WEB] 回復API 応答:', res.status, raw);
+        // 必要なら JSON.parse(raw) してUI反映
+      } catch (e) {
+        console.error('[WEB] 回復API 失敗:', e);
+      } finally {
+        // 必要なら演出の待ち時間を入れる
+        // await new Promise(r => setTimeout(r, 200));
+        closeLoadingOverlayHard('AD_WATCHED finally');
+      }
+    }, { passive: true });
+
+    // 閉じ/失敗でも必ず畳む（保険）
+    window.addEventListener('AD_CLOSED', (ev) => {
+      const reason = ev?.detail?.reason || 'closed';
+      console.log('[WEB] AD_CLOSED 受信:', reason);
+      closeLoadingOverlayHard('AD_CLOSED');
+    }, { passive: true });
+
+    window.addEventListener('AD_FAILED', (ev) => {
+      const msg = ev?.detail?.message || 'unknown';
+      console.warn('[WEB] AD_FAILED 受信:', msg);
+      closeLoadingOverlayHard('AD_FAILED');
+    }, { passive: true });
+  })();
+
 
 
   // 初期状態でクリック可能にしておく
