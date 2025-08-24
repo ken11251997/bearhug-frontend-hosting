@@ -601,43 +601,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ★ AD_WATCHED: 報酬獲得 → 回復API → ローディングを閉じる
-  window.addEventListener("AD_WATCHED", (event) => {
-        // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
-        const adType = event.detail?.type || "unknown";
-        alert("AD1: " + adType); // ← これで実際の adType の中身が見える
+  // window.addEventListener("AD_WATCHED", (event) => {
+  //       // alert("🎉 AD_WATCHED カスタムイベントを受信しました");
+  //       const adType = event.detail?.type || "unknown";
+  //       alert("AD1: " + adType); // ← これで実際の adType の中身が見える
 
-        fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
-      })
-      .finally(() => {
-        alert("AD2",adType)
-        loadingOverlay.classList.add("hidden");
-        loadingOverlay.style.display = "none";
-        // startGame();
-      })
-        closeLoadingOverlay();
-        // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
-    });
+  //       fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ user_id, type: adType }) // ✅ 修正
+  //     })
+  //     .finally(() => {
+  //       alert("AD2",adType)
+  //       loadingOverlay.classList.add("hidden");
+  //       loadingOverlay.style.display = "none";
+  //       // startGame();
+  //     })
+  //       closeLoadingOverlay();
+  //       // showPopup(`✅ ${adType === 'chat' ? 'チャット' : 'マッチ'}回数が回復しました！`);
+  //   });
   
 
-  window.addEventListener("AD_CLOSED", (event) => {
-    console.log("[WEB] AD_CLOSED", event?.detail);
-    closeLoadingOverlay();
-    // 必要ならここで beginGameFlow() を呼ぶ
-    // beginGameFlow();
-  });
+  // window.addEventListener("AD_CLOSED", (event) => {
+  //   console.log("[WEB] AD_CLOSED", event?.detail);
+  //   closeLoadingOverlay();
+  //   // 必要ならここで beginGameFlow() を呼ぶ
+  //   // beginGameFlow();
+  // });
 
 // ✅ 広告失敗イベント（必要に応じて）
-  window.addEventListener("AD_FAILED", (event) => {
-        alert(`(F1) AD_FAILED 受信: ${msg} → ローディング閉じます`);
-        const msg = event.detail?.message || "不明なエラー";
-        closeLoadingOverlay();
-        try { closeLoadingOverlay && closeLoadingOverlay(); } catch (e) {}
-        alert(`(F2) 閉じ後の可視状態: ${isOverlayVisible()}`);
-      }, { passive: true });
-        // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
+  // window.addEventListener("AD_FAILED", (event) => {
+  //       alert(`(F1) AD_FAILED 受信: ${msg} → ローディング閉じます`);
+  //       const msg = event.detail?.message || "不明なエラー";
+  //       closeLoadingOverlay();
+  //       try { closeLoadingOverlay && closeLoadingOverlay(); } catch (e) {}
+  //       alert(`(F2) 閉じ後の可視状態: ${isOverlayVisible()}`);
+  //     }, { passive: true });
+  //       // showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
 
   // === Debug alert bridge: Web → React Native (Androidでalertが出ない対策) ===
 (function () {
@@ -662,29 +662,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 既存コードの alert() をそのまま生かすため、alert を差し替え（追記のみ）
-  window.alert = debugAlert;
-
   (function () {
-    if (window.__CALCBATTLE_AD_SINK__) return;
-    window.__CALCBATTLE_AD_SINK__ = true;
+    if (window.__CALCBATTLE_AD_DEBUG__) return;
+    window.__CALCBATTLE_AD_DEBUG__ = true;
 
-    function closeSafe(reason) {
-      console.log(`[WEB] closeSafe: ${reason}`);
-      try { closeLoadingOverlay && closeLoadingOverlay(); } catch (e) { console.warn('close err', e); }
+    function hideOverlay(reason) {
+      const el = document.getElementById('loading-overlay');
+      if (!el) return;
+      el.classList.add('hidden');
+      el.style.display = 'none';
+      console.log('[WEB] overlay hidden by', reason);
     }
 
-    // 広告を「閉じた」通知が来たら必ず畳む（完了通知が欠落しても閉じる）
-    window.addEventListener('AD_CLOSED', (ev) => {
-      const reason = ev?.detail?.reason || 'closed';
-      closeSafe(`AD_CLOSED(${reason})`);
-    }, { passive: true });
+    window.addEventListener('AD_WATCHED', () => {
+      alert("✅ AD_WATCHED 受信しました");
+      hideOverlay("AD_WATCHED");
+    });
 
-    // 広告失敗でも必ず畳む
-    window.addEventListener('AD_FAILED', (ev) => {
-      const msg = ev?.detail?.message || 'unknown';
-      closeSafe(`AD_FAILED(${msg})`);
-    }, { passive: true });
-  })();
+    window.addEventListener('AD_CLOSED', () => {
+      alert("✅ AD_CLOSED 受信しました");
+      hideOverlay("AD_CLOSED");
+    });
+
+    window.addEventListener('AD_FAILED', () => {
+      alert("✅ AD_FAILED 受信しました");
+      hideOverlay("AD_FAILED");
+    });
+})();
   })();
 
   (function () {
