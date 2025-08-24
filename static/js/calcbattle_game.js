@@ -309,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // loadingOverlay.style.display = "flex";
     openLoadingOverlay("ロード中…"); 
     alert("ad game")
+    alert("AD1: " + type)
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
