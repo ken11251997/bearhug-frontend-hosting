@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         window.__beginAfterAd = true;
         alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
+        alert("こっち");
         window.beginGameFlow();
         enableStart();
         beginGameFlow()
