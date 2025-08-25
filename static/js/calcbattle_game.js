@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof window.beginGameFlow === "function") {
         alert("▶️ [calc] beginGameFlow after AD_WATCHED");
         window.beginGameFlow();
+        enableStart();
+        beginGameFlow()
       } else {
         window.__beginAfterAd = true;
         alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
