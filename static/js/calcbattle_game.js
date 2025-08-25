@@ -461,6 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingOverlay.classList.add("hidden");
     loadingOverlay.style.display = "none";
     // startGame();
+    enableStart();
   })
     closeLoadingOverlay();
 });
