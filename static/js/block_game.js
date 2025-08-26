@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => {
       console.error("通信エラー:", err);
-      alert("通信エラー:");
+      // alert("通信エラー:");
       startBtn.disabled = false; // 復旧
     });
   });
@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("AD_WATCHED", (event) => {
     const adType = event.detail?.type || "unknown";
-    alert("✅ AD_WATCHED 受信:", adType);
+    // alert("✅ AD_WATCHED 受信:", adType);
 
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
       method: "POST",

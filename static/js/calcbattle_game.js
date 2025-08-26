@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   //   console.log("✅ 初期にローディングを消しました");
   // }
 
-  alert("🧭 [calc] calcbattle_game.js loaded");
+  // alert("🧭 [calc] calcbattle_game.js loaded");
 
 // ★修正: BRIDGED_◯◯ を受ける（ブリッジ経由で確実に1回だけ来る）
   window.addEventListener("BRIDGED_AD_WATCHED", (event) => {
-    alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(event.detail));
+    // alert("✅ [calc] AD_WATCHED 受信: " + JSON.stringify(event.detail));
 
     const user_id = new URLSearchParams(location.search).get("user_id");
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/adresets/limit/recover", {
@@ -27,14 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (el) { el.classList.add("hidden"); el.style.display = "none"; }
 
       if (typeof window.beginGameFlow === "function") {
-        alert("▶️ [calc] beginGameFlow after AD_WATCHED");
+        // alert("▶️ [calc] beginGameFlow after AD_WATCHED");
         window.beginGameFlow();
         enableStart();
         beginGameFlow()
       } else {
         window.__beginAfterAd = true;
-        alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
-        alert("こっち");
+        // alert("⏳ [calc] beginGameFlow未定義 → 遅延実行フラグON");
+        // alert("こっち");
         window.beginGameFlow = beginGameFlow;
         enableStart();
         beginGameFlow()
@@ -44,13 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ★推奨: 失敗/クローズもBRIDGED名で受信
   window.addEventListener("BRIDGED_AD_FAILED", (event) => {
-    alert("❌ [calc] AD_FAILED: " + JSON.stringify(event.detail));
+    // alert("❌ [calc] AD_FAILED: " + JSON.stringify(event.detail));
     const el = document.getElementById("loading-overlay");
     if (el) { el.classList.add("hidden"); el.style.display = "none"; }
   });
 
   window.addEventListener("BRIDGED_AD_CLOSED", (event) => {
-    alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(event.detail));
+    // alert("ℹ️ [calc] AD_CLOSED: " + JSON.stringify(event.detail));
     const el = document.getElementById("loading-overlay");
     if (el) { el.classList.add("hidden"); el.style.display = "none"; }
   });
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // loadingOverlay.classList.remove("hidden");
     // loadingOverlay.style.display = "flex";
     openLoadingOverlay("ロード中…"); 
-    alert("AD1: " + type)
+    // alert("AD1: " + type)
 
     if (window.ReactNativeWebView) {
         window.ReactNativeWebView.postMessage(JSON.stringify({
