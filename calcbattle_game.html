@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
   <script>
     (function () {
-      alert("🧭 [calc] head-bridge loaded"); // 読み込み確認
+      // alert("🧭 [calc] head-bridge loaded"); // 読み込み確認
 
       // ★追加: ループ防止フラグ
       const markBridged = (d) => Object.assign({}, d || {}, { __fromBridge: true });
@@ -17,7 +17,7 @@
 
       function forward(type, detail) {
         // 受信確認（1回だけ出る）
-        alert("📥 [calc] bridge got " + type + " " + JSON.stringify(detail));
+        // alert("📥 [calc] bridge got " + type + " " + JSON.stringify(detail));
 
         // ★重要: 同じイベント名で再dispatchしない（=無限ループ回避）
         // 代わりに "BRIDGED_◯◯" へ変えて下流へ流す
