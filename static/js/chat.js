@@ -167,6 +167,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tryShowPopup();
     });
+
+//     socket.on("ad_message", (data) => {
+//         console.log("[ad_message] received:", data); // ★デバッグ
+//         if (!data || Number(data.sender_id) !== myId) {
+//             console.log("[ad_message] ignore (not mine)"); // ★デバッグ
+//             return;
+//         }
+
+//         // ここから先は自分宛てのみ
+//         const overlay = document.getElementById("loading-overlay");
+//         if (overlay) overlay.classList.add("hidden"); // 念のため
+//         showAdPopup({
+//             message: data.type === "chat" ? "広告を見てチャット開始！" : "広告を見てマッチング開始！",
+//             onWatchAd: () => onWatchAd(data.type),
+//         });
+// });
     
     // ログインページへ
     // BackButton.addEventListener("click", function () {
