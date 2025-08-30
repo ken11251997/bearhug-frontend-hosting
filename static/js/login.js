@@ -556,12 +556,45 @@ document.addEventListener("DOMContentLoaded",function(){
     );
 
     function closeLoadingOverlay() {
-        const loadingOverlay = document.getElementById("loading-overlay");
-        if (loadingOverlay) {
-            loadingOverlay.classList.add("hidden");
-            loadingOverlay.style.display = "none";
+            const loadingOverlay = document.getElementById("loading-overlay");
+            if (loadingOverlay) {
+                loadingOverlay.classList.add("hidden");
+                loadingOverlay.style.display = "none";
+            }
         }
+
+        function showWarnBanner(message) {
+        const container = document.querySelector(".container") || document.body;
+        const div = document.createElement("div");
+        div.style.background = "#fff3cd";
+        div.style.color = "#664d03";
+        div.style.border = "1px solid #ffe69c";
+        div.style.borderRadius = "12px";
+        div.style.padding = "12px 14px";
+        div.style.margin = "10px 0 14px";
+        div.style.fontSize = "14px";
+        div.style.lineHeight = "1.5";
+        div.innerHTML = `⚠️ ${message}`;
+        container.insertBefore(div, container.firstChild);
     }
+
+    // サマリー取得
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/report/summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ user_id: uid })
+    })
+    .then(r => r.json())
+    .then(json => {
+        if (json.status === "success" && json.warn) {
+        const cnt = Number(json.total_reports || 0);
+        showWarnBanner(`あなたに対する通報が ${cnt} 件あります。安心・安全なご利用をお願いします。`);
+        }
+    })
+    .catch(err => {
+        console.warn("report/summary failed", err);
+    });
 
 });
 

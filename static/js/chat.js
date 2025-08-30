@@ -207,22 +207,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     // ルームを退出
-    leaveButton.addEventListener("click", function () {
-        console.log("leave")
-        if (user_id && room_id) {
-            socket.emit("leave", { user_id , room_id });
-        }
-    });
+    // leaveButton.addEventListener("click", function () {
+    //     console.log("leave")
+    //     if (user_id && room_id) {
+    //         socket.emit("leave", { user_id , room_id });
+    //     }
+    // });
 
-    socket.on("lev-message", function (msg) {
-        let newMessage = document.createElement("p");
-        newMessage.classList.add("system-message");  // 新しいCSSクラス
-        newMessage.textContent = `${msg.sendername}: ${msg.message}`;
-        chatBox.appendChild(newMessage);
-        if(msg.sender_id==user_id){
-            window.location.href = `login?user_id=${msg.sender_id}&user_name=${msg.sendername}&mbti=${msg.mbti}`};
-    });
-
+    // socket.on("lev-message", function (msg) {
+    //     let newMessage = document.createElement("p");
+    //     newMessage.classList.add("system-message");  // 新しいCSSクラス
+    //     newMessage.textContent = `${msg.sendername}: ${msg.message}`;
+    //     chatBox.appendChild(newMessage);
+    //     if(msg.sender_id==user_id){
+    //         window.location.href = `login?user_id=${msg.sender_id}&user_name=${msg.sendername}&mbti=${msg.mbti}`};
+    // });
+   
 
 
     // ✅ ジョインあたり
@@ -644,4 +644,138 @@ document.addEventListener("DOMContentLoaded", function () {
             messageInput.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 300);
     });
+
+  
+  // ---------- 1) マッチ解除：#leave-btn の既存リスナーを無効化して差し替え ----------
+    (function bindUnmatch() {
+
+        leaveButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (!user_id || !room_id) {
+            showPopup("処理に必要な情報が不足しています");
+            return;
+        }
+        const ok = confirm(
+            "この相手とのマッチを解除しますか？（相手の一覧からも非表示になります）"
+        );
+        if (!ok) return;
+
+        try {
+            loadingOverlay.classList.remove("hidden");
+            loadingOverlay.style.display = "flex";
+            const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/unmatch", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ user_id: myId, room_id: roomId }),
+            });
+            const json = await res.json();
+            if (json.status === "success") {
+            showPopup("マッチを解除しました");
+            setTimeout(() => (window.location.href = "/list"), 700);
+            } else {
+            showPopup(json.message || "解除に失敗しました");
+            }
+        } catch (err) {
+            console.error(err);
+            showPopup("通信エラーが発生しました");
+        } finally {
+            closeLoadingOverlay();
+        }
+        });
+    })();
+
+    // ---------- 2) 通報：#report-btn があれば使い、無ければ作る ----------
+    (function bindReport() {
+        const header =
+        document.querySelector(".chat-header") || document.body;
+        let reportBtn = document.getElementById("report-btn");
+
+        // if (!reportBtn) {
+        // // HTML上に無い構成でも動くように保険で作成（あれば何もしない）
+        // reportBtn = document.createElement("button");
+        // reportBtn.id = "report-btn";
+        // reportBtn.className = "btn";
+        // reportBtn.type = "button";
+        // reportBtn.textContent = "通報";
+        // header.appendChild(reportBtn);
+        // }
+
+        reportBtn.addEventListener("click", () => openReportModal());
+    })();
+
+    function openReportModal() {
+        const overlay = document.createElement("div");
+        overlay.className = "popup-overlay";
+        const modal = document.createElement("div");
+        modal.className = "popup-message persistent-popup";
+        modal.style.maxWidth = "92vw";
+        modal.innerHTML = `
+        <div class="popup-header" style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <span>通報の理由を選択してください</span>
+            <button class="popup-close-btn">✕</button>
+        </div>
+        <div class="popup-actions" style="text-align:left;">
+            <label style="display:block;margin:6px 0;"><input type="radio" name="rp_reason" value="harassment" checked> 迷惑・嫌がらせ</label>
+            <label style="display:block;margin:6px 0;"><input type="radio" name="rp_reason" value="spam"> スパム／宣伝</label>
+            <label style="display:block;margin:6px 0;"><input type="radio" name="rp_reason" value="scam"> 詐欺の可能性</label>
+            <label style="display:block;margin:6px 0;"><input type="radio" name="rp_reason" value="inappropriate"> 不適切な内容</label>
+            <label style="display:block;margin:6px 0;"><input type="radio" name="rp_reason" value="other"> その他</label>
+            <textarea id="rp_details" rows="3" placeholder="詳細（任意）" style="width:100%;margin-top:8px;"></textarea>
+            <button id="rp_submit" class="popup-watch-ad-btn" style="margin-top:10px;">送信</button>
+        </div>
+        `;
+        document.body.appendChild(overlay);
+        document.body.appendChild(modal);
+
+        modal.querySelector(".popup-close-btn").addEventListener("click", () => {
+        modal.remove();
+        overlay.remove();
+        });
+
+        modal.querySelector("#rp_submit").addEventListener("click", async () => {
+        if (!myId) {
+            showPopup("ログイン情報が見つかりません");
+            return;
+        }
+        if (!reportedUserId) {
+            showPopup("相手情報が取得できませんでした。リスト画面から入室し直してください。");
+            return;
+        }
+        const reason =
+            (modal.querySelector('input[name="rp_reason"]:checked') || {}).value ||
+            "other";
+        const details = modal.querySelector("#rp_details").value || "";
+
+        try {
+            openLoadingOverlay();
+            const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                reporter_user_id: myId,
+                reported_user_id: reportedUserId,
+                room_id: roomId,
+                reason,
+                details,
+            }),
+            });
+            const json = await res.json();
+            if (json.status === "success") {
+            const cnt = Number(json.total_reports || 0);
+            showPopup(`通報を受け付けました（累計: ${cnt} 件）`);
+            } else {
+            showPopup(json.message || "通報に失敗しました");
+            }
+        } catch (err) {
+            console.error(err);
+            showPopup("通信エラーが発生しました");
+        } finally {
+            closeLoadingOverlay();
+            modal.remove();
+            overlay.remove();
+        }
+        });
+    }
 })
