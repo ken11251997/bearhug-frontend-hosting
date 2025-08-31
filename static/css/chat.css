@@ -515,14 +515,17 @@ button:hover {
 
 .chat-actions {
   position: absolute;
-  left: 52px;              /* ← back-btn（left:10px）の横に配置 */
+  right: 10px;              /* ← 右端寄せ */
   top: 50%;
   transform: translateY(-50%);
   display: flex;
-  gap: 8px;
-  z-index: 2;              /* タイトルより前面 */
+  align-items: center;
+  gap: 8px;                 /* ボタン間の余白 */
+  z-index: 2;
 }
 
+
 @media (max-width: 480px) {
-  .chat-actions { left: 44px; gap: 6px; }
+  .chat-actions { right: 8px; gap: 6px; }
+  .chat-actions .btn { padding: 6px 10px; font-size: 12px; }
 }
