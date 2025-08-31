@@ -513,7 +513,16 @@ button:hover {
 .mbti-blue   { color: #3498db; } /* ISTP, ISFP, ESTP, ESFP */
 .mbti-yellow { color: #ff8e07; } /* ISTJ, ISFJ, ESTJ, ESFJ */
 
+.chat-actions {
+  position: absolute;
+  left: 52px;              /* ← back-btn（left:10px）の横に配置 */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;              /* タイトルより前面 */
+}
 
-#leave-btn {
-  display: none;
+@media (max-width: 480px) {
+  .chat-actions { left: 44px; gap: 6px; }
 }
