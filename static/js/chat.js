@@ -315,15 +315,15 @@ document.addEventListener("DOMContentLoaded", function () {
             messageInput.value = "";
             messageInput.focus();  // ✅ これを追加：再フォーカスしてキーボードを維持！
 
-            fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/token/chat_notification", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  receiver_name: Partnername, // 相手のユーザーネーム
-                  sender_id: user_id,
-                  message: message
-                })
-            })
+            // fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/token/chat_notification", {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify({
+            //       receiver_name: Partnername, // 相手のユーザーネーム
+            //       sender_id: user_id,
+            //       message: message
+            //     })
+            // })
         }
     });
 
