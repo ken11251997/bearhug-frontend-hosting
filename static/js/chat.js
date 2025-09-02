@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const other_id = (() => {
     // room_id から “数字” だけを全部抜く（例: ["166","267"]）
 
-    const other_user_id = (() => {
+    const other_id = (() => {
     const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
     if (!nums.length || !Number.isFinite(myId)) return null;
 
