@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const user_id = sessionStorage.getItem("user_id")
     const other_mbti = urlParams.get("mbti");
     const myId = Number(user_id);
-    const other_user_id = (() => {
+    const other_id = (() => {
     // room_id から “数字” だけを全部抜く（例: ["166","267"]）
     const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
     if (!nums.length || Number.isNaN(myId)) return null;
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(Partnername)
     console.log(user_id)
     console.log(other_mbti)
-    console.log("other_user_id:", other_user_id);
+    console.log("other_user_id:", other_id);
     const mbtiNames = {
         "INTJ": "建築家",
         "INTP": "論理学者",
@@ -753,7 +753,7 @@ document.addEventListener("DOMContentLoaded", function () {
             showPopup("ログイン情報が見つかりません");
             return;
         }
-        if (!other_user_id) {
+        if (!other_id) {
             showPopup("相手情報が取得できませんでした。リスト画面から入室し直してください。");
             return;
         }
@@ -769,9 +769,9 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                reporter_user_id: myId,
-                reported_user_id: reportedUserId,
-                room_id: roomId,
+                reporter_user_id: user_id,
+                reported_user_id: other_id,
+                room_id: room_id,
                 reason,
                 details,
             }),
