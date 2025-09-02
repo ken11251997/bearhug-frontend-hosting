@@ -793,4 +793,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         });
     }
+
+    const optionsBtn = document.getElementById("options-btn");
+    const actionsMenu = document.getElementById("chat-actions-menu");
+
+    function closeMenu() {
+    if (!actionsMenu.classList.contains("hidden")) {
+        actionsMenu.classList.add("hidden");
+        optionsBtn.setAttribute("aria-expanded", "false");
+    }
+    }
+
+    if (optionsBtn && actionsMenu) {
+    optionsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = actionsMenu.classList.toggle("hidden"); // toggle後の状態（true=隠れた）
+        optionsBtn.setAttribute("aria-expanded", open ? "false" : "true");
+    });
+
+    // メニュー外クリックで閉じる
+    document.addEventListener("click", (e) => {
+        if (!actionsMenu.classList.contains("hidden")) {
+        const withinMenu = actionsMenu.contains(e.target);
+        const onToggle = e.target === optionsBtn;
+        if (!withinMenu && !onToggle) closeMenu();
+        }
+    });
+
+    // Escapeで閉じる（アクセシビリティ）
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMenu();
+    });
+
+    // リサイズ時に閉じる（レイアウト崩れ防止）
+    window.addEventListener("resize", closeMenu);
+    }
 })
