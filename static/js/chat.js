@@ -13,17 +13,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const myId = Number(user_id);
     const other_id = (() => {
     // room_id から “数字” だけを全部抜く（例: ["166","267"]）
-    const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
-    if (!nums.length || Number.isNaN(myId)) return null;
 
-    // 一般ケース: 最後の2つがユーザID（room_A_B想定）
+    const other_user_id = (() => {
+    const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
+    if (!nums.length || !Number.isFinite(myId)) return null;
+
     if (nums.length >= 2) {
         const [a, b] = nums.slice(-2);
         if (a === myId) return b;
         if (b === myId) return a;
-        }
-    })
+    }
 
+    const candidate = nums.find(n => n !== myId);
+    return (typeof candidate === "number") ? candidate : null;
+    })(); // ← ここ大事！()で即実行
+
+    const candidate = nums.find(n => n !== myId);
+    return (typeof candidate === "number") ? candidate : null;
+    })(); // ← ここ大事！()で即実行
 
     console.log(room_id)
     console.log(Partnername)
@@ -48,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "ESTP": "起業家",
         "ESFP": "エンターテイナー"
         };
-
 
     function getMbtiColorClass(mbti) {
     const purple = ["INTJ", "INFJ", "ENTJ", "ENFJ"];
@@ -78,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
 
     const ListBtn = document.getElementById("back-btn");
     const sendFileButton = document.getElementById("send-file-btn");
@@ -116,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("⚠️ `chat-title` または `chat-mbti` の要素が見つかりません！");
     }
 
-
     if (other_mbti && chatBox) {
         let imgPath = `static/img/${other_mbti}.png`;  // MBTIタイプの画像に変更
         chatBox.style.backgroundImage = `url('${imgPath}')`;
@@ -127,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("適用された背景画像:", chatBox.style.backgroundImage); 
     }
    
-
     // ✅ サーバー接続,確認メッセージを受け取る
     socket.on("connect", function () {
         console.log("サーバーに接続しました");
@@ -147,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.on("error_message", (data) => {
         showPopup(data.message); // or 任意のUI表示
     });
-
     // socket.on("ad_message", (data) => {
     //     if (data.type == "chat") {
     //         showAdPopup({
@@ -237,8 +239,6 @@ document.addEventListener("DOMContentLoaded", function () {
     //     if(msg.sender_id==user_id){
     //         window.location.href = `login?user_id=${msg.sender_id}&user_name=${msg.sendername}&mbti=${msg.mbti}`};
     // });
-   
-
 
     // ✅ ジョインあたり
     socket.emit("join", {room_id: room_id, user_id: user_id });
