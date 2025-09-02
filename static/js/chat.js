@@ -794,38 +794,54 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const optionsBtn = document.getElementById("options-btn");
-    const actionsMenu = document.getElementById("chat-actions-menu");
-
-    function closeMenu() {
-    if (!actionsMenu.classList.contains("hidden")) {
-        actionsMenu.classList.add("hidden");
-        optionsBtn.setAttribute("aria-expanded", "false");
-    }
+    (function attachOptionsMenu() {
+    const btn  = document.getElementById("options-btn");
+    const menu = document.getElementById("chat-actions-menu");
+    if (!btn || !menu) {
+        console.warn("[options] elements not found");
+        return;
     }
 
-    if (optionsBtn && actionsMenu) {
-    optionsBtn.addEventListener("click", (e) => {
+    // 初期は閉じておく（CSS競合対策。!importantの競合を避ける）
+    menu.classList.add("hidden");
+    btn.setAttribute("aria-expanded", "false");
+
+    // ︙ボタンで開閉
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        const open = actionsMenu.classList.toggle("hidden"); // toggle後の状態（true=隠れた）
-        optionsBtn.setAttribute("aria-expanded", open ? "false" : "true");
+        const willOpen = menu.classList.contains("hidden"); // 開く前の状態を見ておく
+        menu.classList.toggle("hidden");
+        btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        // デバッグ用ログ
+        console.log("[options] toggled ->", willOpen ? "open" : "close");
     });
 
-    // メニュー外クリックで閉じる
+    // メニューの中は閉じない（項目クリックで閉じたい場合はここで閉じる）
+    menu.addEventListener("click", (e) => {
+        // e.stopPropagation(); // ← 中のボタン押下で即閉じたくないなら有効
+    });
+
+    // 画面の他の場所をクリックしたら閉じる
     document.addEventListener("click", (e) => {
-        if (!actionsMenu.classList.contains("hidden")) {
-        const withinMenu = actionsMenu.contains(e.target);
-        const onToggle = e.target === optionsBtn;
-        if (!withinMenu && !onToggle) closeMenu();
+        if (menu.classList.contains("hidden")) return;
+        const clickedInside = menu.contains(e.target) || btn.contains(e.target);
+        if (!clickedInside) {
+        menu.classList.add("hidden");
+        btn.setAttribute("aria-expanded", "false");
+        console.log("[options] closed by outside click");
         }
     });
 
-    // Escapeで閉じる（アクセシビリティ）
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMenu();
-    });
-
-    // リサイズ時に閉じる（レイアウト崩れ防止）
-    window.addEventListener("resize", closeMenu);
-    }
+    // 画面が切り替わる・リサイズなどでも閉じる
+    ["resize", "blur", "orientationchange"].forEach(ev =>
+        window.addEventListener(ev, () => {
+        if (!menu.classList.contains("hidden")) {
+            menu.classList.add("hidden");
+            btn.setAttribute("aria-expanded", "false");
+            console.log("[options] closed by", ev);
+        }
+        })
+    );
+    })();
 })
