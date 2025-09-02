@@ -10,11 +10,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const Partnername = decodeURIComponent(urlParams.get("username"));
     const user_id = sessionStorage.getItem("user_id")
     const other_mbti = urlParams.get("mbti");
+    const myId = Number(user_id);
+    const other_user_id = (() => {
+    // room_id から “数字” だけを全部抜く（例: ["166","267"]）
+    const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
+    if (!nums.length || Number.isNaN(myId)) return null;
+
+    // 一般ケース: 最後の2つがユーザID（room_A_B想定）
+    if (nums.length >= 2) {
+        const [a, b] = nums.slice(-2);
+        if (a === myId) return b;
+        if (b === myId) return a;
+        }
+    })
+
 
     console.log(room_id)
     console.log(Partnername)
     console.log(user_id)
     console.log(other_mbti)
+    console.log("other_user_id:", other_user_id);
     const mbtiNames = {
         "INTJ": "建築家",
         "INTP": "論理学者",
@@ -734,11 +749,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         modal.querySelector("#rp_submit").addEventListener("click", async () => {
-        if (!myId) {
+        if (!user_id) {
             showPopup("ログイン情報が見つかりません");
             return;
         }
-        if (!reportedUserId) {
+        if (!other_user_id) {
             showPopup("相手情報が取得できませんでした。リスト画面から入室し直してください。");
             return;
         }
