@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const user_id = sessionStorage.getItem("user_id")
     const other_mbti = urlParams.get("mbti");
     const myId = Number(user_id);
-    const other_id = (() => {
-    // room_id から “数字” だけを全部抜く（例: ["166","267"]）
 
     const other_id = (() => {
     const nums = (room_id && room_id.match(/\d+/g)) ? room_id.match(/\d+/g).map(Number) : [];
@@ -23,10 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (a === myId) return b;
         if (b === myId) return a;
     }
-
-    const candidate = nums.find(n => n !== myId);
-    return (typeof candidate === "number") ? candidate : null;
-    })(); // ← ここ大事！()で即実行
 
     const candidate = nums.find(n => n !== myId);
     return (typeof candidate === "number") ? candidate : null;
