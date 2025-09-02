@@ -529,3 +529,60 @@ button:hover {
   .chat-actions { right: 8px; gap: 6px; }
   .chat-actions .btn { padding: 6px 10px; font-size: 12px; }
 }
+
+/* メニューを .chat-actions に相対配置させる */
+.chat-actions { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display:flex; gap:8px; z-index:2; }
+
+/* ドロップダウンメニュー */
+.options-menu {
+  position: absolute;
+  top: calc(100% + 8px);   /* ︙ボタンの下に出す */
+  right: 0;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #deb887;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  padding: 6px;
+  z-index: 1000;
+}
+
+/* メニュー項目（既存のボタンスタイルに寄せつつ、ドロップダウン向けに少し薄め）*/
+.options-menu .menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 4px 0;
+}
+.options-menu .menu-item:hover {
+  background: linear-gradient(135deg, #a0522d, #8b4513);
+}
+
+/* 危険操作は色味を少し強めに */
+.options-menu .menu-item.danger {
+  background: linear-gradient(135deg, #7a2f0e, #8b4513);
+}
+.options-menu .menu-item.danger:hover {
+  background: linear-gradient(135deg, #8b4513, #7a2f0e);
+}
+
+/* ︙ボタン（テキストのままでもOK。アイコン画像に差し替えるなら .icon-button をそのまま）*/
+#options-btn.icon-button {
+  width: 40px; height: 40px; line-height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; background: #8b4513; color:#fff; border-radius: 6px;
+}
+#options-btn.icon-button:hover { background: #a0522d; }
+
+@media (max-width: 480px) {
+  .chat-actions { right: 8px; gap: 6px; }
+  .options-menu { min-width: 150px; }
+  .options-menu .menu-item { padding: 8px 10px; font-size: 14px; }
+}

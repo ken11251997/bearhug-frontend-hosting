@@ -42,8 +42,16 @@
                 <span id="chat-mbti" class="chat-mbti mbti-yellow">(ISFJ - 擁護者)</span>
             </div>
             <div class="chat-actions">
-                <button id="leave-btn" class="btn">マッチ解除</button>
-                <button id="report-btn" class="btn" type="button">通報</button><!-- ★ 追加 -->
+                <!-- ︙（オプション）トグル -->
+                <button id="options-btn" class="icon-button"
+                        aria-haspopup="true" aria-expanded="false" aria-controls="chat-actions-menu"
+                        title="オプション">︙</button>
+
+                <!-- ドロップダウンメニュー -->
+                <div id="chat-actions-menu" class="options-menu hidden" role="menu" aria-labelledby="options-btn">
+                    <button id="report-btn" class="menu-item" role="menuitem">通報する</button>
+                    <button id="leave-btn"  class="menu-item danger" role="menuitem">マッチ解除</button>
+                </div>
             </div>
         </div>
         
