@@ -763,7 +763,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const details = modal.querySelector("#rp_details").value || "";
 
         try {
-            openLoadingOverlay();
+            // openLoadingOverlay();
             const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
