@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     async function fetchReportSummary(user_id) {
     console.log("[summary] start");
+    console.log(user_id,user_id,);
     if (!Number.isFinite(user_id)) {
         console.warn("[summary] skip: uid missing");
         return;
