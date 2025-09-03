@@ -5,6 +5,26 @@ document.addEventListener("DOMContentLoaded",function(){
     // const loadingOverlay = document.getElementById("loading-overlay");
     // loadingOverlay.style.display = "none";
 
+    console.log("通報確認")
+    // サマリー取得
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ user_id: user_id })
+    })
+    .then(r => r.json())
+    .then(json => {
+        console.log("通報されてる")
+        if (json.status === "success" && json.warn) {
+        const cnt = Number(json.total_reports || 0);
+        showWarnBanner(`あなたに対する通報が ${cnt} 件あります。安心・安全なご利用をお願いします。`);
+        }
+    })
+    .catch(err => {
+        console.warn("report/summary failed", err);
+    });
+
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
     const user_name = new URLSearchParams(window.location.search).get("user_name");
@@ -578,25 +598,6 @@ document.addEventListener("DOMContentLoaded",function(){
         container.insertBefore(div, container.firstChild);
     }
 
-    console.log("通報確認")
-    // サマリー取得
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ user_id: user_id })
-    })
-    .then(r => r.json())
-    .then(json => {
-        console.log("通報されてる")
-        if (json.status === "success" && json.warn) {
-        const cnt = Number(json.total_reports || 0);
-        showWarnBanner(`あなたに対する通報が ${cnt} 件あります。安心・安全なご利用をお願いします。`);
-        }
-    })
-    .catch(err => {
-        console.warn("report/summary failed", err);
-    });
 
 });
 
