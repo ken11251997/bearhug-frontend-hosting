@@ -85,6 +85,34 @@ document.addEventListener("DOMContentLoaded",function(){
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
 
+    async function fetchReportSummary(user_id) {
+    console.log("[summary] start");
+    if (!Number.isFinite(user_id)) {
+        console.warn("[summary] skip: uid missing");
+        return;
+    }
+    try {
+        const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", { // ← URLを統一
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ user_id: user_id })
+        });
+
+        const raw = await res.text();                   // まず text で受け取る（HTMLエラー対策）
+        console.log("[summary] status", res.status, raw);
+        if (!res.ok) return;
+
+        const data = JSON.parse(raw);
+        const total = data.total_reports ?? data.reported_count ?? 0;
+        if (total >= 3) {
+        showPopup("⚠️ 通報が一定数あります。利用規約にご注意ください。");
+        }
+    } catch (e) {
+        console.error("[summary] fetch error:", e);
+    }
+    }
+
     fetchReportSummary(user_id);
 
     document.getElementById("logout-btn").addEventListener("click", function () {
