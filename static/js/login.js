@@ -4,26 +4,36 @@ document.addEventListener("DOMContentLoaded",function(){
 
     // const loadingOverlay = document.getElementById("loading-overlay");
     // loadingOverlay.style.display = "none";
-
-    console.log("通報確認")
-    // サマリー取得
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", {
+    
+    
+    async function fetchReportSummary(user_id) {
+    console.log("[summary] start");
+    if (!Number.isFinite(user_id)) {
+        console.warn("[summary] skip: uid missing");
+        return;
+    }
+    try {
+        const res = await fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", { // ← URLを統一
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ user_id: user_id })
-    })
-    .then(r => r.json())
-    .then(json => {
-        console.log("通報されてる")
-        if (json.status === "success" && json.warn) {
-        const cnt = Number(json.total_reports || 0);
-        showWarnBanner(`あなたに対する通報が ${cnt} 件あります。安心・安全なご利用をお願いします。`);
+        });
+
+        const raw = await res.text();                   // まず text で受け取る（HTMLエラー対策）
+        console.log("[summary] status", res.status, raw);
+        if (!res.ok) return;
+
+        const data = JSON.parse(raw);
+        const total = data.total_reports ?? data.reported_count ?? 0;
+        if (total >= 3) {
+        showPopup("⚠️ 通報が一定数あります。利用規約にご注意ください。");
         }
-    })
-    .catch(err => {
-        console.warn("report/summary failed", err);
-    });
+    } catch (e) {
+        console.error("[summary] fetch error:", e);
+    }
+    }
+
 
     const user_id = new URLSearchParams(window.location.search).get("user_id");
     const mbti = new URLSearchParams(window.location.search).get("mbti");
@@ -74,6 +84,8 @@ document.addEventListener("DOMContentLoaded",function(){
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
+
+    fetchReportSummary(user_id);
 
     document.getElementById("logout-btn").addEventListener("click", function () {
 
