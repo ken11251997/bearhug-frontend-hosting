@@ -187,11 +187,11 @@ document.addEventListener("DOMContentLoaded",function(){
         }, 1000);
     }
 
-    function checkUnreadMessages(uid) {
+    function checkUnreadMessages(user_id) {
         return fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/list/unread_status", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: uid })
+            body: JSON.stringify({ user_id: user_id })
         })
         .then(res => res.json())
         .then(data => {
