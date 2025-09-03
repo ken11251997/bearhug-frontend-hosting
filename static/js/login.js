@@ -587,6 +587,7 @@ document.addEventListener("DOMContentLoaded",function(){
     })
     .then(r => r.json())
     .then(json => {
+        console.log("通報されてる")
         if (json.status === "success" && json.warn) {
         const cnt = Number(json.total_reports || 0);
         showWarnBanner(`あなたに対する通報が ${cnt} 件あります。安心・安全なご利用をお願いします。`);
