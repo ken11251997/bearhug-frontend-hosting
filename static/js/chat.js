@@ -676,7 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ user_id: myId, room_id: roomId }),
+            body: JSON.stringify({ user_id: myId, room_id: room_id }),
             });
             const json = await res.json();
             if (json.status === "success") {
