@@ -578,12 +578,13 @@ document.addEventListener("DOMContentLoaded",function(){
         container.insertBefore(div, container.firstChild);
     }
 
+     console.log("通報確認")
     // サマリー取得
     fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/report/summary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ user_id: uid })
+        body: JSON.stringify({ user_id: user_id })
     })
     .then(r => r.json())
     .then(json => {
