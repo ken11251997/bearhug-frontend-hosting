@@ -549,11 +549,11 @@ document.addEventListener("DOMContentLoaded",function(){
         showPopup(`❌ 広告の視聴に失敗しました: ${msg}`);
     });
 
-    document.getElementById("test-match-animation").addEventListener("click", () => {
-        // 例: 自分INTJ・相手ENTP・相手名テスト
-        showPoyonMatch("INTJ", "ENTP", "テストさん");
-        }
-    );
+    // document.getElementById("test-match-animation").addEventListener("click", () => {
+    //     // 例: 自分INTJ・相手ENTP・相手名テスト
+    //     showPoyonMatch("INTJ", "ENTP", "テストさん");
+    //     }
+    // );
 
     function closeLoadingOverlay() {
             const loadingOverlay = document.getElementById("loading-overlay");
@@ -578,9 +578,9 @@ document.addEventListener("DOMContentLoaded",function(){
         container.insertBefore(div, container.firstChild);
     }
 
-     console.log("通報確認")
+    console.log("通報確認")
     // サマリー取得
-    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/report/summary", {
+    fetch("https://bearhug-6c58c8d5bd0e.herokuapp.com/chat/report/summary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
