@@ -58,7 +58,8 @@ document.addEventListener("DOMContentLoaded",function(){
     async function fetchReportSummary(user_id) {
     console.log("[summary] start");
     console.log(user_id,user_id,);
-    if (!Number.isFinite(user_id)) {
+    const uid = Number(user_id,);
+    if (!Number.isFinite(uid)) {
         console.warn("[summary] skip: uid missing");
         return;
     }
@@ -67,7 +68,7 @@ document.addEventListener("DOMContentLoaded",function(){
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ user_id: user_id })
+        body: JSON.stringify({ user_id: uid })
         });
 
         const raw = await res.text();                   // まず text で受け取る（HTMLエラー対策）
