@@ -249,6 +249,6 @@ document.addEventListener("DOMContentLoaded",function(){
                 popup.remove();
                 if (callback) callback();
             }, 100);
-        }, 750);
+        }, 1500);
     }
 });
