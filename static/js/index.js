@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded",function(){
         .then(result => {
                 loadingOverlay.style.display = "none";
                 console.log("登録結果:", result);
-
                 if (result.status === "success") {
                     showPopup("登録成功！", () => {
                         // location.reload();
+                        sessionStorage.setItem("user_id", result.user_id);
                         window.location.href = `login?user_id=${result.user_id}&user_name=${result.user_name}&mbti=${result.mbti}`;
                         localStorage.setItem("subs", result.subs);
                         console.log("✅ 遷移コード実行完了");
