@@ -305,9 +305,9 @@ document.addEventListener("DOMContentLoaded",function(){
     });
 
 
-    function joinRoom(roomId, otherUserName,mbti) {
-        window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
-    }
+    // function joinRoom(roomId, otherUserName,mbti) {
+    //     window.location.href = `chat?room_id=${roomId}&username=${encodeURIComponent(otherUserName)}&mbti=${mbti}`;
+    // }
 
     bearsBtn.addEventListener("click", function () {
         localStorage.setItem("backToLogin", window.location.href);

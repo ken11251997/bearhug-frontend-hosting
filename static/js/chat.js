@@ -665,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         const ok = confirm(
-            "この相手とのマッチを解除しますか？（相手の一覧からも非表示になります）"
+            "この相手とのマッチを解除しますか？"
         );
         if (!ok) return;
 
@@ -681,7 +681,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const json = await res.json();
             if (json.status === "success") {
             showPopup("マッチを解除しました");
-            setTimeout(() => (window.location.href = "/list"), 700);
+            setTimeout(() => (window.location.href = "list"), 700);
             } else {
             showPopup(json.message || "解除に失敗しました");
             }
@@ -789,53 +789,53 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     (function attachOptionsMenu() {
-    const btn  = document.getElementById("options-btn");
-    const menu = document.getElementById("chat-actions-menu");
-    if (!btn || !menu) {
-        console.warn("[options] elements not found");
-        return;
-    }
+        const btn  = document.getElementById("options-btn");
+        const menu = document.getElementById("chat-actions-menu");
+        if (!btn || !menu) {
+            console.warn("[options] elements not found");
+            return;
+        }
 
-    // 初期は閉じておく（CSS競合対策。!importantの競合を避ける）
-    menu.classList.add("hidden");
-    btn.setAttribute("aria-expanded", "false");
-
-    // ︙ボタンで開閉
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const willOpen = menu.classList.contains("hidden"); // 開く前の状態を見ておく
-        menu.classList.toggle("hidden");
-        btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
-        // デバッグ用ログ
-        console.log("[options] toggled ->", willOpen ? "open" : "close");
-    });
-
-    // メニューの中は閉じない（項目クリックで閉じたい場合はここで閉じる）
-    menu.addEventListener("click", (e) => {
-        // e.stopPropagation(); // ← 中のボタン押下で即閉じたくないなら有効
-    });
-
-    // 画面の他の場所をクリックしたら閉じる
-    document.addEventListener("click", (e) => {
-        if (menu.classList.contains("hidden")) return;
-        const clickedInside = menu.contains(e.target) || btn.contains(e.target);
-        if (!clickedInside) {
+        // 初期は閉じておく（CSS競合対策。!importantの競合を避ける）
         menu.classList.add("hidden");
         btn.setAttribute("aria-expanded", "false");
-        console.log("[options] closed by outside click");
-        }
-    });
 
-    // 画面が切り替わる・リサイズなどでも閉じる
-    ["resize", "blur", "orientationchange"].forEach(ev =>
-        window.addEventListener(ev, () => {
-        if (!menu.classList.contains("hidden")) {
+        // ︙ボタンで開閉
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const willOpen = menu.classList.contains("hidden"); // 開く前の状態を見ておく
+            menu.classList.toggle("hidden");
+            btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+            // デバッグ用ログ
+            console.log("[options] toggled ->", willOpen ? "open" : "close");
+        });
+
+        // メニューの中は閉じない（項目クリックで閉じたい場合はここで閉じる）
+        menu.addEventListener("click", (e) => {
+            // e.stopPropagation(); // ← 中のボタン押下で即閉じたくないなら有効
+        });
+
+        // 画面の他の場所をクリックしたら閉じる
+        document.addEventListener("click", (e) => {
+            if (menu.classList.contains("hidden")) return;
+            const clickedInside = menu.contains(e.target) || btn.contains(e.target);
+            if (!clickedInside) {
             menu.classList.add("hidden");
             btn.setAttribute("aria-expanded", "false");
-            console.log("[options] closed by", ev);
-        }
-        })
-    );
+            console.log("[options] closed by outside click");
+            }
+        });
+
+        // 画面が切り替わる・リサイズなどでも閉じる
+        ["resize", "blur", "orientationchange"].forEach(ev =>
+            window.addEventListener(ev, () => {
+            if (!menu.classList.contains("hidden")) {
+                menu.classList.add("hidden");
+                btn.setAttribute("aria-expanded", "false");
+                console.log("[options] closed by", ev);
+            }
+            })
+        );
     })();
 })
