@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const room_id = urlParams.get("room_id");
     const Partnername = decodeURIComponent(urlParams.get("username"));
-    const user_id = sessionStorage.getItem("user_id")
+    const user_id = sessionStorage.getItem("user_id");
     const other_mbti = urlParams.get("mbti");
     const myId = Number(user_id);
 
