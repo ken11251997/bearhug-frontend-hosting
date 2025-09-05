@@ -207,6 +207,7 @@ footer {
 }
 
 .popup-message {
+    min-width: 80%;  /* 80% → 90% に変更 */
     max-width: 90%;  /* 80% → 90% に変更 */
     padding: 15px 30px; /* 横の余白も増やすと広く見える */
 }
