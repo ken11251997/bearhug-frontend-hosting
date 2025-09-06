@@ -97,8 +97,9 @@ document.addEventListener("DOMContentLoaded",function(){
         try { localStorage.removeItem("user_id"); } catch (_) {}
 
         // ★遷移（GitHub Pages 配下のパスに合わせる）
-        const basePath = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
-        location.href = basePath + "login";
+        // const basePath = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
+        // location.href = basePath + "login";
+        window.location.href = "index.html";
         } catch (err) {
         console.error("[delete] fetch error:", err); // ★ログ
         alert("通信エラーが発生しました。");
