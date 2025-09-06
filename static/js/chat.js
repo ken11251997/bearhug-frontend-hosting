@@ -839,52 +839,5 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     })();
 
-    const $ = sel => document.querySelector(sel);
-
-    const btn = $("#delete-account-btn");
-    const modal = $("#delete-modal");
-    const ok = $("#delete-ok");
-    const cancel = $("#delete-cancel");
-    const agree = $("#delete-confirm");
-
-    function showModal() { if (modal) modal.classList.remove("hidden"); }
-    function hideModal() { if (modal) modal.classList.add("hidden"); }
-
-    if (btn && modal && ok && cancel && agree) {
-        btn.addEventListener("click", showModal);
-        cancel.addEventListener("click", hideModal);
-        ok.addEventListener("click", async () => {
-        if (!agree.checked) {
-            alert("同意チェックを入れてください。");
-            return;
-        }
-        if (!Number.isFinite(user_id)) {
-            alert("ユーザー情報が取得できません。ログインし直してください。");
-            return;
-        }
-        try {
-            const res = await fetch(`${API_BASE}/auth/account/delete`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ user_id: user_id, confirm: true })
-            });
-            const raw = await res.text();
-            if (!res.ok) {
-            console.warn("[delete] HTTP", res.status, raw);
-            alert("削除に失敗しました。時間をおいて再試行してください。");
-            return;
-            }
-            // 成功：クライアントの情報をクリアしてログインへ
-            sessionStorage.clear();
-            localStorage.removeItem("user_id");
-            // GitHub Pages のベース配下へ遷移（あなたの環境ヘルパに合わせて）
-            const base = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
-            location.href = base + "login";
-        } catch (e) {
-            console.error("[delete] fetch error", e);
-            alert("通信エラーが発生しました。");
-        }
-        });
-    }
+    
 })

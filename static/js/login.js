@@ -135,10 +135,10 @@ document.addEventListener("DOMContentLoaded",function(){
     badge.id = "message-notification";
     badge.className = "unread-indicator hidden"; // list.cssと同じ
 
-    const btn = document.querySelector("#match_list_reload");  // ✅ 対象ボタンのIDを修正
-    if (btn) {
-        btn.style.position = "relative";  // 念のため再指定
-        btn.appendChild(badge);
+    const match_btn = document.querySelector("#match_list_reload");  // ✅ 対象ボタンのIDを修正
+    if (match_btn) {
+        match_btn.style.position = "relative";  // 念のため再指定
+        match_btn.appendChild(badge);
     }
     checkUnreadMessages(user_id)
     // const storedUserId = localStorage.getItem("user_id");
@@ -608,6 +608,55 @@ document.addEventListener("DOMContentLoaded",function(){
         div.style.lineHeight = "1.5";
         div.innerHTML = `⚠️ ${message}`;
         container.insertBefore(div, container.firstChild);
+    }
+
+    const $ = sel => document.querySelector(sel);
+
+    const delete_btn = $("#delete-account-btn");
+    const modal = $("#delete-modal");
+    const ok = $("#delete-ok");
+    const cancel = $("#delete-cancel");
+    const agree = $("#delete-confirm");
+
+    function showModal() { if (modal) modal.classList.remove("hidden"); }
+    function hideModal() { if (modal) modal.classList.add("hidden"); }
+
+    if (delete_btn && modal && ok && cancel && agree) {
+        delete_btn.addEventListener("click", showModal);
+        cancel.addEventListener("click", hideModal);
+        ok.addEventListener("click", async () => {
+        if (!agree.checked) {
+            alert("同意チェックを入れてください。");
+            return;
+        }
+        if (!Number.isFinite(user_id)) {
+            alert("ユーザー情報が取得できません。ログインし直してください。");
+            return;
+        }
+        try {
+            const res = await fetch(`${API_BASE}/auth/account/delete`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ user_id: user_id, confirm: true })
+            });
+            const raw = await res.text();
+            if (!res.ok) {
+            console.warn("[delete] HTTP", res.status, raw);
+            alert("削除に失敗しました。時間をおいて再試行してください。");
+            return;
+            }
+            // 成功：クライアントの情報をクリアしてログインへ
+            sessionStorage.clear();
+            localStorage.removeItem("user_id");
+            // GitHub Pages のベース配下へ遷移（あなたの環境ヘルパに合わせて）
+            const base = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
+            location.href = base + "login";
+        } catch (e) {
+            console.error("[delete] fetch error", e);
+            alert("通信エラーが発生しました。");
+        }
+        });
     }
 
 
