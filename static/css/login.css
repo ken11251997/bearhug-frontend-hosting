@@ -710,7 +710,8 @@ h1 {
   position: fixed;
   top: 16px;
   right: 16px;                          /* 右上固定 */
-  background: linear-gradient(135deg, #b71c1c, #e53935);
+  /* background: linear-gradient(135deg, #b71c1c, #e53935); */
+  background: linear-gradient(135deg, #8b4513, #a0522d);
   color: #fff;
   border: none;
   padding: 10px 16px;
