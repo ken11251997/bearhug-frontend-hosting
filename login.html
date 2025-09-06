@@ -102,6 +102,75 @@
 
     <script src="static/js/login.js" defer></script>
 
+    <script>
+        (() => {
+        if (window.__deleteInline) return; window.__deleteInline = true; // ★二重防止
+        const btn    = document.getElementById('delete-account-btn');
+        const modal  = document.getElementById('delete-modal');
+        const ok     = document.getElementById('delete-ok');
+        const cancel = document.getElementById('delete-cancel');
+        const agree  = document.getElementById('delete-confirm');
+        const API_BASE = location.hostname.endsWith('github.io')
+            ? 'https://bearhug-6c58c8d5bd0e.herokuapp.com'  // ★本番(例)
+            : 'http://localhost:5000';                       // ★ローカル(例)
+
+        const getUid = () => {
+            const s = sessionStorage.getItem('user_id') ?? new URLSearchParams(location.search).get('user_id') ?? '';
+            const id = parseInt(s, 10);
+            console.log('[inline] user_id:', s, '->', id);   // ★デバッグログ
+            return id;
+        };
+
+        const open  = () => { if (modal)  modal.classList.remove('hidden'); };
+        const close = () => { if (modal)  modal.classList.add('hidden'); };
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+            console.log('[inline] delete button clicked'); // ★デバッグログ
+            if (modal && ok && cancel && agree) {
+                open();
+            } else {
+                const uid = getUid();
+                if (!Number.isFinite(uid)) return alert('ユーザー情報が取得できません。');
+                if (confirm('本当にアカウントを削除しますか？この操作は取り消せません。')) doDelete(uid);
+            }
+            });
+        }
+
+        if (cancel) cancel.addEventListener('click', () => { console.log('[inline] cancel'); close(); });
+        if (ok) ok.addEventListener('click', () => {
+            if (!agree.checked) return alert('同意チェックを入れてください。');
+            const uid = getUid();
+            if (!Number.isFinite(uid)) return alert('ユーザー情報が取得できません。');
+            doDelete(uid);
+        });
+
+        async function doDelete(uid){
+            console.log('[inline] POST', `${API_BASE}/auth/account/delete`, {user_id: uid}); // ★デバッグログ
+            try{
+            const r = await fetch(`${API_BASE}/auth/account/delete`, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                credentials:'include',
+                body: JSON.stringify({user_id: uid, confirm: true})
+            });
+            const txt = await r.text();
+            console.log('[inline] status', r.status, 'raw', txt); // ★デバッグログ
+            if (!r.ok) return alert('削除に失敗しました。時間をおいて再試行してください。');
+            try { sessionStorage.clear(); } catch(e){}
+            try { localStorage.removeItem('user_id'); } catch(e){}
+            const base = location.hostname.endsWith('github.io') ? '/bearhug-frontend-hosting/' : '/';
+            location.href = base + 'login';
+            } catch(e){
+            console.error('[inline] fetch error', e);
+            alert('通信エラーが発生しました。');
+            } finally {
+            close();
+            }
+        }
+        })();
+    </script>
+
     <!-- <iframe id="bgm-iframe" src="static/sound/bgm.html" style="display:none;"></iframe>
     <script>
     const bgmFrame = document.getElementById("bgm-iframe");
