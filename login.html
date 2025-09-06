@@ -79,6 +79,25 @@
         <button id="contact-btn" class="btn">問い合わせ</button>
     </div>
 
+    <div id="delete-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+        <div class="modal-card" role="document">
+            <h3 id="delete-title" class="modal-title">アカウント削除の確認</h3>
+            <p class="modal-desc">
+            この操作は取り消せません。チャット履歴やマッチ情報も利用できなくなります。
+            </p>
+
+            <label class="modal-agree">
+            <input id="delete-confirm" type="checkbox" />
+            <span>内容に同意して削除します。</span>
+            </label>
+
+            <div class="modal-actions">
+            <button id="delete-cancel" type="button" class="btn-cancel">キャンセル</button>
+            <button id="delete-ok" type="button" class="btn-danger">削除する</button>
+            </div>
+        </div>
+    </div>
+
     <!-- <button id="test-match-animation">🎉 マッチング演出テスト</button> -->
 
     <script src="static/js/login.js" defer></script>
