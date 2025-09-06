@@ -706,5 +706,30 @@ h1 {
   outline-offset: 2px;
 }
 
+.delete-button{
+  position: fixed;
+  top: 16px;
+  right: 16px;                          /* 右上固定 */
+  background: linear-gradient(135deg, #b71c1c, #e53935);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 10001;                        /* ★オーバーレイ(9999)より上 */
+  appearance: none;                      /* ブラウザ既定の装飾を打ち消す */
+  -webkit-appearance: none;
+  display: inline-block;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+.delete-button:hover{
+  background: linear-gradient(135deg, #e53935, #b71c1c);
+}
+
 
 
