@@ -51,6 +51,94 @@ document.addEventListener("DOMContentLoaded",function(){
         mbtiDescElement.innerText = mbtiJapaneseNames[mbti];
     }
 
+    const $ = (s) => document.querySelector(s);
+    const deleteBtn = $("#delete-account-btn");
+    const modal = $("#delete-modal");
+    const okBtn = $("#delete-ok");
+    const cancelBtn = $("#delete-cancel");
+    const agreeChk = $("#delete-confirm");
+
+    console.log("[delete] elements:", {
+        hasBtn: !!deleteBtn, hasModal: !!modal, hasOk: !!okBtn, hasCancel: !!cancelBtn, hasAgree: !!agreeChk,
+    }); // ★ログ
+
+    // ★追加: 共通：削除実行
+    async function doDelete() {
+        if (!Number.isFinite(user_id)) {
+        console.warn("[delete] invalid user_id:", user_id); // ★ログ
+        alert("ユーザー情報が取得できません。ログインし直してください。");
+        return;
+        }
+
+        const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/account/delete`; // ★必要に応じてバックエンドの実装パスに合わせてください
+        const body = { user_id, confirm: true };
+
+        console.log("[delete] POST", url, body); // ★ログ
+        try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",        // ★必要ならCookieベースの認証に対応
+            body: JSON.stringify(body),
+        });
+
+        const text = await res.text();
+        console.log("[delete] status:", res.status, "raw:", text); // ★ログ
+
+        if (!res.ok) {
+            alert("削除に失敗しました。時間をおいて再試行してください。");
+            return;
+        }
+
+        // ★成功時：クライアント側クリーンアップ
+        try { sessionStorage.clear(); } catch (_) {}
+        try { localStorage.removeItem("user_id"); } catch (_) {}
+
+        // ★遷移（GitHub Pages 配下のパスに合わせる）
+        const basePath = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
+        location.href = basePath + "login";
+        } catch (err) {
+        console.error("[delete] fetch error:", err); // ★ログ
+        alert("通信エラーが発生しました。");
+        }
+    }
+
+    // ★追加: モーダル開閉
+    function openModal()  { if (modal) modal.classList.remove("hidden"); }
+    function closeModal() { if (modal) modal.classList.add("hidden"); }
+
+    // ★追加: ハンドラ登録（モーダルがある場合）
+    if (deleteBtn && modal && okBtn && cancelBtn && agreeChk) {
+        deleteBtn.addEventListener("click", () => {
+        console.log("[delete] open modal"); // ★ログ
+        openModal();
+        });
+
+        cancelBtn.addEventListener("click", () => {
+        console.log("[delete] cancel"); // ★ログ
+        closeModal();
+        });
+
+        okBtn.addEventListener("click", async () => {
+        if (!agreeChk.checked) {
+            alert("同意チェックを入れてください。");
+            return;
+        }
+        await doDelete();
+        });
+    }
+    // ★追加: フォールバック（モーダルが無くても動く）
+    else if (deleteBtn) {
+        console.warn("[delete] modal elements not found. fallback confirm flow."); // ★ログ
+        deleteBtn.addEventListener("click", async () => {
+        if (confirm("本当にアカウントを削除しますか？この操作は取り消せません。")) {
+            await doDelete();
+        }
+        });
+    } else {
+        console.warn("[delete] delete button not found."); // ★ログ
+    }
+
     const bearsBtn = document.getElementById("bearspage-btn");
     const SubsBtn = document.getElementById("subscribe-btn");
     const ConBtn = document.getElementById("contact-btn");
@@ -608,94 +696,6 @@ document.addEventListener("DOMContentLoaded",function(){
         div.style.lineHeight = "1.5";
         div.innerHTML = `⚠️ ${message}`;
         container.insertBefore(div, container.firstChild);
-    }
-
-    const $ = (s) => document.querySelector(s);
-    const deleteBtn = $("#delete-account-btn");
-    const modal = $("#delete-modal");
-    const okBtn = $("#delete-ok");
-    const cancelBtn = $("#delete-cancel");
-    const agreeChk = $("#delete-confirm");
-
-    console.log("[delete] elements:", {
-        hasBtn: !!deleteBtn, hasModal: !!modal, hasOk: !!okBtn, hasCancel: !!cancelBtn, hasAgree: !!agreeChk,
-    }); // ★ログ
-
-    // ★追加: 共通：削除実行
-    async function doDelete() {
-        if (!Number.isFinite(user_id)) {
-        console.warn("[delete] invalid user_id:", user_id); // ★ログ
-        alert("ユーザー情報が取得できません。ログインし直してください。");
-        return;
-        }
-
-        const url = `https://bearhug-6c58c8d5bd0e.herokuapp.com/auth/account/delete`; // ★必要に応じてバックエンドの実装パスに合わせてください
-        const body = { user_id, confirm: true };
-
-        console.log("[delete] POST", url, body); // ★ログ
-        try {
-        const res = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",        // ★必要ならCookieベースの認証に対応
-            body: JSON.stringify(body),
-        });
-
-        const text = await res.text();
-        console.log("[delete] status:", res.status, "raw:", text); // ★ログ
-
-        if (!res.ok) {
-            alert("削除に失敗しました。時間をおいて再試行してください。");
-            return;
-        }
-
-        // ★成功時：クライアント側クリーンアップ
-        try { sessionStorage.clear(); } catch (_) {}
-        try { localStorage.removeItem("user_id"); } catch (_) {}
-
-        // ★遷移（GitHub Pages 配下のパスに合わせる）
-        const basePath = location.hostname.endsWith("github.io") ? "/bearhug-frontend-hosting/" : "/";
-        location.href = basePath + "login";
-        } catch (err) {
-        console.error("[delete] fetch error:", err); // ★ログ
-        alert("通信エラーが発生しました。");
-        }
-    }
-
-    // ★追加: モーダル開閉
-    function openModal()  { if (modal) modal.classList.remove("hidden"); }
-    function closeModal() { if (modal) modal.classList.add("hidden"); }
-
-    // ★追加: ハンドラ登録（モーダルがある場合）
-    if (deleteBtn && modal && okBtn && cancelBtn && agreeChk) {
-        deleteBtn.addEventListener("click", () => {
-        console.log("[delete] open modal"); // ★ログ
-        openModal();
-        });
-
-        cancelBtn.addEventListener("click", () => {
-        console.log("[delete] cancel"); // ★ログ
-        closeModal();
-        });
-
-        okBtn.addEventListener("click", async () => {
-        if (!agreeChk.checked) {
-            alert("同意チェックを入れてください。");
-            return;
-        }
-        await doDelete();
-        });
-    }
-    // ★追加: フォールバック（モーダルが無くても動く）
-    else if (deleteBtn) {
-        console.warn("[delete] modal elements not found. fallback confirm flow."); // ★ログ
-        deleteBtn.addEventListener("click", async () => {
-        if (confirm("本当にアカウントを削除しますか？この操作は取り消せません。")) {
-            await doDelete();
-        }
-        });
-    } else {
-        console.warn("[delete] delete button not found."); // ★ログ
     }
 
 });
