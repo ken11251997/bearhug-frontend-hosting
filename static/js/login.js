@@ -61,7 +61,8 @@ document.addEventListener("DOMContentLoaded",function(){
     console.log("[delete] elements:", {
         hasBtn: !!deleteBtn, hasModal: !!modal, hasOk: !!okBtn, hasCancel: !!cancelBtn, hasAgree: !!agreeChk,
     }); // ★ログ
-    
+
+    const myId = Number(user_id);
 
     // ★追加: 共通：削除実行
     async function doDelete() {
