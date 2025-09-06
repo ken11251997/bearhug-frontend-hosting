@@ -61,11 +61,12 @@ document.addEventListener("DOMContentLoaded",function(){
     console.log("[delete] elements:", {
         hasBtn: !!deleteBtn, hasModal: !!modal, hasOk: !!okBtn, hasCancel: !!cancelBtn, hasAgree: !!agreeChk,
     }); // ★ログ
+    
 
     // ★追加: 共通：削除実行
     async function doDelete() {
-        if (!Number.isFinite(user_id)) {
-        console.warn("[delete] invalid user_id:", user_id); // ★ログ
+        if (!Number.isFinite(myId)) {
+        console.warn("[delete] invalid user_id:", myId ); // ★ログ
         alert("ユーザー情報が取得できません。ログインし直してください。");
         return;
         }
