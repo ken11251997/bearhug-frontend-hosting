@@ -721,7 +721,7 @@ h1 {
   font-size: 14px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
-  z-index: 10001;                        /* ★オーバーレイ(9999)より上 */
+  /* z-index: 10001;                        ★オーバーレイ(9999)より上 */
   appearance: none;                      /* ブラウザ既定の装飾を打ち消す */
   -webkit-appearance: none;
   display: inline-block;
