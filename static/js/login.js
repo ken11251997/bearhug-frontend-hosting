@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded",function(){
         const data = JSON.parse(raw);
         const total = data.total_reports ?? data.reported_count ?? 0;
         if (total >= 3) {
-        showPopup("⚠️ 通報が一定数あります。利用規約にご注意ください。");
+        showPopup("⚠️ 通報が一定数あります。<br>利用規約にご注意ください。");
         }
     } catch (e) {
         console.error("[summary] fetch error:", e);
