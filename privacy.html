@@ -4,37 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>プライバシーポリシー | べあはぐ</title>
-  <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height: 1.7; margin: 24px; color: #222; }
-    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.2rem; margin-top: 1.6rem; border-left: 4px solid #ffb400; padding-left: 8px; }
-    ul { padding-left: 1.4rem; }
-    small { color: #666; }
-    .toc a { display: block; text-decoration: none; color: #0366d6; margin: 4px 0; }
-    .note { background: #fff9e6; border: 1px solid #ffe8a3; padding: 8px 12px; border-radius: 6px; }
-  </style>
+  <!-- ★ 追加: アプリ統一スタイル -->
+  <link rel="stylesheet" href="static/css/privacy.css">
 </head>
+
 <body>
-  <h1>プライバシーポリシー</h1>
-  <p><small>最終更新日：2025-08-12</small></p>
+  <!-- ★ 既存: 戻るボタン（classはそのまま利用OK） -->
+  <button id="buck_btn" class="back-button fixed" onclick="history.back()">←戻る</button>
 
-  <p>本サービス「べあはぐ」（以下「本サービス」）の利用者個人情報の取扱いに関する方針を記載します。</p>
+  <!-- ★ 追加: コンテンツを統一カードでラップ -->
+  <main class="privacy-container">
+    <h1>プライバシーポリシー</h1>
+    <p><small class="footer-meta">最終更新日：2025-08-12</small></p>
 
-  <!-- 追記: 目次 -->
-  <div class="toc">
-    <a href="#collect">1. 収集する情報</a>
-    <a href="#purpose">2. 利用目的</a>
-    <a href="#ads">3. 広告・解析ツールについて</a>
-    <a href="#share">4. 情報の共有と第三者提供</a>
-    <a href="#retention">5. データの保存期間</a>
-    <a href="#minor">6. 未成年のプライバシー</a>
-    <a href="#rights">7. ユーザーの権利</a>
-    <a href="#transfer">8. データの保管場所・国外移転</a>
-    <a href="#security">9. セキュリティ対策</a>
-    <a href="#contact">10. お問い合わせ</a>
-    <a href="#changes">11. 変更について</a>
-    <a href="#account-deletion">12. アカウント削除</a>
-  </div>
+    <!-- 既存の本文はそのまま。以下は例として目次～各章のブロック -->
+    <div class="toc">
+      <a href="#collect">1. 収集する情報</a>
+      <a href="#purpose">2. 利用目的</a>
+      <a href="#ads">3. 広告・解析ツールについて</a>
+      <a href="#share">4. 情報の共有と第三者提供</a>
+      <a href="#retention">5. データの保存期間</a>
+      <a href="#minor">6. 未成年のプライバシー</a>
+      <a href="#rights">7. ユーザーの権利</a>
+      <a href="#transfer">8. データの保管場所・国外移転</a>
+      <a href="#security">9. セキュリティ対策</a>
+      <a href="#contact">10. お問い合わせ</a>
+      <a href="#changes">11. 変更について</a>
+      <a href="#account-deletion">12. アカウント削除</a>
+    </div>
 
   <h2 id="collect">1. 収集する情報</h2>
   <p>本サービスでは、以下の情報を収集する場合があります。</p>
@@ -128,5 +125,6 @@
     <li>法令で長期保存が必要な情報がある場合は、定められた期間保持します。</li>
   </ul>
   </p>
+  </main>
 </body>
 </html>

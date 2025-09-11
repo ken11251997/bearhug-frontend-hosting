@@ -1,0 +1,136 @@
+/* =========================================
+   privacy.css  |  BearHug unified style
+   アプリの雰囲気（list.css）に統一
+   ★ 修正点/意図は「★」コメントで明示
+========================================= */
+
+/* ★ 共通トークン（list.cssの配色に準拠） */
+:root{
+  --bg-grad-1:#d2b48c;      /* タン */
+  --bg-grad-2:#f5deb3;      /* ウィート */
+  --card-bg:#fffaf0;        /* アイボリー系カード */
+  --text-main:#4e342e;      /* 文字色(ブラウン濃) */
+  --brand:#8b4513;          /* ブランドブラウン */
+  --accent:#ffb400;         /* アクセント(見出しライン) */
+  --shadow:0 5px 15px rgba(0,0,0,.2);
+  --radius:16px;
+}
+
+/* ★ スクロール可（長文対策）。list.cssのbodyはoverflow:hiddenだが、規約は読む前提なので有効化 */
+html,body{height:100%;}
+body{
+  margin:0;
+  color:var(--text-main);
+  font-family:'Poppins','Noto Sans JP',system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  background:linear-gradient(135deg,var(--bg-grad-1),var(--bg-grad-2));
+  overflow-y:auto;                    /* ★ 読めるように縦スクロール許可 */
+  overscroll-behavior:none;
+  -webkit-overflow-scrolling:touch;
+  touch-action:manipulation;
+}
+
+/* ★ カードレイアウト（list.cssの.containerに合わせて統一） */
+.privacy-container{
+  box-sizing:border-box;
+  background:var(--card-bg);
+  width:min(920px,92vw);             /* ★ 規約は広め */
+  margin:24px auto;
+  padding:clamp(18px,3.5vw,28px);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+/* 見出し */
+h1{
+  margin:0 0 4px 0;
+  font-size:clamp(20px,3.6vw,28px);
+  line-height:1.3;
+  text-align:center;
+  color:var(--brand);                 /* ★ ブランドカラー */
+}
+h2{
+  margin:28px 0 8px;
+  font-size:clamp(16px,3.2vw,20px);
+  line-height:1.35;
+  color:var(--brand);
+  border-left:6px solid var(--accent);/* ★ list.cssの雰囲気に合わせたアクセント */
+  padding-left:10px;
+  scroll-margin-top:84px;             /* ★ #アンカーで上詰まりしない */
+}
+h3{
+  margin:22px 0 6px;
+  font-size:clamp(15px,3vw,18px);
+  color:var(--text-main);
+}
+
+/* 小要素・本文 */
+small{color:#7a6a5f;}
+p{margin:10px 0;}
+ul,ol{margin:8px 0 12px 0; padding-left:1.4rem;}
+li{margin:4px 0;}
+a{
+  color:var(--brand);
+  text-decoration:none;
+  border-bottom:1px dashed rgba(139,69,19,.35);
+}
+a:hover{opacity:.9; text-decoration:underline;}
+::selection{background:#ffe7b3;}
+
+/* 目次ボックス */
+.toc{
+  margin:14px 0 18px;
+  padding:12px;
+  background:#fff8e6;
+  border:1px solid #ffe1a8;
+  border-radius:10px;
+}
+.toc a{
+  display:block;
+  padding:6px 4px;
+  font-weight:600;
+}
+
+/* 注意書き（note） */
+.note{
+  background:#fff9e6;
+  border:1px solid #ffe8a3;
+  padding:10px 12px;
+  border-radius:10px;
+}
+
+/* ★ list.css の戻るボタンを踏襲（単体で動くよう再現） */
+.back-button{
+  display:inline-block;
+  font-size:16px;
+  color:var(--brand);
+  text-decoration:none;
+  padding:10px 16px;
+  border:2px solid var(--brand);
+  border-radius:6px;
+  background-color:var(--card-bg);
+  font-weight:bold;
+  transition:background-color .3s,opacity .2s;
+}
+.back-button:hover{background-color:#f0e6d6;}
+.back-button.fixed{
+  position:fixed;
+  top:20px;
+  left:20px;
+  z-index:1000;
+}
+
+/* フッタ情報などを少し弱めに */
+.footer-meta{margin-top:18px; font-size:.9rem; color:#6d5b50;}
+
+/* ★ モバイル最適化 */
+@media (max-width:480px){
+  .privacy-container{margin:18px auto; padding:16px;}
+  .back-button.fixed{top:12px; left:12px;}
+}
+
+/* ★ アニメーションを好まない設定 */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important;}
+}
